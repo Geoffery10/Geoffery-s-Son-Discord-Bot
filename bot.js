@@ -59,6 +59,16 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                   bot.sendMessage(data);
     }
 
+    if (message.toLowerCase().includes("sauce".toLowerCase()) == true || message.toLowerCase().includes("Uwu".toLowerCase()) == true) {
+        let sauce = ['238212', '177013', '200948', '215600', '228922', '189890']
+        var num = Math.floor(Math.random() * sauce.length)
+                var data = {
+                    to: channelID,
+                    message: "Sauce: " + sauce[num]
+                  };
+                  bot.sendMessage(data);
+    }
+
     if (message.toLowerCase().includes("heresy".toLowerCase()) == true) {
         var num = Math.floor(Math.random() * heresy.length)
                 var data = {
