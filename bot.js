@@ -60,7 +60,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     }
 
     if (message.toLowerCase().includes("sauce".toLowerCase()) == true && !(message.includes("Sauce: "))) {
-        var num = Math.floor(Math.random() * Math.floor(300000))
+        var num = Math.floor(Math.random() * Math.floor(321861))
         sauce = "Sauce: " + num
                   bot.sendMessage({
                     to: channelID,
@@ -147,7 +147,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                       }
                 });
             break;
-            // Just add any case commands if you want to..
+            case 'nani':
+                bot.sendMessage({
+                        to: channelID,
+                        message: '何'
+                });
+            break;
          }
      }
 });
