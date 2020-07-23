@@ -1,0 +1,13 @@
+{
+  "name": "geofferys-son",
+  "version": "1.0.0",
+  "description": "My First Discord Bot",
+  "main": "bot.js",
+  "author": "Geoffery Powell",
+  "dependencies": {
+    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+    "giphy-api": "^2.0.1",
+    "ifttt-webhooks-channel": "^1.1.3",
+    "winston": "^3.3.3"
+  }
+}
