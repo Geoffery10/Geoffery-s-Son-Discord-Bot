@@ -59,13 +59,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                   bot.sendMessage(data);
     }
 
-    if (message.toLowerCase().includes("sauce".toLowerCase()) == true || message.toLowerCase().includes("Uwu".toLowerCase()) == true) {
-        var num = Math.floor(Math.random() * Math.floor(999999))
-                var data = {
+    if (message.toLowerCase().includes("sauce".toLowerCase()) == true) {
+        var num = Math.floor(Math.random() * Math.floor(300000))
+                  bot.sendMessage({
                     to: channelID,
                     message: "Sauce: " + num
-                  };
-                  bot.sendMessage(data);
+                });
     }
 
     if (message.toLowerCase().includes("heresy".toLowerCase()) == true) {
