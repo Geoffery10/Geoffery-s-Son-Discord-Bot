@@ -85,6 +85,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var num = Math.floor(Math.random() * heresy.length)
                 var data = {
                     "to": channelID,
+                    message: "don't lewd the dragon loli",
                     "embed": {
                         "image": {
                           "url": 'https://pa1.narvii.com/6524/9faa750f3d296da6e0e19dcbc8fe1beb7d5f9760_hq.gif'
