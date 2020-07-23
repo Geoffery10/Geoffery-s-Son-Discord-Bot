@@ -96,6 +96,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         });
     }
 
+    if (message.toLowerCase().includes("hello there".toLowerCase()) == true) {
+      bot.uploadFile({
+        to: channelID,
+        file: './images/generalkenobi.gif'
+      });
+  }
+
     if (message.toLowerCase().includes("trap".toLowerCase()) == true) {
         bot.sendMessage({
             to: channelID,
@@ -205,6 +212,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                 {
                                   "name": "ravioli ravioli",
                                   "value": "DON'T LEWD!"
+                                },
+                                {
+                                  "name": "hello there",
+                                  "value": "It's a star wars reference"
                                 },
                                 {
                                   "name": "trap",
