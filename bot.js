@@ -81,7 +81,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                   bot.sendMessage(data);
     }
 
-    if (message.toLowerCase().includes("ravioli".toLowerCase()) == true) {
+    if (message.toLowerCase().includes("ravioli ravioli".toLowerCase()) == true) {
         var num = Math.floor(Math.random() * heresy.length)
                 var data = {
                     "to": channelID,
