@@ -132,7 +132,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             } else if (message.toLowerCase().includes('your father'.toLowerCase()) == true) {
                 bot.sendMessage({
                     to: channelID,
-                    message: 'Geoffery is my father'
+                    message: 'Geoffery is my father',
+                    "embed": {
+                        "image": {
+                        "url": 'https://avatars3.githubusercontent.com/u/43981091?s=460&u=7216909e10eaadc9ab9263e93ef6c46560fb8c03&v=4'
+                        }
+                    }
                 });
             } else if (message.toLowerCase().includes('step mother'.toLowerCase()) == true) {
                 bot.sendMessage({
@@ -179,6 +184,69 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     bot.sendMessage({
                             to: channelID,
                             message: '何'
+                    });
+                break;
+                case 'help':
+                    bot.sendMessage({
+                            to: channelID,
+                            "embed": {
+                              "title": "Commands",
+                              "description": "This is a list of all the commands I can do:",
+                              "fields": [
+                                {
+                                  "name": "anime",
+                                  "value": "Anime gif"
+                                },
+                                {
+                                  "name": "hentai",
+                                  "value": "That's illegal!"
+                                },
+                                {
+                                  "name": "owo or uwu",
+                                  "value": "owo"
+                                },
+                                {
+                                  "name": "sauce",
+                                  "value": "nhentai.net/g/<number>"
+                                },
+                                {
+                                  "name": "heresy",
+                                  "value": "Yikes that bad?"
+                                },
+                                {
+                                  "name": "ravioli ravioli",
+                                  "value": "DON'T LEWD!"
+                                },
+                                {
+                                  "name": "trap",
+                                  "value": "Danger!"
+                                },
+                                {
+                                  "name": "!ping",
+                                  "value": "Pong probably"
+                                },
+                                {
+                                  "name": "!wtf",
+                                  "value": "That's mean!"
+                                },
+                                {
+                                  "name": "!rolld20",
+                                  "value": "What do you expect"
+                                },
+                                {
+                                  "name": "!nani",
+                                  "value": "What?"
+                                },
+                                      {
+                                  "name": "!who is my \"Family Member Here\"",
+                                  "value": "I will reveal some of my relations..."
+                                },
+                                {
+                                  "name": "!help",
+                                  "value": "You just did that..."
+                                }
+                              ]
+                            }
                     });
                 break;
             }
