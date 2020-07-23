@@ -21,12 +21,9 @@ bot.on('ready', function (evt) {
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
-    let animeURLs = ['https://pa1.narvii.com/6204/dd03582be2d57e47c5378cd1ab19b8f39b1b2e76_hq.gif', 'https://media.tenor.com/images/bccc03037137312c211cace52bafa84d/tenor.gif', 
-'https://k60.kn3.net/taringa/4/6/7/4/4/4/7/zongbie/E5E.gif', 'https://i.gifer.com/6mh.gif', 'https://cdn.discordapp.com/attachments/542189375975456780/735572673211531334/tumblr_inline_nr18tghWcp1rjj2rl_500.gif',
-'https://pa1.narvii.com/6858/a80b1f14084168ac795b13e6062915ab893489f1_hq.gif', 'https://media.tenor.com/images/7393ac30cca2839ca79f8f4d52feb979/tenor.gif', 
-'https://miro.medium.com/max/1080/1*WKUI7bElYPPD9jLClBle1w.gif', 'https://miro.medium.com/max/1280/1*MHVmltql9CiyaPd-UKp82g.gif', 'https://thumbs.gfycat.com/BeautifulDependentDaddylonglegs-size_restricted.gif', 
-'https://thumbs.gfycat.com/ExemplaryFaroffDugong-size_restricted.gif', 'https://pa1.narvii.com/7017/63395e78c57532a320eb5fe86d5d34aadaae6546r1-500-359_00.gif',
-'https://38.media.tumblr.com/3d04ea77bf4c9794bff2084ceeddd096/tumblr_ndnvhwVokt1t89rpeo1_500.gif']
+    let animeURLs = ['./images/anime/anime_01.gif', './images/anime/anime_02.gif', './images/anime/anime_03.gif', './images/anime/anime_04.gif', './images/anime/anime_05.gif', './images/anime/anime_06.gif', 
+    './images/anime/anime_07.gif', './images/anime/anime_08.gif', './images/anime/anime_09.gif', './images/anime/anime_10.gif', './images/anime/anime_11.gif', './images/anime/anime_12.gif', 
+    './images/anime/anime_13.gif']
 
     let heresy = ['https://cdn.discordapp.com/attachments/254779349352448001/735584631860232232/reee.gif', 'https://pbs.twimg.com/media/DSTz1dsVwAAQElr.jpg' ,
 'https://cdn.discordapp.com/attachments/254779349352448001/735584844922486804/15_-_AncI19F.jpg', 'https://cdn.discordapp.com/attachments/254779349352448001/735585058072559626/heresy_detected.jpg',
@@ -39,28 +36,17 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
     if (message.toLowerCase().includes("anime".toLowerCase()) == true) {
         var num = Math.floor(Math.random() * animeURLs.length)
-                var data = {
-                    "to": channelID,
-                    "embed": {
-                      "image": {
-                        "url": animeURLs[num]
-                      }
-                    }
-                  };
-                  bot.sendMessage(data);
+        bot.uploadFile({
+          to: channelID,
+          file: animeURLs[num]
+        });
     }
 
     if (message.toLowerCase().includes("OwO".toLowerCase()) == true || message.toLowerCase().includes("Uwu".toLowerCase()) == true) {
-        var num = Math.floor(Math.random() * animeURLs.length)
-                var data = {
-                    "to": channelID,
-                    "embed": {
-                        "image": {
-                          "url": 'https://cdn.drawception.com/drawings/MPPrYcG3Xa.png'
-                        }
-                      }
-                  };
-                  bot.sendMessage(data);
+        bot.uploadFile({
+          to: channelID,
+          file: './images/owo.png'
+        });
     }
 
     if (message.toLowerCase().includes("sauce".toLowerCase()) == true && !(message.includes("Sauce: "))) {
@@ -102,12 +88,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     if (message.toLowerCase().includes("hentai".toLowerCase()) == true) {
         bot.sendMessage({
             to: channelID,
-            message: "WAIT THAT'S ILLEGAL!",
-            "embed": {
-                "image": {
-                  "url": 'https://media0.giphy.com/media/wkW0maGDN1eSc/giphy.gif'
-                }
-              }
+            message: "WAIT THAT'S ILLEGAL!"
+        });
+        bot.uploadFile({
+          to: channelID,
+          file: './images/hentai.gif'
         });
     }
 
