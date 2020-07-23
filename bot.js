@@ -59,11 +59,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                   bot.sendMessage(data);
     }
 
-    if (message.toLowerCase().includes("sauce".toLowerCase()) == true) {
+    if (message.toLowerCase().includes("sauce".toLowerCase()) == true && !(message.includes("Sauce: "))) {
         var num = Math.floor(Math.random() * Math.floor(300000))
+        sauce = "Sauce: " + num
                   bot.sendMessage({
                     to: channelID,
-                    message: "Sauce: " + num
+                    message: sauce
                 });
     }
 
