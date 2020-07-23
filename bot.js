@@ -81,6 +81,19 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                   bot.sendMessage(data);
     }
 
+    if (message.toLowerCase().includes("ravioli".toLowerCase()) == true) {
+        var num = Math.floor(Math.random() * heresy.length)
+                var data = {
+                    "to": channelID,
+                    "embed": {
+                        "image": {
+                          "url": 'https://pa1.narvii.com/6524/9faa750f3d296da6e0e19dcbc8fe1beb7d5f9760_hq.gif'
+                        }
+                      }
+                  };
+                  bot.sendMessage(data);
+    }
+
     if (message.toLowerCase().includes("hentai".toLowerCase()) == true) {
         bot.sendMessage({
             to: channelID,
