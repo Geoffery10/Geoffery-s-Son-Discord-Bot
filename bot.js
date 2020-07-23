@@ -30,6 +30,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 'https://cdn.discordapp.com/attachments/254779349352448001/735585142650830851/139_-_DJp3O3C.jpg', 'https://cdn.discordapp.com/attachments/254779349352448001/735585202671452340/134_-_pgkZxPT.gif',
 'https://cdn.discordapp.com/attachments/254779349352448001/735585237425324083/tumblr_ouhspkqdzq1s83dh2o3_400.gif', 'https://cdn.discordapp.com/attachments/254779349352448001/735585310800347166/STOP.png', 
 'https://cdn.discordapp.com/attachments/254779349352448001/735585433467093112/du_eet.jpg']
+let sauce = ['238212', '177013', '200948', '215600', '228922', '189890']
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
 
@@ -60,7 +61,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     }
 
     if (message.toLowerCase().includes("sauce".toLowerCase()) == true || message.toLowerCase().includes("Uwu".toLowerCase()) == true) {
-        let sauce = ['238212', '177013', '200948', '215600', '228922', '189890']
         var num = Math.floor(Math.random() * sauce.length)
                 var data = {
                     to: channelID,
