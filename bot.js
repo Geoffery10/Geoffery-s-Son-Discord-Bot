@@ -123,36 +123,65 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var cmd = args[0];
        
         args = args.splice(1);
-        switch(cmd) {
-            // !ping
-            case 'ping':
+        if (message.toLowerCase().includes('who is'.toLowerCase()) == true){
+            if (message.toLowerCase().includes('your mother'.toLowerCase()) == true) {
                 bot.sendMessage({
                     to: channelID,
-                    message: 'What are you expecting? Me to say pong back?'
+                    message: 'Isaac is my mother'
                 });
-            break;
-            case 'wtf':
+            } else if (message.toLowerCase().includes('your father'.toLowerCase()) == true) {
                 bot.sendMessage({
                     to: channelID,
-                    message: 'Rude!'
+                    message: 'Geoffery is my father'
                 });
-            break;
-            case 'rolld20':
+            } else if (message.toLowerCase().includes('step mother'.toLowerCase()) == true) {
                 bot.sendMessage({
                     to: channelID,
-                    "embed": {
-                        "image": {
-                          "url": 'https://media1.tenor.com/images/2cf373aef8fedfa21cc1f5587a6f9e2b/tenor.gif?itemid=8620719'
-                        }
-                      }
+                    message: 'Seth is my step mother'
                 });
-            break;
-            case 'nani':
+            } else if (message.toLowerCase().includes('your brother'.toLowerCase()) == true) {
                 bot.sendMessage({
+                    to: channelID,
+                    message: 'Connor is my brother'
+                });
+            } else {
+                bot.sendMessage({
+                    to: channelID,
+                    message: 'Who?'
+                });
+            }
+        } else {
+            switch(cmd) {
+                // !ping
+                case 'ping':
+                    bot.sendMessage({
                         to: channelID,
-                        message: '何'
-                });
-            break;
-         }
+                        message: 'What are you expecting? Me to say pong back?'
+                    });
+                break;
+                case 'wtf':
+                    bot.sendMessage({
+                        to: channelID,
+                        message: 'Rude!'
+                    });
+                break;
+                case 'rolld20':
+                    bot.sendMessage({
+                        to: channelID,
+                        "embed": {
+                            "image": {
+                            "url": 'https://media1.tenor.com/images/2cf373aef8fedfa21cc1f5587a6f9e2b/tenor.gif?itemid=8620719'
+                            }
+                        }
+                    });
+                break;
+                case 'nani':
+                    bot.sendMessage({
+                            to: channelID,
+                            message: '何'
+                    });
+                break;
+            }
+        }
      }
 });
