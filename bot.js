@@ -20,7 +20,7 @@ const getAllDirFiles = function(dirPath, arrayOfFiles) {
   return arrayOfFiles
 }
 
-const sendAnime = function (num, fileName, channelID, message, bot) {
+const sendImage = function (num, fileName, channelID, message, bot) {
   if (num <= 9) {
     fileName = fileName + "0" + num;
   } else {
@@ -32,33 +32,36 @@ const sendAnime = function (num, fileName, channelID, message, bot) {
     bot.uploadFile({
       to: channelID,
       file: fileName
-    });
-  } else {
-    if (fs.existsSync(fileName + ".png")) {
-      fileName = fileName + ".png"
+  });
+  } else if (fs.existsSync(fileName + ".png")) {
+    fileName = fileName + ".png"
+    console.log(fileName)
+    bot.uploadFile({
+      to: channelID,
+      file: fileName
+  });
+  } else if (fs.existsSync(fileName + ".jpg")) {
+      fileName = fileName + ".jpg"
       console.log(fileName)
       bot.uploadFile({
         to: channelID,
         file: fileName
-      });
-    } else {
-      if (fs.existsSync(fileName + ".jpg")) {
-        fileName = fileName + ".jpg"
-        console.log(fileName)
-        bot.uploadFile({
-          to: channelID,
-          file: fileName
-        });
-    } else {
-      console.log("Error " + fileName + " not found...")
-      bot.sendMessage({
+  });
+  } else if (fs.existsSync(fileName + ".mp4")) {
+      fileName = fileName + ".mp4"
+      console.log(fileName)
+      bot.uploadFile({
         to: channelID,
-        message: "This ain't it chief. I couldn't find the gif."
-    });
-    }
+        file: fileName
+  });
+  } else {
+    console.log("Error " + fileName + " not found...")
+    bot.sendMessage({
+      to: channelID,
+      message: "This ain't it chief. I couldn't find the gif."
+  });
   }
-  }
-}
+};
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -93,7 +96,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               console.log("Trying to find anime_" + parseInt(message.substring(6)))
               var num = parseInt(message.substring(6))
               var fileName = "./images/anime/anime_"
-              sendAnime(num, fileName, channelID, message, bot)
+              sendImage(num, fileName, channelID, message, bot)
           } else {
             var num = Math.floor(Math.random() * getAllDirFiles("./images/anime").length)
             console.log(getAllDirFiles("./images/anime").length)
@@ -102,7 +105,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               console.log("Rerolling...")
               num = Math.floor(Math.random() * getAllDirFiles("./images/anime").length)
             }
-            sendAnime(num, fileName, channelID, message, bot)
+            sendImage(num, fileName, channelID, message, bot)
           }
       }
           
@@ -114,6 +117,38 @@ bot.on('message', function (user, userID, channelID, message, evt) {
           to: channelID,
           file: './images/owo.png'
         });
+    }
+
+    if (message.toLowerCase().includes("is it possible to learn this power".toLowerCase()) == true) {
+      console.log("Is it possible to learn this power?")
+        bot.uploadFile({
+          to: channelID,
+          file: './video/Palpatine_00.mp4'
+        });
+    }
+
+    if (message.toLowerCase().includes("hot".toLowerCase()) == true) {
+      console.log("HOT")
+        bot.uploadFile({
+          to: channelID,
+          file: './video/Hot.mp4'
+        });
+    }
+
+    if (message.toLowerCase().includes("the sun is a deadly lazer".toLowerCase()) == true || message.toLowerCase().includes("the sun is a deadly laser".toLowerCase()) == true) {
+      console.log("The sun is a deadly lazer!")
+        bot.uploadFile({
+          to: channelID,
+          file: './video/Blanket.mp4'
+        });
+    }
+
+    if (message.toLowerCase().includes("10th time".toLowerCase()) == true) {
+      console.log("9th time")
+      bot.sendMessage({
+        to: channelID,
+        message: "9th time!"
+    });
     }
 
     if (message.toLowerCase().includes("sauce".toLowerCase()) == true && !(message.includes("Sauce: "))) {
@@ -128,17 +163,21 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     }
 
     if (message.toLowerCase().includes("heresy".toLowerCase()) == true) {
+      {
         var num = Math.floor(Math.random() * heresy.length)
         console.log("HERESY!!")
-                var data = {
-                    "to": channelID,
-                    "embed": {
-                        "image": {
-                          "url": heresy[num]
-                        }
-                      }
-                  };
-                  bot.sendMessage(data);
+        if ((message.substring(0, 7) == "heresy_".toLowerCase()) && (parseInt(message.substring(7))) != NaN) {
+            console.log("Trying to find heresy_" + parseInt(message.substring(7)))
+            var num = parseInt(message.substring(7))
+            var fileName = "./images/heresy/heresy_"
+            sendImage(num, fileName, channelID, message, bot)
+        } else {
+          var num = Math.floor(Math.random() * getAllDirFiles("./images/heresy").length)
+          console.log(getAllDirFiles("./images/heresy").length)
+          var fileName = "./images/heresy/heresy_"
+          sendImage(num, fileName, channelID, message, bot)
+        }
+    }
     }
 
     if (message.toLowerCase().includes("ravioli ravioli".toLowerCase()) == true) {
