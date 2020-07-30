@@ -114,7 +114,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
           
     }
 
-    if (message.toLowerCase().includes("happy birth".toLowerCase()) == true) {
+    if ((message.toLowerCase().includes("happy".toLowerCase()) == true) && (message.toLowerCase().includes("birth".toLowerCase()) == true)) {
       var date = new Date()
       if ((date.setHours(0,0,0,0) - birthdayLastDate.setHours(0,0,0,0)) > 0) {
         birthdayLastDate = date
@@ -293,16 +293,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     bot.sendMessage({
                         to: channelID,
                         message: 'Rude!'
-                    });
-                break;
-                case 'rolld20':
-                    bot.sendMessage({
-                        to: channelID,
-                        "embed": {
-                            "image": {
-                            "url": 'https://media1.tenor.com/images/2cf373aef8fedfa21cc1f5587a6f9e2b/tenor.gif?itemid=8620719'
-                            }
-                        }
                     });
                 break;
                 case 'nani':
