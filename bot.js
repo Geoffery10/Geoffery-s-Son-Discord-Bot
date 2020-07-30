@@ -2,6 +2,8 @@ var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
 const fs = require('fs')
+var lastNum = -1;
+var birthdayLastDate = new Date(2019,3,31) 
 // Require the module in your project
  
 const getAllDirFiles = function(dirPath, arrayOfFiles) {
@@ -21,6 +23,7 @@ const getAllDirFiles = function(dirPath, arrayOfFiles) {
 }
 
 const sendImage = function (num, fileName, channelID, message, bot) {
+  lastNum = num;
   if (num <= 9) {
     fileName = fileName + "0" + num;
   } else {
@@ -109,6 +112,18 @@ bot.on('message', function (user, userID, channelID, message, evt) {
           }
       }
           
+    }
+
+    if (message.toLowerCase().includes("happy birth".toLowerCase()) == true) {
+      var date = new Date()
+      if ((date.setHours(0,0,0,0) - birthdayLastDate.setHours(0,0,0,0)) > 0) {
+        birthdayLastDate = date
+        console.log("Happy birthday!")
+        bot.uploadFile({
+          to: channelID,
+          file: './images/happybirthday.gif'
+        });
+      }
     }
 
     if (message.toLowerCase().includes("OwO".toLowerCase()) == true || message.toLowerCase().includes("Uwu".toLowerCase()) == true) {
@@ -296,6 +311,19 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                             message: '何'
                     });
                 break;
+                case 'lastNum':
+                    bot.sendMessage({
+                            to: channelID,
+                            message: ("The last gif number was: " + lastNum)
+                    });
+                break;
+                case 'birthdayReset':
+                    birthdayLastDate = new Date(2019,3,31)
+                    bot.sendMessage({
+                      to: channelID,
+                      message: ("Cooldown reset")
+                    });
+                break;
                 case 'help':
                   console.log("Sending help!")
                     bot.sendMessage({
@@ -352,7 +380,15 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                   "name": "!nani",
                                   "value": "What?"
                                 },
-                                      {
+                                {
+                                  "name": "!lastNum",
+                                  "value": "I'll tell you the number of the last gif I sent. (Number 94 of an anime gif would equal anime_94)"
+                                },
+                                {
+                                  "name": "!birthdayReset",
+                                  "value": "Reset the cooldown on birthday messages."
+                                },
+                                {
                                   "name": "!who is my \"Family Member Here\"",
                                   "value": "I will reveal some of my relations..."
                                 },
