@@ -280,6 +280,14 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     message: 'Who?'
                 });
             }
+        } else if (message.toLowerCase().includes('roll_d'.toLowerCase()) == true) { 
+          var dice = 1
+          dice = parseInt(cmd.substring(6))
+          var num = Math.floor(Math.random() * dice) + 1;
+          bot.sendMessage({
+            to: channelID,
+            message: ("You rolled " + num)
+        });
         } else {
             switch(cmd) {
                 // !ping
@@ -363,8 +371,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                   "value": "That's mean!"
                                 },
                                 {
-                                  "name": "!rolld20",
-                                  "value": "What do you expect"
+                                  "name": "!rolld<Your Number Here>",
+                                  "value": "Roll any dice. Example: !rolld20"
                                 },
                                 {
                                   "name": "!nani",
