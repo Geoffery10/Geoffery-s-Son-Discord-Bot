@@ -74,6 +74,9 @@ const sinList = function (message) {
   if (message.toLowerCase().includes("Geoffery".toLowerCase()) == true) {
     list = "Geoffery\nBusy, weeb, Birthplace of Sin, Faithless, Hostess of Servers\n"
   } 
+  if (message.toLowerCase().includes("Seth".toLowerCase()) == true) {
+    list = "Seth\nGay, weeb, Garden of Sin, Rage Baby\n"
+  } 
   if (message.toLowerCase().includes("Riley".toLowerCase()) == true) {
     list = "Riley\nHentai, Knower of truths, Weeb, Meem lord, Denial of wrongdoing, priest of garbobo, BAbaBa\n"
   } 
