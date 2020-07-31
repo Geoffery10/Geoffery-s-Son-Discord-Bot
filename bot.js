@@ -319,11 +319,49 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             message: ("You rolled " + num)
         });
         } else if (message.toLowerCase().includes('sins'.toLowerCase()) == true) { 
-          var list = sinList(message)
+          var name = ""
+          var info = ""
+          if (message.toLowerCase().includes("Connor".toLowerCase()) == true) {
+            name = "Connor"
+            info = "weeb, Furry, Bird, Faithful to Garbobo, Creator of All"
+          } else if (message.toLowerCase().includes("Geoffery".toLowerCase()) == true) {
+            name = "Geoffery"
+            info = "Busy, weeb, Birthplace of Sin, Faithless, Hostess of Servers"
+          } else if (message.toLowerCase().includes("Seth".toLowerCase()) == true) {
+            name = "Seth"
+            info = "Gay, weeb, Garden of Sin, Rage Baby"
+          } else if (message.toLowerCase().includes("Riley".toLowerCase()) == true) {
+            name = "Riley"
+            info = "Hentai, Knower of truths, Weeb, Meem lord, Denial of wrongdoing, priest of garbobo, BAbaBa"
+          } else if (message.toLowerCase().includes("Randy".toLowerCase()) == true) {
+            name = "Randy"
+            info = "Alcoholic, Rage Baby, Owner of The Broken Sleep, Inquisitor"
+          } else if (message.toLowerCase().includes("Isaac".toLowerCase()) == true) {
+            name = "Isaac"
+            info = "weeb, Scalie, Hentai,  Murderer, Faithless, Cataloger of Crimes"
+          } else if (message.toLowerCase().includes("Pete".toLowerCase()) == true) {
+            name = "Pete"
+            info = "Generic heresy"
+          } else if (message.toLowerCase().includes("Andy".toLowerCase()) == true) {
+            name = "Andy"
+            info = "Heretic Detector"
+          } else if ((message.toLowerCase().includes("Nathanial".toLowerCase()) == true) || (message.toLowerCase().includes("DonutMc_Pastery".toLowerCase()) == true)) {
+            name = "Nathanial"
+            info = "weeb, Denier of Meta, Owner of The Broken Sleep"
+          } else if (message.toLowerCase().includes("Katherine".toLowerCase()) == true) {
+            name = "Katherine"
+            info = "Furry, Sickly, Betrothed to the Evil Dragon God, Baker of Cookies"
+          } else {
+            name = message.substring(5)
+            info = "Sinless... for now..."
+          }
           
           bot.sendMessage({
             to: channelID,
-            message: list
+            "embed": {
+              "title": name,
+              "description": info
+            }
         });
         } else {
             switch(cmd) {
