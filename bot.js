@@ -371,8 +371,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                   "value": "That's mean!"
                                 },
                                 {
-                                  "name": "!rolld<Your Number Here>",
-                                  "value": "Roll any dice. Example: !rolld20"
+                                  "name": "!roll_d<Your Number Here>",
+                                  "value": "Roll any dice. Example: !roll_d20"
                                 },
                                 {
                                   "name": "!nani",
