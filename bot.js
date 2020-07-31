@@ -323,7 +323,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
           var info = ""
           if (message.toLowerCase().includes("Connor".toLowerCase()) == true) {
             name = "Connor"
-            info = "weeb, Furry, Bird, Faithful to Garbobo, Creator of All"
+            info = "weeb, Furry, Bird, Faithful to garbobo, Creator of All"
           } else if (message.toLowerCase().includes("Geoffery".toLowerCase()) == true) {
             name = "Geoffery"
             info = "Busy, weeb, Birthplace of Sin, Faithless, Hostess of Servers"
@@ -332,7 +332,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             info = "Gay, weeb, Garden of Sin, Rage Baby"
           } else if (message.toLowerCase().includes("Riley".toLowerCase()) == true) {
             name = "Riley"
-            info = "Hentai, Knower of truths, Weeb, Meem lord, Denial of wrongdoing, priest of garbobo, BAbaBa"
+            info = "Hentai, Knower of truths, Weeb, Meem lord, Denial of Wrongdoing, Priest of Garbobo, BAbaBa"
           } else if (message.toLowerCase().includes("Randy".toLowerCase()) == true) {
             name = "Randy"
             info = "Alcoholic, Rage Baby, Owner of The Broken Sleep, Inquisitor"
