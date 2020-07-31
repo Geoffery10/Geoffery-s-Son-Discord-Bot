@@ -68,8 +68,8 @@ const sendImage = function (num, fileName, channelID, message, bot) {
 
 const sinList = function (message) {
   var list = "";  
-  if (message.toLowerCase().includes("connor".toLowerCase()) == true) {
-    list = "Connor\nweeb, Furry, Bird, Faithful to Garbobo\n"
+  if (message.toLowerCase().includes("Connor".toLowerCase()) == true) {
+    list = "Connor\nweeb, Furry, Bird, Faithful to Garbobo, Creator of All\n"
   } 
   if (message.toLowerCase().includes("Geoffery".toLowerCase()) == true) {
     list = "Geoffery\nBusy, weeb, Birthplace of Sin, Faithless, Hostess of Servers\n"
@@ -91,6 +91,9 @@ const sinList = function (message) {
   }
   if ((message.toLowerCase().includes("Nathanial".toLowerCase()) == true) || (message.toLowerCase().includes("DonutMc_Pastery".toLowerCase()) == true)) {
     list = "Nathanial\nweeb, Denier of Meta, Owner of The Broken Sleep\n"
+  }
+  if (message.toLowerCase().includes("Katherine".toLowerCase()) == true) {
+    list = "Katherine\nFurry, Sickly, Betrothed to the Evil Dragon God, Baker of Cookies\n"
   }
 
   return list
