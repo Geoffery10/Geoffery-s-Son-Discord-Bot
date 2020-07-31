@@ -66,6 +66,36 @@ const sendImage = function (num, fileName, channelID, message, bot) {
   }
 };
 
+const sinList = function (message) {
+  var list = "";  
+  if (message.toLowerCase().includes("connor".toLowerCase()) == true) {
+    list = "Connor\nweeb, Furry, Bird, Faithful to Garbobo\n"
+  } 
+  if (message.toLowerCase().includes("Geoffery".toLowerCase()) == true) {
+    list = "Geoffery\nBusy, weeb, Birthplace of Sin, Faithless, Hostess of Servers\n"
+  } 
+  if (message.toLowerCase().includes("Riley".toLowerCase()) == true) {
+    list = "Riley\nHentai, Knower of truths, Weeb, Meem lord, Denial of wrongdoing, priest of garbobo, BAbaBa\n"
+  } 
+  if (message.toLowerCase().includes("Randy".toLowerCase()) == true) {
+    list = "Randy\nAlcoholic, Rage Baby, Owner of The Broken Sleep, Inquisitor\n"
+  } 
+  if (message.toLowerCase().includes("Isaac".toLowerCase()) == true) {
+    list = "Isaac\nweeb, Scalie, Hentai,  Murderer, Faithless, Cataloger of Crimes\n"
+  } 
+  if (message.toLowerCase().includes("Pete".toLowerCase()) == true) {
+    list = "Pete\nGeneric heresy\n"
+  } 
+  if (message.toLowerCase().includes("Andy".toLowerCase()) == true) {
+    list = "Andy\nHeretic Detector\n"
+  }
+  if ((message.toLowerCase().includes("Nathanial".toLowerCase()) == true) || (message.toLowerCase().includes("DonutMc_Pastery".toLowerCase()) == true)) {
+    list = "Nathanial\nweeb, Denier of Meta, Owner of The Broken Sleep\n"
+  }
+
+  return list
+}
+
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -82,14 +112,8 @@ bot.on('ready', function (evt) {
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
-bot.on('message', function (user, userID, channelID, message, evt) {
 
-    let heresy = ['https://cdn.discordapp.com/attachments/254779349352448001/735584631860232232/reee.gif', 'https://pbs.twimg.com/media/DSTz1dsVwAAQElr.jpg' ,
-'https://cdn.discordapp.com/attachments/254779349352448001/735584844922486804/15_-_AncI19F.jpg', 'https://cdn.discordapp.com/attachments/254779349352448001/735585058072559626/heresy_detected.jpg',
-'https://cdn.discordapp.com/attachments/254779349352448001/735585071678881924/140_-_SFf3Thm.gif', 'https://cdn.discordapp.com/attachments/254779349352448001/735585103392276550/intervention.jpg',
-'https://cdn.discordapp.com/attachments/254779349352448001/735585142650830851/139_-_DJp3O3C.jpg', 'https://cdn.discordapp.com/attachments/254779349352448001/735585202671452340/134_-_pgkZxPT.gif',
-'https://cdn.discordapp.com/attachments/254779349352448001/735585237425324083/tumblr_ouhspkqdzq1s83dh2o3_400.gif', 'https://cdn.discordapp.com/attachments/254779349352448001/735585310800347166/STOP.png', 
-'https://cdn.discordapp.com/attachments/254779349352448001/735585433467093112/du_eet.jpg']
+bot.on('message', function (user, userID, channelID, message, evt) {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
 
@@ -287,6 +311,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
           bot.sendMessage({
             to: channelID,
             message: ("You rolled " + num)
+        });
+        } else if (message.toLowerCase().includes('sins'.toLowerCase()) == true) { 
+          var list = sinList(message)
+          
+          bot.sendMessage({
+            to: channelID,
+            message: list
         });
         } else {
             switch(cmd) {
