@@ -57,6 +57,13 @@ const sendImage = function (num, fileName, channelID, message, bot) {
         to: channelID,
         file: fileName
   });
+  } else if (fs.existsSync(fileName + ".mov")) {
+    fileName = fileName + ".mov"
+    console.log(fileName)
+    bot.uploadFile({
+      to: channelID,
+      file: fileName
+  });
   } else {
     console.log("Error " + fileName + " not found...")
     bot.sendMessage({
@@ -208,8 +215,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     }
 
     if (message.toLowerCase().includes("heresy".toLowerCase()) == true) {
-      {
-        var num = Math.floor(Math.random() * heresy.length)
+        var num = Math.floor(Math.random() * getAllDirFiles("./images/heresy").length)
         console.log("HERESY!!")
         if ((message.substring(0, 7) == "heresy_".toLowerCase()) && (parseInt(message.substring(7))) != NaN) {
             console.log("Trying to find heresy_" + parseInt(message.substring(7)))
@@ -223,17 +229,15 @@ bot.on('message', function (user, userID, channelID, message, evt) {
           sendImage(num, fileName, channelID, message, bot)
         }
     }
-    }
 
     if (message.toLowerCase().includes("ravioli ravioli".toLowerCase()) == true) {
-        var num = Math.floor(Math.random() * heresy.length)
         console.log("Don't lewd the drangon loli!")
                 var data = {
                     "to": channelID,
                     message: "don't lewd the dragon loli",
                     "embed": {
                         "image": {
-                          "url": 'https://pa1.narvii.com/6524/9faa750f3d296da6e0e19dcbc8fe1beb7d5f9760_hq.gif'
+                          "url": './images/ravioli.gif'
                         }
                       }
                   };
