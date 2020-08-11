@@ -2,7 +2,6 @@ var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
 var fileManager = require('./fileManager.js');
-var sins = require('./sins.js');
 const fs = require('fs')
 const fetch = require('node-fetch');
 const { json } = require('express');
