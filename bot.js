@@ -11,57 +11,6 @@ var birthdayLastDate = new Date(2019,3,31)
 // Require the module in your project
 
 
-const sendImage = function (num, fileName, channelID, message, bot) {
-  lastNum = num;
-  if (num <= 9) {
-    fileName = fileName + "0" + num;
-  } else {
-    fileName = fileName + num;
-  }
-  if(fs.existsSync(fileName + ".gif")){
-    fileName = fileName + ".gif"
-    console.log(fileName)
-    bot.uploadFile({
-      to: channelID,
-      file: fileName
-  });
-  } else if (fs.existsSync(fileName + ".png")) {
-    fileName = fileName + ".png"
-    console.log(fileName)
-    bot.uploadFile({
-      to: channelID,
-      file: fileName
-  });
-  } else if (fs.existsSync(fileName + ".jpg")) {
-      fileName = fileName + ".jpg"
-      console.log(fileName)
-      bot.uploadFile({
-        to: channelID,
-        file: fileName
-  });
-  } else if (fs.existsSync(fileName + ".mp4")) {
-      fileName = fileName + ".mp4"
-      console.log(fileName)
-      bot.uploadFile({
-        to: channelID,
-        file: fileName
-  });
-  } else if (fs.existsSync(fileName + ".mov")) {
-    fileName = fileName + ".mov"
-    console.log(fileName)
-    bot.uploadFile({
-      to: channelID,
-      file: fileName
-  });
-  } else {
-    console.log("Error " + fileName + " not found...")
-    bot.sendMessage({
-      to: channelID,
-      message: "This ain't it chief. I couldn't find the gif."
-  });
-  }
-};
-
 const sinList = function (message) {
   var list = "";  
   if (message.toLowerCase().includes("Connor".toLowerCase()) == true) {
@@ -125,7 +74,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               console.log("Trying to find anime_" + parseInt(message.substring(6)))
               var num = parseInt(message.substring(6))
               var fileName = "./images/anime/anime_"
-              sendImage(num, fileName, channelID, message, bot)
+              fileManager.sendImage(num, fileName, channelID, message, bot)
           } else {
             var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/anime").length)
             console.log(fileManager.getAllDirFiles("./images/anime").length)
@@ -134,7 +83,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               console.log("Rerolling...")
               num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/anime").length)
             }
-            sendImage(num, fileName, channelID, message, bot)
+            fileManager.sendImage(num, fileName, channelID, message, bot)
           }
       }
           
@@ -210,12 +159,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             console.log("Trying to find heresy_" + parseInt(message.substring(7)))
             var num = parseInt(message.substring(7))
             var fileName = "./images/heresy/heresy_"
-            sendImage(num, fileName, channelID, message, bot)
+            fileManager.sendImage(num, fileName, channelID, message, bot)
         } else {
           var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/heresy").length)
           console.log(fileManager.getAllDirFiles("./images/heresy").length)
           var fileName = "./images/heresy/heresy_"
-          sendImage(num, fileName, channelID, message, bot)
+          fileManager.sendImage(num, fileName, channelID, message, bot)
         }
     }
 
