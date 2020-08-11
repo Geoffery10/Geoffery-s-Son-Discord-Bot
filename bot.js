@@ -2,6 +2,9 @@ var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
 const fs = require('fs')
+const fetch = require('node-fetch');
+const { json } = require('express');
+var https = require('https');
 var lastNum = -1;
 var birthdayLastDate = new Date(2019,3,31) 
 // Require the module in your project
@@ -369,6 +372,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             }
         });
         } else {
+          var url = "";
             switch(cmd) {
                 // !ping
                 case 'ping':
@@ -404,7 +408,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 break;
                 case 'thispersondoesnotexist':
                   var plScraper = require('./pl-scraper')
-                  var url = "https://thispersondoesnotexist.com/";
+                  url = "https://thispersondoesnotexist.com/";
                   var filePath = "./images/thispersondoesnotexist/"
                   var name = "tpdne.jpg"
                   console.log(filePath + name)
@@ -416,7 +420,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 break;
                   case 'waifu':
                   var num = Math.floor(Math.random() * 100000)
-                  var url = "https://www.thiswaifudoesnotexist.net/example-" + num + ".jpg";
+                  url = "https://www.thiswaifudoesnotexist.net/example-" + num + ".jpg";
                   var filePath = "./images/waifu/"
                   var name = "waifu"
                   console.log(url)
@@ -429,6 +433,99 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         }
                       }
                 });
+                break;
+                case 'joke':
+                  //Info at: https://sv443.net/jokeapi/v2/
+                  url = "https://sv443.net/jokeapi/v2/joke/Any?blacklistFlags=racist&type=single";
+
+                  https.get(url, res => {
+                    res.setEncoding("utf8");
+                    let body = "";
+                    res.on("data", data => {
+                      body += data;
+                    });
+                    res.on("end", () => {
+                      body = JSON.parse(body);
+                      console.log(body);
+                      console.log(body.joke)
+                      var text = body.joke
+                      bot.sendMessage({
+                        to: channelID,
+                        message: (body.joke)
+                      });
+                    });
+                  });
+                break;
+                case 'insultme':
+                  //Info at: https://evilinsult.com/api/
+                  url = "https://evilinsult.com/generate_insult.php?lang=en&type=json";
+
+                  https.get(url, res => {
+                    res.setEncoding("utf8");
+                    let body = "";
+                    res.on("data", data => {
+                      body += data;
+                    });
+                    res.on("end", () => {
+                      body = JSON.parse(body);
+                      console.log(body);
+                      console.log(body.insult)
+                      var text = body.insult
+                      bot.sendMessage({
+                        to: channelID,
+                        message: (body.insult)
+                      });
+                    });
+                  });
+                break;
+                case 'yesorno':
+                  //Info at: https://yesno.wtf/api
+                  url = "https://yesno.wtf/api";
+
+                  https.get(url, res => {
+                    res.setEncoding("utf8");
+                    let body = "";
+                    res.on("data", data => {
+                      body += data;
+                    });
+                    res.on("end", () => {
+                      body = JSON.parse(body);
+                      console.log(body);
+                      console.log(body.answer)
+                      var text = body.answer
+                      bot.sendMessage({
+                        to: channelID,
+                        message: (body.answer)
+                      });
+                    });
+                  });
+                break;
+                case 'cat':
+                  //Info at: https://yesno.wtf/api
+                  url = "https://api.thecatapi.com/v1/images/search?api_key=b9a826e6-fac5-43e7-8af1-aa47523e1bbd";
+
+                  https.get(url, res => {
+                    res.setEncoding("utf8");
+                    let body = "";
+                    res.on("data", data => {
+                      body += data;
+                    });
+                    res.on("end", () => {
+                      body = JSON.parse(body);
+                      console.log(body);
+                      var data = body[0]
+                      console.log(data)
+                      url = data.url
+                      bot.sendMessage({
+                        to: channelID,
+                        "embed": {
+                            "image": {
+                              "url": url
+                            }
+                          }
+                      });
+                    });
+                  });
                 break;
                 case 'help':
                   console.log("Sending help!")
@@ -485,6 +582,22 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                 {
                                   "name": "!nani",
                                   "value": "What?"
+                                },
+                                {
+                                  "name": "!joke",
+                                  "value": "I'll tell you a joke."
+                                },
+                                {
+                                  "name": "!insultme",
+                                  "value": "I'll tell you a different kind of joke..."
+                                },
+                                {
+                                  "name": "!yesorno",
+                                  "value": "I'll tell you yes or no."
+                                },
+                                {
+                                  "name": "!cat",
+                                  "value": "Random cat pictures from Tumblr."
                                 },
                                 {
                                   "name": "!thispersondoesnotexist",
