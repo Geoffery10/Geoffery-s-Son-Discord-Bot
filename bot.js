@@ -500,8 +500,29 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     });
                   });
                 break;
+                case 'fact':
+                  //Info at: https://uselessfacts.jsph.pl/
+                  url = "https://uselessfacts.jsph.pl/random.json?language=en";
+
+                  https.get(url, res => {
+                    res.setEncoding("utf8");
+                    let body = "";
+                    res.on("data", data => {
+                      body += data;
+                    });
+                    res.on("end", () => {
+                      body = JSON.parse(body);
+                      console.log(body);
+                      console.log(body.text)
+                      var text = body.text
+                      bot.sendMessage({
+                        to: channelID,
+                        message: (body.text)
+                      });
+                    });
+                  });
+                break;
                 case 'cat':
-                  //Info at: https://yesno.wtf/api
                   url = "https://api.thecatapi.com/v1/images/search?api_key=b9a826e6-fac5-43e7-8af1-aa47523e1bbd";
 
                   https.get(url, res => {
@@ -582,6 +603,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                 {
                                   "name": "!nani",
                                   "value": "What?"
+                                },
+                                {
+                                  "name": "!fact",
+                                  "value": "I'll tell you a random fact."
                                 },
                                 {
                                   "name": "!joke",
