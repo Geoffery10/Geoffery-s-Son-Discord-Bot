@@ -1,6 +1,7 @@
 var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
+var fileManager = require('./fileManager.js');
 const fs = require('fs')
 const fetch = require('node-fetch');
 const { json } = require('express');
@@ -9,22 +10,6 @@ var lastNum = -1;
 var birthdayLastDate = new Date(2019,3,31) 
 // Require the module in your project
 
-
-const getAllDirFiles = function(dirPath, arrayOfFiles) {
-  files = fs.readdirSync(dirPath)
-
-  arrayOfFiles = arrayOfFiles || []
-
-  files.forEach(function(file) {
-    if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-      arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
-    } else {
-      arrayOfFiles.push(file)
-    }
-  })
-
-  return arrayOfFiles
-}
 
 const sendImage = function (num, fileName, channelID, message, bot) {
   lastNum = num;
@@ -142,12 +127,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               var fileName = "./images/anime/anime_"
               sendImage(num, fileName, channelID, message, bot)
           } else {
-            var num = Math.floor(Math.random() * getAllDirFiles("./images/anime").length)
-            console.log(getAllDirFiles("./images/anime").length)
+            var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/anime").length)
+            console.log(fileManager.getAllDirFiles("./images/anime").length)
             var fileName = "./images/anime/anime_"
             if (num == 5) {
               console.log("Rerolling...")
-              num = Math.floor(Math.random() * getAllDirFiles("./images/anime").length)
+              num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/anime").length)
             }
             sendImage(num, fileName, channelID, message, bot)
           }
@@ -219,7 +204,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     }
 
     if (message.toLowerCase().includes("heresy".toLowerCase()) == true) {
-        var num = Math.floor(Math.random() * getAllDirFiles("./images/heresy").length)
+        var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/heresy").length)
         console.log("HERESY!!")
         if ((message.substring(0, 7) == "heresy_".toLowerCase()) && (parseInt(message.substring(7))) != NaN) {
             console.log("Trying to find heresy_" + parseInt(message.substring(7)))
@@ -227,8 +212,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             var fileName = "./images/heresy/heresy_"
             sendImage(num, fileName, channelID, message, bot)
         } else {
-          var num = Math.floor(Math.random() * getAllDirFiles("./images/heresy").length)
-          console.log(getAllDirFiles("./images/heresy").length)
+          var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/heresy").length)
+          console.log(fileManager.getAllDirFiles("./images/heresy").length)
           var fileName = "./images/heresy/heresy_"
           sendImage(num, fileName, channelID, message, bot)
         }
