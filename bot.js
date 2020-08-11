@@ -2,6 +2,7 @@ var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
 var fileManager = require('./fileManager.js');
+var sins = require('./sins.js');
 const fs = require('fs')
 const fetch = require('node-fetch');
 const { json } = require('express');
@@ -9,43 +10,6 @@ var https = require('https');
 var lastNum = -1;
 var birthdayLastDate = new Date(2019,3,31) 
 // Require the module in your project
-
-
-const sinList = function (message) {
-  var list = "";  
-  if (message.toLowerCase().includes("Connor".toLowerCase()) == true) {
-    list = "Connor\nweeb, Furry, Bird, Faithful to Garbobo, Creator of All\n"
-  } 
-  if (message.toLowerCase().includes("Geoffery".toLowerCase()) == true) {
-    list = "Geoffery\nBusy, weeb, Birthplace of Sin, Faithless, Hostess of Servers\n"
-  } 
-  if (message.toLowerCase().includes("Seth".toLowerCase()) == true) {
-    list = "Seth\nGay, weeb, Garden of Sin, Rage Baby\n"
-  } 
-  if (message.toLowerCase().includes("Riley".toLowerCase()) == true) {
-    list = "Riley\nHentai, Knower of truths, Weeb, Meem lord, Denial of wrongdoing, priest of garbobo, BAbaBa\n"
-  } 
-  if (message.toLowerCase().includes("Randy".toLowerCase()) == true) {
-    list = "Randy\nAlcoholic, Rage Baby, Owner of The Broken Sleep, Inquisitor\n"
-  } 
-  if (message.toLowerCase().includes("Isaac".toLowerCase()) == true) {
-    list = "Isaac\nweeb, Scalie, Hentai,  Murderer, Faithless, Cataloger of Crimes\n"
-  } 
-  if (message.toLowerCase().includes("Pete".toLowerCase()) == true) {
-    list = "Pete\nGeneric heresy\n"
-  } 
-  if (message.toLowerCase().includes("Andy".toLowerCase()) == true) {
-    list = "Andy\nHeretic Detector\n"
-  }
-  if ((message.toLowerCase().includes("Nathanial".toLowerCase()) == true) || (message.toLowerCase().includes("DonutMc_Pastery".toLowerCase()) == true)) {
-    list = "Nathanial\nweeb, Denier of Meta, Owner of The Broken Sleep\n"
-  }
-  if (message.toLowerCase().includes("Katherine".toLowerCase()) == true) {
-    list = "Katherine\nFurry, Sickly, Betrothed to the Evil Dragon God, Baker of Cookies\n"
-  }
-
-  return list
-}
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
