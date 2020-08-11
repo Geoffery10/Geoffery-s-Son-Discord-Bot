@@ -5,7 +5,8 @@ const fs = require('fs')
 var lastNum = -1;
 var birthdayLastDate = new Date(2019,3,31) 
 // Require the module in your project
- 
+
+
 const getAllDirFiles = function(dirPath, arrayOfFiles) {
   files = fs.readdirSync(dirPath)
 
@@ -401,6 +402,34 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                       message: ("Cooldown reset")
                     });
                 break;
+                case 'thispersondoesnotexist':
+                  var plScraper = require('./pl-scraper')
+                  var url = "https://thispersondoesnotexist.com/";
+                  var filePath = "./images/thispersondoesnotexist/"
+                  var name = "tpdne.jpg"
+                  console.log(filePath + name)
+                  plScraper.makeScrape(url, filePath, name);
+                  bot.uploadFile({
+                    to: channelID,
+                    file: filePath + name
+                  });
+                break;
+                  case 'waifu':
+                  var num = Math.floor(Math.random() * 100000)
+                  var url = "https://www.thiswaifudoesnotexist.net/example-" + num + ".jpg";
+                  var filePath = "./images/waifu/"
+                  var name = "waifu"
+                  console.log(url)
+
+                  bot.sendMessage({
+                    to: channelID,
+                    "embed": {
+                        "image": {
+                          "url": url
+                        }
+                      }
+                });
+                break;
                 case 'help':
                   console.log("Sending help!")
                     bot.sendMessage({
@@ -456,6 +485,14 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                 {
                                   "name": "!nani",
                                   "value": "What?"
+                                },
+                                {
+                                  "name": "!thispersondoesnotexist",
+                                  "value": "Generates a person that does not exist."
+                                },
+                                {
+                                  "name": "!waifu",
+                                  "value": "Generates a waifu for you to love. <3"
                                 },
                                 {
                                   "name": "!lastNum",
