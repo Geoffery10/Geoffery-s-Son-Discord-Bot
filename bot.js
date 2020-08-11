@@ -17,6 +17,7 @@ logger.add(new logger.transports.Console, {
 });
 logger.level = 'debug';
 // Initialize Discord Bot
+
 var bot = new Discord.Client({
    token: auth.token,
    autorun: true
@@ -28,11 +29,9 @@ bot.on('ready', function (evt) {
 });
 
 bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
+
 
     if (message.toLowerCase().includes("anime".toLowerCase()) == true) {
-      {
           if ((message.substring(0, 6) == "anime_".toLowerCase()) && (parseInt(message.substring(6))) != NaN) {
               console.log("Trying to find anime_" + parseInt(message.substring(6)))
               var num = parseInt(message.substring(6))
@@ -48,7 +47,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             }
             fileManager.sendImage(num, fileName, channelID, message, bot)
           }
-      }
           
     }
 
@@ -373,7 +371,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                       });
                     });
                   });
-                break;
                 case 'yesorno':
                   //Info at: https://yesno.wtf/api
                   url = "https://yesno.wtf/api";
