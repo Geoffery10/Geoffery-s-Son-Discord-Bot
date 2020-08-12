@@ -46,8 +46,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/anime").length)
             }
             fileManager.sendImage(num, fileName, channelID, message, bot)
-          }
-          
+          }  
     }
 
     if ((message.toLowerCase().includes("happy".toLowerCase()) == true) && (message.toLowerCase().includes("birth".toLowerCase()) == true)) {
@@ -371,6 +370,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                       });
                     });
                   });
+                  break;
                 case 'yesorno':
                   //Info at: https://yesno.wtf/api
                   url = "https://yesno.wtf/api";
