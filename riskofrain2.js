@@ -6,6 +6,7 @@ const fs = require('fs')
 const fetch = require('node-fetch');
 var lastNum = -1;
 
+//Options to choose from
 const survivors = ['https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/8/8e/Acrid.png?version=a770995303bb4b03d7df6f923ef1fff9', 
     'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/thumb/9/98/Artificer.png/128px-Artificer.png?version=26b17dea06edace28354784b56353135',
     'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/a/a9/Captain.png?version=57daf1c125136f82afdfeed472aa760a',
@@ -75,6 +76,7 @@ const randomLoadout = async function (bot, user, userID, channelID, message, evt
     var lunarEquipment = lunarEquipments[num]
     console.log(lunarEquipment)
 
+    //Send images in order
     let result = await survivorStart(bot, channelID)
     result = await uploadItem(bot, channelID, (folder+"white"), white)
     result = await uploadItem(bot, channelID, (folder+"green"), green)
