@@ -34,16 +34,9 @@ const lunars = ['Beads_of_Fealty', 'Brittle_Crown', 'Corpsebloom', 'Defiant_Goug
 'Shaped_Glass', 'Strides_of_Heresy', 'Transcendence', 'Visions_of_Heresy']
 const lunarEquipments = ['Effigy_of_Grief', 'Glowing_Meteorite', 'Eccentric_Vase', 'Helfire_Tincture', 'Spinel_Tonic']
 
-const randomLoadout = async function (tag) {
+const randomLoadout = function (tag) {
     var num = 0
-    /*var survivor = riskofrain2.randomLoadout('survivor')
-    var white = riskofrain2.randomLoadout('white')
-    var green = riskofrain2.randomLoadout('green')
-    var red = riskofrain2.randomLoadout('red')
-    var equipment = riskofrain2.randomLoadout('equipment')
-    var yellow = riskofrain2.randomLoadout('yellow')
-    var lunar = riskofrain2.randomLoadout('lunar')
-    var lunarEquipment = riskofrain2.randomLoadout('lunarEquipment')*/
+    var value = ''
     switch (tag){
         case 'survivor':
             num = Math.floor(Math.random() * survivors.length)
@@ -51,37 +44,39 @@ const randomLoadout = async function (tag) {
                 num = Math.floor(Math.random() * survivors.length)
             }
             lastNum = num
-            return survivors[num]
+            value = survivors[num]
             break;
         case 'white':
             num = Math.floor(Math.random() * whites.length)
-            return whites[num]
+            value = whites[num]
             break;
         case 'green':
             num = Math.floor(Math.random() * greens.length)
-            return greens[num]
+            value = greens[num]
             break;
         case 'red':
             num = Math.floor(Math.random() * reds.length)
-            return reds[num]
+            value = reds[num]
             break;
         case 'equipment':
             num = Math.floor(Math.random() * equipments.length)
-            return equipments[num]
+            value = equipments[num]
             break;
         case 'yellow':
             num = Math.floor(Math.random() * yellows.length)
-            return yellows[num]
+            value = yellows[num]
             break;
         case 'lunar':
             num = Math.floor(Math.random() * lunars.length)
-            return lunars[num]
+            value = lunars[num]
             break;
         case 'lunarEquipment':
             num = Math.floor(Math.random() * lunarEquipments.length)
-            return lunarEquipments[num]
+            value = lunarEquipments[num]
             break;
     }
+    console.log(value)
+    return value
     /*
     //Pick items
     //White 

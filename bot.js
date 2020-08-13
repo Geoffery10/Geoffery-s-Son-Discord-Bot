@@ -29,7 +29,7 @@ bot.on('ready', function (evt) {
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
 
-bot.on('message', async function (user, userID, channelID, message, evt) {
+bot.on('message', function (user, userID, channelID, message, evt) {
 
 
     if (message.toLowerCase().includes("anime".toLowerCase()) == true) {
@@ -452,6 +452,7 @@ bot.on('message', async function (user, userID, channelID, message, evt) {
                   var yellow = riskofrain2.randomLoadout('yellow')
                   var lunar = riskofrain2.randomLoadout('lunar')
                   var lunarEquipment = riskofrain2.randomLoadout('lunarEquipment')
+                  console.log("Loadout Data: %s - %s - %s - %s - %s - %s - %s - %s", survivor, white, green, red, equipment, yellow, lunar, lunarEquipment)
                   bot.sendMessage({
                     to: channelID,
                     "content": "Good luck survivor...",
@@ -494,11 +495,6 @@ bot.on('message', async function (user, userID, channelID, message, evt) {
                       ]
                     }
                   });
-                  let result = await riskofrain2.randomLoadout(bot, user, userID, channelID, message, evt)
-                  bot.sendMessage({
-                    to: channelID,
-                    message: 'Upload complete!'
-                });
                 break;
                 case 'help':
                   console.log("Sending help!")
