@@ -2,6 +2,7 @@ var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
 var fileManager = require('./fileManager.js');
+var riskofrain2 = require('./riskofrain2.js');
 const fs = require('fs')
 const fetch = require('node-fetch');
 const { json } = require('express');
@@ -28,7 +29,7 @@ bot.on('ready', function (evt) {
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
 
-bot.on('message', function (user, userID, channelID, message, evt) {
+bot.on('message', async function (user, userID, channelID, message, evt) {
 
 
     if (message.toLowerCase().includes("anime".toLowerCase()) == true) {
@@ -440,6 +441,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                       });
                     });
                   });
+                break;
+                case 'r2loadout':
+                  await riskofrain2.randomLoadout(bot, user, userID, channelID, message, evt)
                 break;
                 case 'help':
                   console.log("Sending help!")

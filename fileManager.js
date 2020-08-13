@@ -67,5 +67,24 @@ const sendImage = function (num, fileName, channelID, message, bot) {
     }
   };
 
+const getItem = function(folder) {
+  console.log("Checking " + folder + " for items...")
+  var num = Math.floor(Math.random() * getAllDirFiles(folder).length)
+  var counter = 0
+  var item
+  fs.readdirSync(folder).forEach(file => {
+    //console.log(file)
+    //console.log("Counter (" + num + "): " + counter)
+    if (counter == num) {
+      item = file
+      //console.log(item + " has been saved...")
+    }
+    counter++
+    console.log("Item to return: " + item)
+    return item;
+  });
+}
+
 module.exports.getAllDirFiles = getAllDirFiles;  
 module.exports.sendImage = sendImage;
+module.exports.getItem = getItem;
