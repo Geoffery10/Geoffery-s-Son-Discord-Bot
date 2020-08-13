@@ -34,7 +34,55 @@ const lunars = ['Beads_of_Fealty', 'Brittle_Crown', 'Corpsebloom', 'Defiant_Goug
 'Shaped_Glass', 'Strides_of_Heresy', 'Transcendence', 'Visions_of_Heresy']
 const lunarEquipments = ['Effigy_of_Grief', 'Glowing_Meteorite', 'Eccentric_Vase', 'Helfire_Tincture', 'Spinel_Tonic']
 
-const randomLoadout = async function (bot, user, userID, channelID, message, evt) {
+const randomLoadout = async function (tag) {
+    var num = 0
+    /*var survivor = riskofrain2.randomLoadout('survivor')
+    var white = riskofrain2.randomLoadout('white')
+    var green = riskofrain2.randomLoadout('green')
+    var red = riskofrain2.randomLoadout('red')
+    var equipment = riskofrain2.randomLoadout('equipment')
+    var yellow = riskofrain2.randomLoadout('yellow')
+    var lunar = riskofrain2.randomLoadout('lunar')
+    var lunarEquipment = riskofrain2.randomLoadout('lunarEquipment')*/
+    switch (tag){
+        case 'survivor':
+            num = Math.floor(Math.random() * survivors.length)
+            if (num == lastNum) {
+                num = Math.floor(Math.random() * survivors.length)
+            }
+            lastNum = num
+            return survivors[num]
+            break;
+        case 'white':
+            num = Math.floor(Math.random() * whites.length)
+            return whites[num]
+            break;
+        case 'green':
+            num = Math.floor(Math.random() * greens.length)
+            return greens[num]
+            break;
+        case 'red':
+            num = Math.floor(Math.random() * reds.length)
+            return reds[num]
+            break;
+        case 'equipment':
+            num = Math.floor(Math.random() * equipments.length)
+            return equipments[num]
+            break;
+        case 'yellow':
+            num = Math.floor(Math.random() * yellows.length)
+            return yellows[num]
+            break;
+        case 'lunar':
+            num = Math.floor(Math.random() * lunars.length)
+            return lunars[num]
+            break;
+        case 'lunarEquipment':
+            num = Math.floor(Math.random() * lunarEquipments.length)
+            return lunarEquipments[num]
+            break;
+    }
+    /*
     //Pick items
     //White 
     var folder = "./images/riskofrain2/"
@@ -86,6 +134,7 @@ const randomLoadout = async function (bot, user, userID, channelID, message, evt
     result = await uploadItem(bot, channelID, (folder+"lunar"), lunar)
     result = await uploadItem(bot, channelID, (folder+"lunar_equipment"), lunarEquipment)
     return result
+    */
 }
 
 const survivorStart = async function(bot, channelID) {

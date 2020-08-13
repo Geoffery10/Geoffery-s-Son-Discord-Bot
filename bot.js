@@ -443,6 +443,57 @@ bot.on('message', async function (user, userID, channelID, message, evt) {
                   });
                 break;
                 case 'r2loadout':
+                  // Start selection... Picking survivor
+                  var survivor = riskofrain2.randomLoadout('survivor')
+                  var white = riskofrain2.randomLoadout('white')
+                  var green = riskofrain2.randomLoadout('green')
+                  var red = riskofrain2.randomLoadout('red')
+                  var equipment = riskofrain2.randomLoadout('equipment')
+                  var yellow = riskofrain2.randomLoadout('yellow')
+                  var lunar = riskofrain2.randomLoadout('lunar')
+                  var lunarEquipment = riskofrain2.randomLoadout('lunarEquipment')
+                  bot.sendMessage({
+                    to: channelID,
+                    "content": "Good luck survivor...",
+                    "embed": {
+                      "title": "Risk of Rain 2 - Random Loadout",
+                      "description": "Item info can be found at the [Risk of Rain 2 Wiki](https://riskofrain2.gamepedia.com/Items).",
+                      "color": 4726857,
+                      "thumbnail": {
+                        "url": survivor
+                      },
+                      "fields": [
+                        {
+                          "name": "White",
+                          "value": white
+                        },
+                        {
+                          "name": "Green",
+                          "value": green
+                        },
+                        {
+                          "name": "Red",
+                          "value": red
+                        },
+                        {
+                          "name": "Equipment",
+                          "value": equipment
+                        },
+                        {
+                          "name": "Yellow",
+                          "value": yellow
+                        },
+                        {
+                          "name": "Lunar",
+                          "value": lunar
+                        },
+                        {
+                          "name": "Lunar Equipment",
+                          "value": lunarEquipment
+                        }
+                      ]
+                    }
+                  });
                   let result = await riskofrain2.randomLoadout(bot, user, userID, channelID, message, evt)
                   bot.sendMessage({
                     to: channelID,
