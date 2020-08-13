@@ -34,64 +34,56 @@ const lunars = ['Beads_of_Fealty', 'Brittle_Crown', 'Corpsebloom', 'Defiant_Goug
 const lunarEquipments = ['Effigy_of_Grief', 'Glowing_Meteorite', 'Eccentric_Vase', 'Helfire_Tincture', 'Spinel_Tonic']
 
 const randomLoadout = async function (bot, user, userID, channelID, message, evt) {
-    await survivorStart(bot, channelID)
-
     //Pick items
     //White 
-    var folder = "./images/riskofrain2/white"
+    var folder = "./images/riskofrain2/"
     num = Math.floor(Math.random() * whites.length)
     var white = whites[num]
     console.log(white)
-    await uploadItem(bot, channelID, folder, white)
-    //sleep(1000);
 
     //Green
-    folder = "./images/riskofrain2/green"
     num = Math.floor(Math.random() * greens.length)
     var green = greens[num]
     console.log(green)
-    await uploadItem(bot, channelID, folder, green)
-    //sleep(2000);
 
     //Red
-    folder = "./images/riskofrain2/red"
     num = Math.floor(Math.random() * reds.length)
     var red = reds[num]
     console.log(red)
-    await uploadItem(bot, channelID, folder, red)
-    //sleep(2000);
 
-    /* //Yellow
-    folder = "./images/riskofrain2/yellow"
+    //Yellow
+    folder = "./images/riskofrain2/"
     num = Math.floor(Math.random() * yellows.length)
     var yellow = yellows[num]
     console.log(yellow)
-    await uploadItem(bot, channelID, folder, yellow)
-    //sleep(2000); */
-
-    /* //Equipment
+    
+    //Equipment
     folder = "./images/riskofrain2/equipment"
     num = Math.floor(Math.random() * equipments.length)
     var equiment = equipments[num]
     console.log(equiment)
-    await uploadItem(bot, channelID, folder, equiment)
-    //sleep(2000); */
 
-    /* //Lunar
-    folder = "./images/riskofrain2/lunar"
+    ///Lunar
+    folder = "./images/riskofrain2/"
     num = Math.floor(Math.random() * lunars.length)
     var lunar = lunars[num]
     console.log(lunar)
-    await uploadItem(bot, channelID, folder, lunar)
-    //sleep(2000);
 
     //Lunar Equipment
-    folder = "./images/riskofrain2/lunar_equipment"
+    folder = "./images/riskofrain2/"
     num = Math.floor(Math.random() * lunarEquipments.length)
     var lunarEquipment = lunarEquipments[num]
     console.log(lunarEquipment)
-    await uploadItem(bot, channelID, folder, lunarEquipment)
-    //sleep(2000); */
+
+    let result = await survivorStart(bot, channelID)
+    result = await uploadItem(bot, channelID, (folder+"white"), white)
+    result = await uploadItem(bot, channelID, (folder+"green"), green)
+    result = await uploadItem(bot, channelID, (folder+"red"), red)
+    result = await uploadItem(bot, channelID, (folder+"yellow"), yellow)
+    result = await uploadItem(bot, channelID, (folder+"equipment"), equiment)
+    result = await uploadItem(bot, channelID, (folder+"lunar"), lunar)
+    result = await uploadItem(bot, channelID, (folder+"lunar_equipment"), lunarEquipment)
+    return result
 }
 
 const survivorStart = async function(bot, channelID) {

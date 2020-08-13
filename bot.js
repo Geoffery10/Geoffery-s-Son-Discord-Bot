@@ -443,7 +443,11 @@ bot.on('message', async function (user, userID, channelID, message, evt) {
                   });
                 break;
                 case 'r2loadout':
-                  await riskofrain2.randomLoadout(bot, user, userID, channelID, message, evt)
+                  let result = await riskofrain2.randomLoadout(bot, user, userID, channelID, message, evt)
+                  bot.sendMessage({
+                    to: channelID,
+                    message: 'Upload complete!'
+                });
                 break;
                 case 'help':
                   console.log("Sending help!")
