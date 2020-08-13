@@ -17,22 +17,22 @@ const survivors = ['https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/8/8e
     'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/thumb/0/00/Mercenary.png/128px-Mercenary.png?version=049e8137daf69cb645908ac7affeace5', 
     'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/thumb/6/6f/MUL-T.png/128px-MUL-T.png?version=3d4235ee57a9b7145d79e9d342eb3e03', 
     'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/7/74/REX.png?version=ddc456b15c26f92e4fc52fcd911c081b']
-const whites = ['Armor-Piercing_Rounds', 'Backup_Magazine', 'Bundle_of_Fireworks', 'Bustling_Fungus', 'Crowbar', 'Energy_Drink', 'Focus_Crystal', 'Fresh_Meat', 
-      'Gasoline', 'Lens-Makers_Glasses', 'Medkit', 'Monster_Tooth', 'Pauls_Goat_Hoof', 'Personal_Shield_Generator', 'Repulsion_Armor_Plate', 'Rusted_Key', 
-      'Soldiers_Syringe', 'Sticky_Bomb', 'Stun_Grenade', 'Topaz_Brooch', 'Tougher_Times', 'Tri-Tip_Dagger', 'Warbanner']
-const greens = ['AtG_Missile_Mk._1', 'Bandolier', 'Berzerkers_Pauldron', 'Chronobauble', 'Death_Mark', 'Fuel_Cell', 'Ghors_Tome', 'Harvesters_Scythe', 
-'Hopoo_Feather', 'Infusion', 'Kjaros_Bandt', 'Leeching_Seed', 'Lepton_Daisy', 'Old_Guillotine', 'Old_War_Stealthkit', 'Predatory_Instincts', 
-'Razorwire', 'Red_Whip', 'Rose_Buckler', 'Runalds_Band', 'Squid_Polyp', 'Ukulele', 'War_Horn', 'Wax_Quail', 'Will-o-the-wisp']
-const reds = ['57_Leaf_Clover', 'Aegis', 'Alien_Head', 'Brainstalks', 'Brilliant_Behemoth', 'Ceremonial_Dagger', 'Dios_Best_Friend', 'Frost_Relic', 'H3AD-5T_v2', 
-'Happiest_Mask', 'Hardlight_Afterburner', 'Interstellar_Desk_Plant', 'Nkuhanas_Opinion', 'Rejuvenation_Rack', 'Resonance_Disc', 'Sentient_Meat_Hook', 
-'Shattering_Justice', 'Soulbound_Catalyst', 'Unstable_Tesla_Coil', 'Wake_of_Vultures']
-const yellows = ['Genesis_Loop', 'Little_Disciple', 'Mired_Urn', 'Molten_Perforator', 'Queens_Gland', 'Shatterspleen', 'Titanic_Knurl']
-const equipments = ['Blast_Shower', 'Disposable_Missile_Launcher', 'Eccentric_Vase', 'Foreign_Fruit', 'Forgive_Me_Please', 'Gnarled_Woodsprite', 'Gorags_Opus', 'Jade_Elephant', 
-'Milky_Chrysalis', 'Ocular_HUD', 'Preon_Accumulator', 'Primordial_Cube', 'Radar_Scanner', 'Royal_Capacitor', 'Sawmerang', 'Super_Massive_Leech', 'The_Back-up', 
-'The_Crowdfunder', 'Volcanic_Egg']
-const lunars = ['Beads_of_Fealty', 'Brittle_Crown', 'Corpsebloom', 'Defiant_Gouge', 'Focused_Convergence', 'Gesture_of_the_Drowned', 'Mercurial_Rachis', 'Purity', 
-'Shaped_Glass', 'Strides_of_Heresy', 'Transcendence', 'Visions_of_Heresy']
-const lunarEquipments = ['Effigy_of_Grief', 'Glowing_Meteorite', 'Eccentric_Vase', 'Helfire_Tincture', 'Spinel_Tonic']
+const whites = ['Armor-Piercing Rounds', 'Backup Magazine', 'Bundle of Fireworks', 'Bustling Fungus', 'Crowbar', 'Energy Drink', 'Focus Crystal', 'Fresh Meat', 
+      'Gasoline', 'Lens-Maker\'s Glasses', 'Medkit', 'Monster Tooth', 'Paul\'s Goat Hoof', 'Personal Shield Generator', 'Repulsion Armor Plate', 'Rusted Key', 
+      'Soldier\'s Syringe', 'Sticky Bomb', 'Stun Grenade', 'Topaz Brooch', 'Tougher Times', 'Tri-Tip Dagger', 'Warbanner']
+const greens = ['AtG Missile Mk. 1', 'Bandolier', 'Berzerker\'s Pauldron', 'Chronobauble', 'Death Mark', 'Fuel Cell', 'Ghor\'s Tome', 'Harvester\'s Scythe', 
+'Hopoo Feather', 'Infusion', 'Kjaro\'s Bandt', 'Leeching Seed', 'Lepton Daisy', 'Old Guillotine', 'Old War Stealthkit', 'Predatory Instincts', 
+'Razorwire', 'Red Whip', 'Rose Buckler', 'Runald\'s Band', 'Squid Polyp', 'Ukulele', 'War Horn', 'Wax Quail', 'Will-o\'-the-wisp']
+const reds = ['57 Leaf Clover', 'Aegis', 'Alien Head', 'Brainstalks', 'Brilliant Behemoth', 'Ceremonial Dagger', 'Dio\'s Best Friend', 'Frost Relic', 'H3AD-5T v2', 
+'Happiest Mask', 'Hardlight Afterburner', 'Interstellar Desk Plant', 'N\'kuhana\'s Opinion', 'Rejuvenation Rack', 'Resonance Disc', 'Sentient Meat Hook', 
+'Shattering Justice', 'Soulbound Catalyst', 'Unstable Tesla Coil', 'Wake of Vultures']
+const yellows = ['Genesis Loop', 'Little Disciple', 'Mired Urn', 'Molten Perforator', 'Queen\'s Gland', 'Shatterspleen', 'Titanic Knurl']
+const equipments = ['Blast Shower', 'Disposable Missile Launcher', 'Eccentric Vase', 'Foreign Fruit', 'Forgive Me Please', 'Gnarled Woodsprite', 'Gorag\'s Opus', 'Jade Elephant', 
+'Milky Chrysalis', 'Ocular HUD', 'Preon Accumulator', 'Primordial Cube', 'Radar Scanner', 'Royal Capacitor', 'Sawmerang', 'Super Massive Leech', 'The Back-up', 
+'The Crowdfunder', 'Volcanic Egg']
+const lunars = ['Beads of Fealty', 'Brittle Crown', 'Corpsebloom', 'Defiant Gouge', 'Focused Convergence', 'Gesture of the Drowned', 'Mercurial Rachis', 'Purity', 
+'Shaped Glass', 'Strides of Heresy', 'Transcendence', 'Visions of Heresy']
+const lunarEquipments = ['Effigy of Grief', 'Glowing Meteorite', 'Eccentric Vase', 'Helfire Tincture', 'Spinel Tonic']
 
 const randomLoadout = function (tag) {
     var num = 0

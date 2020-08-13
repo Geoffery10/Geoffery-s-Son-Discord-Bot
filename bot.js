@@ -452,7 +452,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                   var yellow = riskofrain2.randomLoadout('yellow')
                   var lunar = riskofrain2.randomLoadout('lunar')
                   var lunarEquipment = riskofrain2.randomLoadout('lunarEquipment')
-                  console.log("Loadout Data: %s - %s - %s - %s - %s - %s - %s - %s", survivor, white, green, red, equipment, yellow, lunar, lunarEquipment)
+                  //console.log("Loadout Data: %s - %s - %s - %s - %s - %s - %s - %s", survivor, white, green, red, equipment, yellow, lunar, lunarEquipment)
                   bot.sendMessage({
                     to: channelID,
                     "content": "Good luck survivor...",
@@ -460,6 +460,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                       "title": "Risk of Rain 2 - Random Loadout",
                       "description": "Item info can be found at the [Risk of Rain 2 Wiki](https://riskofrain2.gamepedia.com/Items).",
                       "color": 4726857,
+                      "footer": {
+                        "icon_url": "https://static.wikia.nocookie.net/be327120-a2dd-4467-bf86-8c2212037668",
+                        "text": "Good luck survivor..."
+                      },
                       "thumbnail": {
                         "url": survivor
                       },
@@ -539,6 +543,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                 {
                                   "name": "!ping",
                                   "value": "Pong probably"
+                                },
+                                {
+                                  "name": "!r2loadout",
+                                  "value": "Gives you a complete random Risk of Rain 2 loadout to use in your next Artifact of Command run."
                                 },
                                 {
                                   "name": "!wtf",
