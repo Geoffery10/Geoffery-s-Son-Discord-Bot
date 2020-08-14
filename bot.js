@@ -121,12 +121,12 @@ if (message.content.toLowerCase().includes("heresy".toLowerCase()) == true) {
       console.log("Trying to find heresy_" + parseInt(message.content.substring(7)))
       var num = parseInt(message.content.substring(7))
       var fileName = "./images/heresy/heresy_"
-      fileManager.sendImage(num, fileName, channelID, message.content, bot)
+      channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
   } else {
     var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/heresy").length)
     console.log(fileManager.getAllDirFiles("./images/heresy").length)
     var fileName = "./images/heresy/heresy_"
-    fileManager.sendImage(num, fileName, channelID, message.content, bot)
+    channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
   }
 }
 
@@ -456,9 +456,9 @@ if (message.content.substring(0, 1) == '!') {
             var lunar = riskofrain2.randomLoadout('lunar')
             var lunarEquipment = riskofrain2.randomLoadout('lunarEquipment')
             //console.log("Loadout Data: %s - %s - %s - %s - %s - %s - %s - %s", survivor, white, green, red, equipment, yellow, lunar, lunarEquipment)
-            bot.sendMessage({
-              to: channelID,
-              "content": "Good luck survivor...",
+            var data = {
+              "to": channel,
+              "message": "Good luck survivor...",
               "embed": {
                 "title": "Risk of Rain 2 - Random Loadout",
                 "description": "Item info can be found at the [Risk of Rain 2 Wiki](https://riskofrain2.gamepedia.com/Items).",
@@ -501,123 +501,125 @@ if (message.content.substring(0, 1) == '!') {
                   }
                 ]
               }
-            });
+            };
+            channel.send(data);
           break;
           case 'help':
             console.log("Sending help!")
-              bot.sendMessage({
-                      to: channelID,
-                      "embed": {
-                        "title": "Commands",
-                        "description": "This is a list of all the commands I can do:",
-                        "fields": [
-                          {
-                            "name": "anime",
-                            "value": "Anime gif\nIf send \"anime_<number>\" then you can call a specific gif."
-                          },
-                          {
-                            "name": "hentai",
-                            "value": "That's illegal!"
-                          },
-                          {
-                            "name": "owo or uwu",
-                            "value": "owo"
-                          },
-                          {
-                            "name": "sauce",
-                            "value": "nhentai.net/g/<number>"
-                          },
-                          {
-                            "name": "heresy",
-                            "value": "Yikes that bad?"
-                          },
-                          {
-                            "name": "ravioli ravioli",
-                            "value": "DON'T LEWD!"
-                          },
-                          {
-                            "name": "hello there",
-                            "value": "It's a star wars reference"
-                          },
-                          {
-                            "name": "trap",
-                            "value": "Danger!"
-                          },
-                          {
-                            "name": "!ping",
-                            "value": "Pong probably"
-                          },
-                          {
-                            "name": "!r2loadout",
-                            "value": "Gives you a complete random Risk of Rain 2 loadout to use in your next Artifact of Command run."
-                          },
-                          {
-                            "name": "!wtf",
-                            "value": "That's mean!"
-                          },
-                          {
-                            "name": "!roll_d<Your Number Here>",
-                            "value": "Roll any dice. Example: !roll_d20"
-                          },
-                          {
-                            "name": "!nani",
-                            "value": "What?"
-                          },
-                          {
-                            "name": "!fact",
-                            "value": "I'll tell you a random fact."
-                          },
-                          {
-                            "name": "!joke",
-                            "value": "I'll tell you a joke."
-                          },
-                          {
-                            "name": "!insultme",
-                            "value": "I'll tell you a different kind of joke..."
-                          },
-                          {
-                            "name": "!yesorno",
-                            "value": "I'll tell you yes or no."
-                          },
-                          {
-                            "name": "!selfie",
-                            "value": "I'll send you a random picture of me."
-                          },
-                          {
-                            "name": "!cat",
-                            "value": "Random cat pictures from Tumblr."
-                          },
-                          {
-                            "name": "!thispersondoesnotexist",
-                            "value": "Generates a person that does not exist."
-                          },
-                          {
-                            "name": "!waifu",
-                            "value": "Generates a waifu for you to love. <3"
-                          },
-                          {
-                            "name": "!random",
-                            "value": "One command sent at random..."
-                          },
-                          {
-                            "name": "!lastNum",
-                            "value": "I'll tell you the number of the last gif I sent. (Number 94 of an anime gif would equal anime_94)"
-                          },
-                          {
-                            "name": "!birthdayReset",
-                            "value": "Reset the cooldown on birthday messages."
-                          },
-                          {
-                            "name": "!who is my \"Family Member Here\"",
-                            "value": "I will reveal some of my relations..."
-                          },
-                          {
-                            "name": "!help",
-                            "value": "You just did that..."
-                          }
-                        ]
-                      }
-              });
+            var data = {
+                    to: channel,
+                    "embed": {
+                      "title": "Commands",
+                      "description": "This is a list of all the commands I can do:",
+                      "fields": [
+                        {
+                          "name": "anime",
+                          "value": "Anime gif\nIf send \"anime_<number>\" then you can call a specific gif."
+                        },
+                        {
+                          "name": "hentai",
+                          "value": "That's illegal!"
+                        },
+                        {
+                          "name": "owo or uwu",
+                          "value": "owo"
+                        },
+                        {
+                          "name": "sauce",
+                          "value": "nhentai.net/g/<number>"
+                        },
+                        {
+                          "name": "heresy",
+                          "value": "Yikes that bad?"
+                        },
+                        {
+                          "name": "ravioli ravioli",
+                          "value": "DON'T LEWD!"
+                        },
+                        {
+                          "name": "hello there",
+                          "value": "It's a star wars reference"
+                        },
+                        {
+                          "name": "trap",
+                          "value": "Danger!"
+                        },
+                        {
+                          "name": "!ping",
+                          "value": "Pong probably"
+                        },
+                        {
+                          "name": "!r2loadout",
+                          "value": "Gives you a complete random Risk of Rain 2 loadout to use in your next Artifact of Command run."
+                        },
+                        {
+                          "name": "!wtf",
+                          "value": "That's mean!"
+                        },
+                        {
+                          "name": "!roll_d<Your Number Here>",
+                          "value": "Roll any dice. Example: !roll_d20"
+                        },
+                        {
+                          "name": "!nani",
+                          "value": "What?"
+                        },
+                        {
+                          "name": "!fact",
+                          "value": "I'll tell you a random fact."
+                        },
+                        {
+                          "name": "!joke",
+                          "value": "I'll tell you a joke."
+                        },
+                        {
+                          "name": "!insultme",
+                          "value": "I'll tell you a different kind of joke..."
+                        },
+                        {
+                          "name": "!yesorno",
+                          "value": "I'll tell you yes or no."
+                        },
+                        {
+                          "name": "!selfie",
+                          "value": "I'll send you a random picture of me."
+                        },
+                        {
+                          "name": "!cat",
+                          "value": "Random cat pictures from Tumblr."
+                        },
+                        {
+                          "name": "!thispersondoesnotexist",
+                          "value": "Generates a person that does not exist."
+                        },
+                        {
+                          "name": "!waifu",
+                          "value": "Generates a waifu for you to love. <3"
+                        },
+                        {
+                          "name": "!random",
+                          "value": "One command sent at random..."
+                        },
+                        {
+                          "name": "!lastNum",
+                          "value": "I'll tell you the number of the last gif I sent. (Number 94 of an anime gif would equal anime_94)"
+                        },
+                        {
+                          "name": "!birthdayReset",
+                          "value": "Reset the cooldown on birthday messages."
+                        },
+                        {
+                          "name": "!who is my \"Family Member Here\"",
+                          "value": "I will reveal some of my relations..."
+                        },
+                        {
+                          "name": "!help",
+                          "value": "You just did that..."
+                        }
+                      ]
+                    }
+              };
+              channel.send(data);
           break;
       }
   }
