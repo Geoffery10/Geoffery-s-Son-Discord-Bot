@@ -31,6 +31,7 @@ bot.on('ready', function (evt) {
 });
 
 bot.on('message', function (user, userID, channelID, message, evt) {
+  console.log(user + "/" + userID + " sent: " + message)
 
 
     if (message.toLowerCase().includes("anime".toLowerCase()) == true) {
