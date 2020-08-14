@@ -1,9 +1,11 @@
 var Discord = require('discord.io');
+const client = new Discord.Client();
 var logger = require('winston');
 var auth = require('./auth.json');
 var fileManager = require('./fileManager.js');
 var riskofrain2 = require('./riskofrain2.js');
 var randomMod = require('./randomMod.js');
+var members = require('./members.js');
 const fs = require('fs')
 const fetch = require('node-fetch');
 const { json } = require('express');
@@ -24,6 +26,7 @@ var bot = new Discord.Client({
    token: auth.token,
    autorun: true
 });
+
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
@@ -243,9 +246,23 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             message: ("You rolled " + num)
         });
         } else if (message.toLowerCase().includes('sins'.toLowerCase()) == true) { 
-          var name = ""
-          var info = ""
-          if (message.toLowerCase().includes("Connor".toLowerCase()) == true) {
+          var mention = message.substring(6)
+          if (mention.startsWith(' ')) {
+            mention = mention.substring(1)
+          }
+          if (mention.startsWith('<@') && mention.endsWith('>')) {
+            mention = mention.slice(2, -1);
+        
+            if (mention.startsWith('!')) {
+              mention = mention.slice(1);
+            }
+          }
+          var user = client.users.cache.get(mention)
+          console.log("Sins tags: " + user + " / " + mention)
+          //var member = members.checkMember(taggedUser.user, tagged.userID)
+          var name = ""//member.user
+          var info = ""//.sins
+          /* if (message.toLowerCase().includes("Connor".toLowerCase()) == true) {
             name = "Connor"
             info = "weeb, Furry, Bird, Faithful to garbobo, Creator of All"
           } else if (message.toLowerCase().includes("Geoffery".toLowerCase()) == true) {
@@ -278,7 +295,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
           } else {
             name = message.substring(5)
             info = "Sinless... for now..."
-          }
+          } */
           
           bot.sendMessage({
             to: channelID,
