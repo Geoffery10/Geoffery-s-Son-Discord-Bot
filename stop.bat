@@ -1,3 +1,3 @@
-forever stop bot.js
+forever stopall
 #forever start -a bot.js
 pause

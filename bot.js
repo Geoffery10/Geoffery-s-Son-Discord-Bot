@@ -179,8 +179,27 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
         console.log("Command issued " + message) 
-       
+
         args = args.splice(1);
+
+        if (message.toLowerCase().includes("selfie".toLowerCase()) == true) {
+          if ((message.substring(0, 8) == "!selfie_".toLowerCase()) && (parseInt(message.substring(8))) != NaN) {
+              console.log("Trying to find selfie_" + parseInt(message.substring(8)))
+              var num = parseInt(message.substring(8))
+              var fileName = "./images/selfies/selfie_"
+              fileManager.sendImage(num, fileName, channelID, message, bot)
+          } else {
+            var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/selfies").length)
+            console.log(fileManager.getAllDirFiles("./images/selfies").length)
+            while (num == lastNum) {
+              num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/selfies").length)
+            }
+            lastNum = num
+            var fileName = "./images/selfies/selfie_"
+            fileManager.sendImage(num, fileName, channelID, message, bot)
+          }  
+        }
+       
         if (message.toLowerCase().includes('who is'.toLowerCase()) == true){
             if (message.toLowerCase().includes('your mother'.toLowerCase()) == true) {
                 bot.sendMessage({
@@ -575,6 +594,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                 {
                                   "name": "!yesorno",
                                   "value": "I'll tell you yes or no."
+                                },
+                                {
+                                  "name": "!selfie",
+                                  "value": "I'll send you a random picture of me."
                                 },
                                 {
                                   "name": "!cat",
