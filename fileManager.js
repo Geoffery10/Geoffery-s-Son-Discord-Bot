@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+const client = new Discord.Client();
 const fs = require('fs')
 
 const getAllDirFiles = function(dirPath, arrayOfFiles) {
@@ -16,54 +18,62 @@ const getAllDirFiles = function(dirPath, arrayOfFiles) {
     return arrayOfFiles
 }
 
-const sendImage = function (num, fileName, channelID, message, bot) {
+const sendImage = function (num, path, fileName, message, lastNum, color) {
+  var title = "" + fileName + num;
     lastNum = num;
     if (num <= 9) {
       fileName = fileName + "0" + num;
     } else {
       fileName = fileName + num;
     }
-    if(fs.existsSync(fileName + ".gif")){
+    if(fs.existsSync(path + fileName + ".gif")){
       fileName = fileName + ".gif"
       console.log(fileName)
-      bot.uploadFile({
-        to: channelID,
-        file: fileName
-    });
-    } else if (fs.existsSync(fileName + ".png")) {
+      var embed= new Discord.MessageEmbed()
+        .setTitle(title)
+        .setColor(color)
+        .attachFiles([path + fileName])
+        .setImage('attachment://' + fileName);
+        return embed
+    } else if (fs.existsSync(path + fileName + ".png")) {
       fileName = fileName + ".png"
       console.log(fileName)
-      bot.uploadFile({
-        to: channelID,
-        file: fileName
-    });
-    } else if (fs.existsSync(fileName + ".jpg")) {
+      var embed= new Discord.MessageEmbed()
+        .setTitle(title)
+        .setColor(color)
+        .attachFiles([path + fileName])
+        .setImage('attachment://' + fileName);
+        return embed
+    } else if (fs.existsSync(path + fileName + ".jpg")) {
         fileName = fileName + ".jpg"
         console.log(fileName)
-        bot.uploadFile({
-          to: channelID,
-          file: fileName
-    });
-    } else if (fs.existsSync(fileName + ".mp4")) {
+        var embed= new Discord.MessageEmbed()
+        .setTitle(title)
+        .setColor(color)
+        .attachFiles([path + fileName])
+        .setImage('attachment://' + fileName);
+        return embed
+    } else if (fs.existsSync(path + fileName + ".mp4")) {
         fileName = fileName + ".mp4"
         console.log(fileName)
-        bot.uploadFile({
-          to: channelID,
-          file: fileName
-    });
-    } else if (fs.existsSync(fileName + ".mov")) {
+        var embed = new Discord.MessageEmbed()
+        .setTitle(title)
+        .setColor(color)
+        .attachFiles([path + fileName])
+        .setImage('attachment://' + fileName);
+        return embed
+    } else if (fs.existsSync(path + fileName + ".mov")) {
       fileName = fileName + ".mov"
       console.log(fileName)
-      bot.uploadFile({
-        to: channelID,
-        file: fileName
-    });
+      var embed= new Discord.MessageEmbed()
+        .setTitle(title)
+        .setColor(color)
+        .attachFiles([path + fileName])
+        .setImage('attachment://' + fileName);
+        return embed
     } else {
-      console.log("Error " + fileName + " not found...")
-      bot.sendMessage({
-        to: channelID,
-        message: "This ain't it chief. I couldn't find the gif."
-    });
+      console.log("Error " + path + fileName + " not found...")
+      message.channel.send("This ain't it chief. I couldn't find the gif.");
     }
   };
 
