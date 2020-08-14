@@ -3,6 +3,7 @@ var logger = require('winston');
 var auth = require('./auth.json');
 var fileManager = require('./fileManager.js');
 var riskofrain2 = require('./riskofrain2.js');
+var randomMod = require('./randomMod.js');
 const fs = require('fs')
 const fetch = require('node-fetch');
 const { json } = require('express');
@@ -312,6 +313,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                             message: ("The last gif number was: " + lastNum)
                     });
                 break;
+                case 'random':
+                  var text = randomMod.randomCommands()
+                    bot.sendMessage({
+                            to: channelID,
+                            message: (text)
+                    });
+                break;
                 case 'birthdayReset':
                     birthdayLastDate = new Date(2019,3,31)
                     bot.sendMessage({
@@ -610,6 +618,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                                 {
                                   "name": "!waifu",
                                   "value": "Generates a waifu for you to love. <3"
+                                },
+                                {
+                                  "name": "!random",
+                                  "value": "One command sent at random..."
                                 },
                                 {
                                   "name": "!lastNum",
