@@ -30,7 +30,7 @@ const sendImage = function (num, path, fileName, message, lastNum, color) {
       fileName = fileName + ".gif"
       console.log(fileName)
       var embed= new Discord.MessageEmbed()
-        .setTitle(title)
+        .setTitle(title.toUpperCase())
         .setColor(color)
         .attachFiles([path + fileName])
         .setImage('attachment://' + fileName);
@@ -39,7 +39,7 @@ const sendImage = function (num, path, fileName, message, lastNum, color) {
       fileName = fileName + ".png"
       console.log(fileName)
       var embed= new Discord.MessageEmbed()
-        .setTitle(title)
+        .setTitle(title.toUpperCase())
         .setColor(color)
         .attachFiles([path + fileName])
         .setImage('attachment://' + fileName);
@@ -48,7 +48,7 @@ const sendImage = function (num, path, fileName, message, lastNum, color) {
         fileName = fileName + ".jpg"
         console.log(fileName)
         var embed= new Discord.MessageEmbed()
-        .setTitle(title)
+        .setTitle(title.toUpperCase())
         .setColor(color)
         .attachFiles([path + fileName])
         .setImage('attachment://' + fileName);
@@ -57,7 +57,7 @@ const sendImage = function (num, path, fileName, message, lastNum, color) {
         fileName = fileName + ".mp4"
         console.log(fileName)
         var embed = new Discord.MessageEmbed()
-        .setTitle(title)
+        .setTitle(title.toUpperCase())
         .setColor(color)
         .attachFiles([path + fileName])
         .setImage('attachment://' + fileName);
@@ -66,7 +66,7 @@ const sendImage = function (num, path, fileName, message, lastNum, color) {
       fileName = fileName + ".mov"
       console.log(fileName)
       var embed= new Discord.MessageEmbed()
-        .setTitle(title)
+        .setTitle(title.toUpperCase())
         .setColor(color)
         .attachFiles([path + fileName])
         .setImage('attachment://' + fileName);

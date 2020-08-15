@@ -57,15 +57,16 @@ client.on('message', message => {
 }
 
 if ((message.content.toLowerCase().includes("happy".toLowerCase()) == true) && (message.content.toLowerCase().includes("birth".toLowerCase()) == true)) {
-var date = new Date()
-if ((date.setHours(0,0,0,0) - birthdayLastDate.setHours(0,0,0,0)) > 0) {
-  birthdayLastDate = date
-  console.log("Happy birthday!")
-  bot.uploadFile({
-    to: channelID,
-    file: './images/happybirthday.gif'
-  });
-}
+  var date = new Date()
+  if ((date.setHours(0,0,0,0) - birthdayLastDate.setHours(0,0,0,0)) > 0) {
+    birthdayLastDate = date
+    console.log("Happy birthday!")
+    var embed= new Discord.MessageEmbed()
+      .attachFiles(['./images/happybirthday.gif'])
+      .setImage('attachment://happybirthday.gif');
+
+    channel.send(embed);
+  }
 }
 
 if (message.content.toLowerCase().includes("OwO".toLowerCase()) == true || message.content.toLowerCase().includes("Uwu".toLowerCase()) == true) {
@@ -78,102 +79,100 @@ if (message.content.toLowerCase().includes("OwO".toLowerCase()) == true || messa
 }
 
 if (message.content.toLowerCase().includes("is it possible to learn this power".toLowerCase()) == true) {
-console.log("Is it possible to learn this power?")
-  bot.uploadFile({
-    to: channelID,
-    file: './video/Palpatine_00.mp4'
+  console.log("Is it possible to learn this power?")
+  channel.send({
+    files: ['./video/Palpatine_00.mp4']
   });
 }
 
 if (message.content.toLowerCase().includes("hot".toLowerCase()) == true) {
-console.log("HOT")
-  bot.uploadFile({
-    to: channelID,
-    file: './video/Hot.mp4'
+  console.log("HOT")
+  channel.send({
+    files: ['./video/Hot.mp4']
   });
 }
 
 if (message.content.toLowerCase().includes("the sun is a deadly lazer".toLowerCase()) == true || message.content.toLowerCase().includes("the sun is a deadly laser".toLowerCase()) == true) {
-console.log("The sun is a deadly lazer!")
-  bot.uploadFile({
-    to: channelID,
-    file: './video/Blanket.mp4'
+  console.log("The sun is a deadly lazer!")
+  channel.send({
+    files: ['./video/Blanket.mp4']
   });
 }
 
 if (message.content.toLowerCase().includes("10th time".toLowerCase()) == true) {
-console.log("9th time")
-message.channel.send("9th time!");
+  console.log("9th time")
+  message.channel.send("9th time!");
 }
 
 if (message.content.toLowerCase().includes("sauce".toLowerCase()) == true && !(message.content.includes("Sauce: "))) {
   var num = Math.floor(Math.random() * Math.floor(321861))
   console.log("Sauce: " + num)
   console.log("nhentai.net/g/" + num)
-  sauce = "Sauce: " + num
-            message.channel.send(sauce);
+  var embed = {
+      "embed": {
+        "description": "Here is the sauce in which you desire: " + num,
+        "url": "https://discordapp.com",
+        "color": 15541587,
+        "author": {
+          "name": "The Devil",
+          "url": "https://youtu.be/dQw4w9WgXcQ",
+          "icon_url": "https://i.imgur.com/uLAimaY_d.webp?maxwidth=728&fidelity=grand"
+        }
+      }
+    }
+    message.channel.send(embed);
 }
 
 if (message.content.toLowerCase().includes("heresy".toLowerCase()) == true) {
   var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/heresy").length)
+  var path = "./images/heresy/"
   console.log("HERESY!!")
   if ((message.content.substring(0, 7) == "heresy_".toLowerCase()) && (parseInt(message.content.substring(7))) != NaN) {
       console.log("Trying to find heresy_" + parseInt(message.content.substring(7)))
       var num = parseInt(message.content.substring(7))
-      var fileName = "./images/heresy/heresy_"
+      var fileName = "heresy_"
       channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
   } else {
     var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/heresy").length)
     console.log(fileManager.getAllDirFiles("./images/heresy").length)
-    var fileName = "./images/heresy/heresy_"
+    var fileName = "heresy_"
     channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
   }
 }
 
 if (message.content.toLowerCase().includes("ravioli ravioli".toLowerCase()) == true) {
   console.log("Don't lewd the drangon loli!")
-          var data = {
-              "to": channelID,
-              message: "don't lewd the dragon loli",
-              "embed": {
-                  "image": {
-                    "url": './images/ravioli.gif'
-                  }
-                }
-            };
-            bot.sendMessage(data);
+  var embed = new Discord.MessageEmbed()
+    .attachFiles(['./images/ravioli.gif'])
+    .setImage('attachment://ravioli.gif');
+  channel.send(embed);
 }
 
 if (message.content.toLowerCase().includes("hentai".toLowerCase()) == true) {
-console.log("Hentai!")
-  // bot.sendMessage({
-  //     to: channelID,
-  //     message.content: "WAIT THAT'S ILLEGAL!"
-  // });
-  bot.uploadFile({
-    to: channelID,
-    file: './images/hentai.gif'
-  });
+  console.log("Hentai!")
+  var embed = new Discord.MessageEmbed()
+    .attachFiles(['./images/hentai.gif'])
+    .setImage('attachment://hentai.gif');
+
+  channel.send(embed);
 }
 
 if (message.content.toLowerCase().includes("hello there".toLowerCase()) == true) {
-console.log("Hello there!")
-bot.uploadFile({
-  to: channelID,
-  file: './images/generalkenobi.gif'
-});
+  console.log("Hello there!")
+  var embed= new Discord.MessageEmbed()
+      .attachFiles(['./images/generalkenobi.gif'])
+      .setImage('attachment://generalkenobi.gif');
+
+  channel.send(embed);
 }
 
 if (message.content.toLowerCase().includes("trap".toLowerCase()) == true) {
-console.log("It's a trap!")
-  bot.sendMessage({
-      to: channelID,
-      "embed": {
-          "image": {
-            "url": 'https://i.kym-cdn.com/photos/images/newsfeed/001/297/055/875.gif'
-          }
-        }
-  });
+  console.log("It's a trap!")
+  var embed = new Discord.MessageEmbed()
+    .attachFiles(['./images/trap.gif'])
+    .setImage('attachment://trap.gif');
+
+  channel.send(embed);
 }
 
 if (message.content.substring(0, 1) == '!') {
@@ -184,11 +183,12 @@ if (message.content.substring(0, 1) == '!') {
   args = args.splice(1);
 
   if (message.content.toLowerCase().includes("selfie".toLowerCase()) == true) {
+    var path = "./images/selfies/"
     if ((message.content.substring(0, 8) == "!selfie_".toLowerCase()) && (parseInt(message.content.substring(8))) != NaN) {
         console.log("Trying to find selfie_" + parseInt(message.content.substring(8)))
         var num = parseInt(message.content.substring(8))
-        var fileName = "./images/selfies/selfie_"
-        fileManager.sendImage(num, fileName, channelID, message.content, bot)
+        var fileName = "selfie_"
+        channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
     } else {
       var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/selfies").length)
       console.log(fileManager.getAllDirFiles("./images/selfies").length)
@@ -196,18 +196,18 @@ if (message.content.substring(0, 1) == '!') {
         num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/selfies").length)
       }
       lastNum = num
-      var fileName = "./images/selfies/selfie_"
-      fileManager.sendImage(num, fileName, channelID, message.content, bot)
+      var fileName = "selfie_"
+      channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
     }  
   }
  
   if (message.content.toLowerCase().includes('who is'.toLowerCase()) == true){
       if (message.content.toLowerCase().includes('your mother'.toLowerCase()) == true) {
-          message.channel.send('Isaac is my mother');
+          message.channel.send('<@!256343280285908992> is my mother');
       } else if (message.content.toLowerCase().includes('your father'.toLowerCase()) == true) {
           bot.sendMessage({
               to: channelID,
-              message: 'Geoffery is my father',
+              message: '<@!253710834553847808> is my father',
               "embed": {
                   "image": {
                   "url": 'https://avatars3.githubusercontent.com/u/43981091?s=460&u=7216909e10eaadc9ab9263e93ef6c46560fb8c03&v=4'
@@ -215,9 +215,9 @@ if (message.content.substring(0, 1) == '!') {
               }
           });
       } else if (message.content.toLowerCase().includes('step mother'.toLowerCase()) == true) {
-          message.channel.send('Seth is my step mother');
+          message.channel.send('<@!280117740222676992> is my step mother');
       } else if (message.content.toLowerCase().includes('your brother'.toLowerCase()) == true) {
-          message.channel.send('Connor is my brother');
+          message.channel.send('<@!251488731750465536> is my brother');
       } else {
           message.channel.send('Who?');
       }
@@ -225,23 +225,22 @@ if (message.content.substring(0, 1) == '!') {
     var dice = 1
     dice = parseInt(cmd.substring(6))
     var num = Math.floor(Math.random() * dice) + 1;
-    bot.sendMessage({
-      to: channelID,
-      message: ("You rolled " + num)
-  });
-  } else if (message.content.toLowerCase().includes('sins'.toLowerCase()) == true) { 
-    /* var mention = message.content.substring(6)
-    if (mention.startsWith(' ')) {
-      mention = mention.substring(1)
-    }
-    if (mention.startsWith('<@') && mention.endsWith('>')) {
-      mention = mention.slice(2, -1);
-  
-      if (mention.startsWith('!')) {
-        mention = mention.slice(1);
+    var embed = {
+      "embed": {
+        "description": `You rolled ${num} on your d${dice}. Good job! At the very least you get an A+ for effort so isn't that nice.`,
+        "color": 2464068,
+        "thumbnail": {
+          "url": "https://image.flaticon.com/icons/svg/1803/1803495.svg"
+        },
+        "author": {
+          "name": "Steve from Accounting",
+          "url": "https://www.google.com/error",
+          "icon_url": "https://lh3.googleusercontent.com/proxy/CeduBXR0upl62aNlwj94VHXk_PHlZxRgfP9ldaV3Zg5UmsbfWC9f-4BpLb1AAnUppO3pOrae_vCirq748VlkxyCuwju_ddNiYnG67FydemUkGeBoVLwnR8IOOLOteNBN6k9j"
+        }
       }
-    } */
-    //var user = client.users.cache.get(mention)
+    };
+    channel.send(embed);
+  } else if (message.content.toLowerCase().includes('sins'.toLowerCase()) == true) { 
     if (!message.mentions.users.size) {
       message.channel.send('You need to tag someone to get their sins...');
     } else {
@@ -268,9 +267,6 @@ if (message.content.substring(0, 1) == '!') {
     } else if (message.content.toLowerCase().includes("Randy".toLowerCase()) == true) {
       name = "Randy"
       info = "Alcoholic, Rage Baby, Owner of The Broken Sleep, Inquisitor"
-    } else if (message.content.toLowerCase().includes("Pete".toLowerCase()) == true) {
-      name = "Pete"
-      info = "Generic heresy"
     } else if (message.content.toLowerCase().includes("Andy".toLowerCase()) == true) {
       name = "Andy"
       info = "Heretic Detector"
@@ -324,14 +320,12 @@ if (message.content.substring(0, 1) == '!') {
             var name = "waifu"
             console.log(url)
 
-            bot.sendMessage({
-              to: channelID,
-              "embed": {
-                  "image": {
-                    "url": url
-                  }
+            var embed = {
+              "image": {
+                  "url": url
                 }
-          });
+              };
+          message.channel.send({ embed });
           break;
           case 'joke':
             //Info at: https://sv443.net/jokeapi/v2/
@@ -348,10 +342,7 @@ if (message.content.substring(0, 1) == '!') {
                 console.log(body);
                 console.log(body.joke)
                 var text = body.joke
-                bot.sendMessage({
-                  to: channelID,
-                  message: (body.joke)
-                });
+                channel.send(body.joke);
               });
             });
           break;
@@ -370,10 +361,7 @@ if (message.content.substring(0, 1) == '!') {
                 console.log(body);
                 console.log(body.insult)
                 var text = body.insult
-                bot.sendMessage({
-                  to: channelID,
-                  message: (body.insult)
-                });
+                channel.send(body.insult);
               });
             });
             break;
@@ -392,10 +380,7 @@ if (message.content.substring(0, 1) == '!') {
                 console.log(body);
                 console.log(body.answer)
                 var text = body.answer
-                bot.sendMessage({
-                  to: channelID,
-                  message: (body.answer)
-                });
+                channel.send(body.answer);
               });
             });
           break;
@@ -414,12 +399,21 @@ if (message.content.substring(0, 1) == '!') {
                 console.log(body);
                 console.log(body.text)
                 var text = body.text
-                bot.sendMessage({
-                  to: channelID,
-                  message: (body.text)
+                var embed = {
+                    "embed": {
+                      "description": `Fact: ${body.text}\nSource: [${body.source}](${body.source_url})`,
+                      "url": "https://discordapp.com",
+                      "color": 4550821,
+                      "author": {
+                        "name": "Dr. Fact",
+                        "url": "https://uselessfacts.jsph.pl/",
+                        "icon_url": "https://img.icons8.com/bubbles/2x/light-on.png"
+                      }
+                    }
+                  };
+                  channel.send(embed);
                 });
               });
-            });
           break;
           case 'cat':
             url = "https://api.thecatapi.com/v1/images/search?api_key=b9a826e6-fac5-43e7-8af1-aa47523e1bbd";
@@ -455,7 +449,7 @@ if (message.content.substring(0, 1) == '!') {
             var yellow = riskofrain2.randomLoadout('yellow')
             var lunar = riskofrain2.randomLoadout('lunar')
             var lunarEquipment = riskofrain2.randomLoadout('lunarEquipment')
-            //console.log("Loadout Data: %s - %s - %s - %s - %s - %s - %s - %s", survivor, white, green, red, equipment, yellow, lunar, lunarEquipment)
+            
             var data = {
               "to": channel,
               "message": "Good luck survivor...",

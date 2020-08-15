@@ -1,16 +1,15 @@
-message.channel.send();
+channel.send();
 
 var embed = {
     "image": {
         "url": url
-    }
+        }
     };
-    message.channel.send({ embed });
-});
+channel.send({ embed });
 
-var embed= new Discord.MessageEmbed()
+var embed = new Discord.MessageEmbed()
 	.setTitle('Some title')
-	.attachFiles(['../assets/discordjs.png'])
+	.attachFiles(['./images/discordjs.png'])
 	.setImage('attachment://discordjs.png');
 
 channel.send(embed);
