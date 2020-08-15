@@ -205,15 +205,7 @@ if (message.content.substring(0, 1) == '!') {
       if (message.content.toLowerCase().includes('your mother'.toLowerCase()) == true) {
           message.channel.send('<@!256343280285908992> is my mother');
       } else if (message.content.toLowerCase().includes('your father'.toLowerCase()) == true) {
-          bot.sendMessage({
-              to: channelID,
-              message: '<@!253710834553847808> is my father',
-              "embed": {
-                  "image": {
-                  "url": 'https://avatars3.githubusercontent.com/u/43981091?s=460&u=7216909e10eaadc9ab9263e93ef6c46560fb8c03&v=4'
-                  }
-              }
-          });
+        message.channel.send('<@!253710834553847808> is my father');
       } else if (message.content.toLowerCase().includes('step mother'.toLowerCase()) == true) {
           message.channel.send('<@!280117740222676992> is my step mother');
       } else if (message.content.toLowerCase().includes('your brother'.toLowerCase()) == true) {
@@ -262,21 +254,6 @@ if (message.content.substring(0, 1) == '!') {
       };
       channel.send(data);
     }
-    //var member = members.checkMember(taggedUser.user, tagged.userID)
-    /* 
-    } else if (message.content.toLowerCase().includes("Randy".toLowerCase()) == true) {
-      name = "Randy"
-      info = "Alcoholic, Rage Baby, Owner of The Broken Sleep, Inquisitor"
-    } else if (message.content.toLowerCase().includes("Andy".toLowerCase()) == true) {
-      name = "Andy"
-      info = "Heretic Detector"
-    } else if ((message.content.toLowerCase().includes("Nathanial".toLowerCase()) == true) || (message.content.toLowerCase().includes("DonutMc_Pastery".toLowerCase()) == true)) {
-      name = "Nathanial"
-      info = "weeb, Denier of Meta, Owner of The Broken Sleep"
-    } else if (message.content.toLowerCase().includes("Katherine".toLowerCase()) == true) {
-      name = "Katherine"
-      info = "Furry, Sickly, Betrothed to the Evil Dragon God, Baker of Cookies"
-    } */
     
   } else {
     var url = "";
