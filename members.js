@@ -25,7 +25,7 @@ const saveJson = function(member) {
     })
 }
 
-const checkMember = async function(userSent, userIDSent) {
+const checkMember = function(userSent, userIDSent) {
     members = loadJson()
     member = members.find( ({ userID }) => userID === userIDSent )
     if (member == undef) {
