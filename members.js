@@ -1,5 +1,5 @@
 const fs = require('fs')
-const path = './memberData.json'
+const path = './memberData/memberData.json'
 var undef;
 var members;
 
