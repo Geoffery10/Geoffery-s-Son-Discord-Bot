@@ -377,13 +377,44 @@ if (message.content.substring(0, 1) == '!') {
                 var text = body.text
                 var embed = {
                     "embed": {
-                      "description": `Fact: ${body.text}\nSource: [${body.source}](${body.source_url})`,
+                      "description": `Fact: ${text}\nSource: [${body.source}](${body.source_url})`,
                       "url": "https://discordapp.com",
                       "color": 4550821,
                       "author": {
                         "name": "Dr. Fact",
                         "url": "https://uselessfacts.jsph.pl/",
                         "icon_url": "https://img.icons8.com/bubbles/2x/light-on.png"
+                      }
+                    }
+                  };
+                  channel.send(embed);
+                });
+              });
+          break;
+          case 'advise':
+            //Info at: https://api.adviceslip.com/
+            url = "https://api.adviceslip.com/advice";
+
+            https.get(url, res => {
+              res.setEncoding("utf8");
+              let body = "";
+              res.on("data", data => {
+                body += data;
+              });
+              res.on("end", () => {
+                body = JSON.parse(body);
+                console.log(body);
+                console.log(body.slip.advice)
+                var text = body.slip.advice
+                var embed = {
+                    "embed": {
+                      "description": `Advice: ${text}`,
+                      "url": "https://discordapp.com",
+                      "color": 4550821,
+                      "author": {
+                        "name": "Advice Co.",
+                        "url": "https://api.adviceslip.com/",
+                        "icon_url": "https://www.partnersinprojectgreen.com/wp-content/uploads/2017/01/PPG_EV_ICON_HELP.png"
                       }
                     }
                   };
@@ -537,6 +568,10 @@ if (message.content.substring(0, 1) == '!') {
                         {
                           "name": "!fact",
                           "value": "I'll tell you a random fact."
+                        },
+                        {
+                          "name": "!advise",
+                          "value": "I'll tell you a some advice if you are that desperate..."
                         },
                         {
                           "name": "!joke",
