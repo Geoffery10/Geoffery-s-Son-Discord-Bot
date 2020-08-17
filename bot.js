@@ -285,9 +285,8 @@ if (message.content.substring(0, 1) == '!') {
             var name = "tpdne.jpg"
             console.log(filePath + name)
             plScraper.makeScrape(url, filePath, name);
-            bot.uploadFile({
-              to: channelID,
-              file: filePath + name
+            channel.send({
+              files: [(filePath + name)]
             });
           break;
             case 'waifu':
