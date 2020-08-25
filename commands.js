@@ -31,6 +31,12 @@ const command = function(message, channel, lastNum)
       channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
     }  
   }
+
+  /*if (message.content.toLowerCase().includes("!broadcast".toLowerCase()) == true) {
+    message.content = message.content.substring(10)  
+
+    message.channel.send(message.content);
+  }*/
  
   if (message.content.toLowerCase().includes('who is'.toLowerCase()) == true){
       if (message.content.toLowerCase().includes('your mother'.toLowerCase()) == true) {

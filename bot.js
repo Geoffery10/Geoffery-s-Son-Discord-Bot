@@ -7,6 +7,7 @@ var riskofrain2 = require('./riskofrain2.js');
 var randomMod = require('./randomMod.js');
 var members = require('./members.js');
 var mcRCON = require('./mcRCON.js');
+var emojis = require('./emojis.js');
 var commands = require('./commands.js');
 const fs = require('fs')
 const fetch = require('node-fetch');
@@ -35,10 +36,11 @@ client.login(auth.token);
 client.on('message', message => {
   members.checkMember(message.author.username, message.author.id)
   var channel = message.channel;
-  //var author = message.author;
-  //console.log(user + "/" + userID + " sent: " + message)
-  //console.log(auther + " on " + channel + ": " + message.content);
+  console.log(`${message.author.username} sent: ${message} on Channel: ${channel}`)
 
+  if(message.content.toLowerCase().includes("rip".toLowerCase()) || message.content.toLowerCase().includes("r.i.p".toLowerCase())) {
+    message.react("372950049665318925")
+  }
   if (message.content.toLowerCase().includes("anime".toLowerCase()) == true) {
     var path = "./images/anime/"
     if ((message.content.substring(0, 6) == "anime_".toLowerCase()) && (parseInt(message.content.substring(6))) != NaN) {
