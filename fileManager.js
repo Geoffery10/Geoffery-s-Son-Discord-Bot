@@ -29,7 +29,7 @@ const sendImage = function (num, path, fileName, message, lastNum, color) {
     if(fs.existsSync(path + fileName + ".gif")){
       fileName = fileName + ".gif"
       console.log(fileName)
-      var embed= new Discord.MessageEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(title.toUpperCase())
         .setColor(color)
         .attachFiles([path + fileName])
@@ -38,7 +38,7 @@ const sendImage = function (num, path, fileName, message, lastNum, color) {
     } else if (fs.existsSync(path + fileName + ".png")) {
       fileName = fileName + ".png"
       console.log(fileName)
-      var embed= new Discord.MessageEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(title.toUpperCase())
         .setColor(color)
         .attachFiles([path + fileName])
@@ -47,7 +47,7 @@ const sendImage = function (num, path, fileName, message, lastNum, color) {
     } else if (fs.existsSync(path + fileName + ".jpg")) {
         fileName = fileName + ".jpg"
         console.log(fileName)
-        var embed= new Discord.MessageEmbed()
+        var embed = new Discord.MessageEmbed()
         .setTitle(title.toUpperCase())
         .setColor(color)
         .attachFiles([path + fileName])
@@ -56,20 +56,12 @@ const sendImage = function (num, path, fileName, message, lastNum, color) {
     } else if (fs.existsSync(path + fileName + ".mp4")) {
         fileName = fileName + ".mp4"
         console.log(fileName)
-        var embed = new Discord.MessageEmbed()
-        .setTitle(title.toUpperCase())
-        .setColor(color)
-        .attachFiles([path + fileName])
-        .setImage('attachment://' + fileName);
+        var embed = {files: [(path + fileName)]}
         return embed
     } else if (fs.existsSync(path + fileName + ".mov")) {
       fileName = fileName + ".mov"
       console.log(fileName)
-      var embed= new Discord.MessageEmbed()
-        .setTitle(title.toUpperCase())
-        .setColor(color)
-        .attachFiles([path + fileName])
-        .setImage('attachment://' + fileName);
+      var embed = {files: [(path + fileName)]}
         return embed
     } else {
       console.log("Error " + path + fileName + " not found...")
