@@ -173,7 +173,7 @@ if (message.content.toLowerCase().includes("trap".toLowerCase()) == true) {
 }
 
 if (message.content.substring(0, 1) == '!') {
-  lastNum = commands.command(message, channel, lastNum)
+  lastNum = commands.command(client, message, channel, lastNum)
 }
 
 

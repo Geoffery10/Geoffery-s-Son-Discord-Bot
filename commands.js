@@ -5,7 +5,7 @@ var fileManager = require('./fileManager.js');
 var randomMod = require('./randomMod.js');
 const masterColor = 7871916
 
-const command = function(message, channel, lastNum) 
+const command = function(client, message, channel, lastNum) 
 {
   var args = message.content.substring(1).split(' ');
   var cmd = args[0];
@@ -32,11 +32,11 @@ const command = function(message, channel, lastNum)
     }  
   }
 
-  /*if (message.content.toLowerCase().includes("!broadcast".toLowerCase()) == true) {
+  if (message.content.toLowerCase().includes("!broadcast".toLowerCase()) == true) {
     message.content = message.content.substring(10)  
 
-    message.channel.send(message.content);
-  }*/
+    client.channels.cache.get('254779349352448001').send(message.content);
+  }
  
   if (message.content.toLowerCase().includes('who is'.toLowerCase()) == true){
       if (message.content.toLowerCase().includes('your mother'.toLowerCase()) == true) {
