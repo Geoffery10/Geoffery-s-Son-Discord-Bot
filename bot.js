@@ -6,6 +6,7 @@ var fileManager = require('./fileManager.js');
 var riskofrain2 = require('./riskofrain2.js');
 var randomMod = require('./randomMod.js');
 var members = require('./members.js');
+var mcRCON = require('./mcRCON.js');
 const fs = require('fs')
 const fetch = require('node-fetch');
 const { json } = require('express');
@@ -85,12 +86,12 @@ if (message.content.toLowerCase().includes("is it possible to learn this power".
   });
 }
 
-if (message.content.toLowerCase().includes("hot".toLowerCase()) == true) {
+/*if (message.content.toLowerCase().includes("hot".toLowerCase()) == true) {
   console.log("HOT")
   channel.send({
     files: ['./video/Hot.mp4']
   });
-}
+}*/
 
 if (message.content.toLowerCase().includes("the sun is a deadly lazer".toLowerCase()) == true || message.content.toLowerCase().includes("the sun is a deadly laser".toLowerCase()) == true) {
   console.log("The sun is a deadly lazer!")
@@ -301,7 +302,25 @@ if (message.content.substring(0, 1) == '!') {
                   "url": url
                 }
               };
+          case 'waifu':
+            var num = Math.floor(Math.random() * 100000)
+            url = "https://www.thiswaifudoesnotexist.net/example-" + num + ".jpg";
+            var filePath = "./images/waifu/"
+            var name = "waifu"
+            console.log(url)
+
+            var embed = {
+              "image": {
+                  "url": url
+                }
+              };
           message.channel.send({ embed });
+          break;
+          case 'hot':
+            console.log("HOT")
+            channel.send({
+              files: ['./video/Hot.mp4']
+            });
           break;
           case 'joke':
             //Info at: https://sv443.net/jokeapi/v2/
@@ -359,6 +378,22 @@ if (message.content.substring(0, 1) == '!') {
                 channel.send(body.answer);
               });
             });
+          break;
+          case 'mcday':
+            console.log("Gettting Server Stat")
+            mcRCON.sendCommand('time set day', channel)
+          break;
+          case 'mcnight':
+            console.log("Gettting Server Stat")
+            mcRCON.sendCommand('time set night', channel)
+          break;
+          case 'mctime':
+            console.log("Gettting Server Stat")
+            mcRCON.sendCommand('time world', channel)
+          break;
+          case 'mcseed':
+            console.log("Gettting Server Stat")
+            mcRCON.sendCommand('seed', channel)
           break;
           case 'fact':
             //Info at: https://uselessfacts.jsph.pl/
@@ -554,8 +589,20 @@ if (message.content.substring(0, 1) == '!') {
                           "value": "Gives you a complete random Risk of Rain 2 loadout to use in your next Artifact of Command run."
                         },
                         {
+                          "name": "!mctime",
+                          "value": "The time in the Minecraft Server."
+                        },
+                        {
+                          "name": "!mcseed",
+                          "value": "The seed of the Minecraft Server."
+                        },
+                        {
                           "name": "!wtf",
                           "value": "That's mean!"
+                        },
+                        {
+                          "name": "!hot",
+                          "value": "HOT!"
                         },
                         {
                           "name": "!roll_d<Your Number Here>",

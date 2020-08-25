@@ -19,9 +19,12 @@
     "https": "^1.0.0",
     "ifttt-webhooks-channel": "^1.1.3",
     "image-scraper": "^0.2.1",
+    "modern-rcon": "^1.0.3",
     "node-fetch": "^2.6.0",
     "node-image-downloader": "^1.0.7",
     "puppeteer": "^5.2.1",
+    "rcon": "^1.0.3",
+    "rcon-client": "^4.2.2",
     "request": "^2.88.2",
     "unirest": "^0.6.0",
     "winston": "^3.3.3"
@@ -40,7 +43,9 @@
     "url": "https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/issues"
   },
   "homepage": "https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "typed-emitter": "^1.3.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   }
