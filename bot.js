@@ -87,13 +87,6 @@ if (message.content.toLowerCase().includes("is it possible to learn this power".
   });
 }
 
-/*if (message.content.toLowerCase().includes("hot".toLowerCase()) == true) {
-  console.log("HOT")
-  channel.send({
-    files: ['./video/Hot.mp4']
-  });
-}*/
-
 if (message.content.toLowerCase().includes("the sun is a deadly lazer".toLowerCase()) == true || message.content.toLowerCase().includes("the sun is a deadly laser".toLowerCase()) == true) {
   console.log("The sun is a deadly lazer!")
   channel.send({
