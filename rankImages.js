@@ -9,6 +9,9 @@ const getImage = function(score) {
     if (score == 69) {
         image = './images/rank/69.png'
     }
+    if (score >= 100) {
+        image = './images/rank/100.png'
+    }
     if (score >= 700) {
         image = './images/rank/700.png'
     }
