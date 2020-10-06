@@ -5,8 +5,9 @@ var fileManager = require('./fileManager.js');
 var randomMod = require('./randomMod.js');
 var members = require('./members.js');
 const masterColor = 7871916
+var lastNum = -1;
 
-const command = function(client, message, channel, lastNum) 
+const command = function(client, message, channel, score) 
 {
   var args = message.content.substring(1).split(' ');
   var cmd = args[0];
@@ -31,6 +32,7 @@ const command = function(client, message, channel, lastNum)
       }
       channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
     }  
+    score = score + 1;
   }
 
   if (message.content.toLowerCase().includes("selfie".toLowerCase()) == true) {
@@ -50,6 +52,7 @@ const command = function(client, message, channel, lastNum)
       var fileName = "selfie_"
       channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
     }  
+    score = score + 1;
   }
 
   if (message.content.toLowerCase().includes("!broadcast".toLowerCase()) == true) {
@@ -110,6 +113,30 @@ const command = function(client, message, channel, lastNum)
         }
       };
       channel.send(data);
+      score = score + 1;
+    }
+  } else if (message.content.toLowerCase().includes('Grank'.toLowerCase()) == true) { 
+    if (!message.mentions.users.size) {
+      message.channel.send('You need to tag someone to get their rank...');
+    } else {
+      var member;
+      const taggedUser = message.mentions.users.first();
+      console.log(`Rank of: ${taggedUser.username}`)
+      member = members.checkMember(taggedUser.username, taggedUser.id)
+      console.log(`Rank: ${member}`)
+      var data = {
+        "to": channel,
+        "embed": {
+          "title": `Rank of ${taggedUser.username}`,
+          "description": "Current Score: " + member.score,
+          "color": 7871916,
+          "thumbnail": {
+            "url": taggedUser.displayAvatarURL({ format: "png", dynamic: true }),
+          }
+        }
+      };
+      channel.send(data);
+      score = 0;
     }
     
   } else {
@@ -316,6 +343,7 @@ const command = function(client, message, channel, lastNum)
                   channel.send(embed);
                 });
               });
+              score = score + 1;
           break;
           case 'cat':
             url = "https://api.thecatapi.com/v1/images/search?api_key=b9a826e6-fac5-43e7-8af1-aa47523e1bbd";
@@ -340,6 +368,7 @@ const command = function(client, message, channel, lastNum)
                 message.channel.send({ embed });
               });
             });
+            score = score + 1;
           break;
           case 'zerotier':
             embed = {
@@ -571,7 +600,7 @@ const command = function(client, message, channel, lastNum)
           break;
       }
   }
-  return lastNum
+  return score
 }
 
 module.exports.command = command;

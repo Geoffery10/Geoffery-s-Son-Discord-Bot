@@ -6,7 +6,8 @@ var members;
 var member = {
     user:"QSteven", 
     userID:"246263645346", 
-    sins:"Many"
+    sins:"Many",
+    anime: 0
 };
 
 const loadJson = function () {
@@ -14,6 +15,33 @@ const loadJson = function () {
     let members = JSON.parse(rawdata);
     return members
 } 
+
+const addScore = function (userSent, userIDSent, score) {
+    members = loadJson()
+    member = members.find( ({ userID }) => userID === userIDSent )
+    member = {
+        user:userSent, 
+        userID:userIDSent, 
+        sins:member.sins,
+        score: (member.score + score)
+    }
+    //members.push(member)
+    updateMembers(member, members)
+    //console.log(member);
+
+    return member
+}
+
+function updateMembers(member, members){
+    var i;
+    for (i = 0; i < members.length; ++i) {
+      if (members[i].userID == member.userID) {
+        members[i].score = member.score;
+      }
+    }
+    fs.writeFileSync(path, JSON.stringify(members, null, 4));
+    return members;
+  }
 
 const saveJson = function(member) {
     console.log("Pushing new member: " + JSON.stringify(member, null, 4))
@@ -32,7 +60,8 @@ const checkMember = function(userSent, userIDSent) {
         member = {
             user:userSent, 
             userID:userIDSent, 
-            sins:"Sinless... for now..."
+            sins:"Sinless... for now...",
+            score: 0
         }
         //members.push(member)
         saveJson(member)
@@ -44,3 +73,4 @@ const checkMember = function(userSent, userIDSent) {
 }
 
 module.exports.checkMember = checkMember;
+module.exports.addScore = addScore;
