@@ -127,7 +127,6 @@ const command = function(Discord, client, message, channel, score)
       console.log(`Rank: ${member.score}`)
       var imageID = rankImages.getImage(member.score)
       var attachment = new Discord.MessageAttachment(imageID, 'rank.png');
-      var rankImage = 'attachment://images/owo.png'
       var embed = new Discord.MessageEmbed()
         .setTitle(`Points of ${taggedUser.username}`)
         .setAuthor("Ranker Girl", "https://i.pinimg.com/736x/b9/cb/0c/b9cb0c0ef9d2b8f1dee686dcb24bc9d2.jpg")
