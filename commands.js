@@ -14,6 +14,25 @@ const command = function(client, message, channel, lastNum)
 
   args = args.splice(1);
 
+  if (message.content.toLowerCase().includes("anime".toLowerCase()) == true) {
+    var path = "./images/anime/"
+    if ((message.content.substring(0, 7) == "!anime_".toLowerCase()) && (parseInt(message.content.substring(6))) != NaN) {
+        console.log("Trying to find anime_" + parseInt(message.content.substring(7)))
+        var num = parseInt(message.content.substring(7))
+        var fileName = "anime_"
+        channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
+    } else {
+      var num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/anime").length)
+      console.log(fileManager.getAllDirFiles("./images/anime").length)
+      var fileName = "anime_"
+      if (num == 5) {
+        console.log("Rerolling...")
+        num = Math.floor(Math.random() * fileManager.getAllDirFiles("./images/anime").length)
+      }
+      channel.send(fileManager.sendImage(num, path, fileName, message, masterColor))
+    }  
+  }
+
   if (message.content.toLowerCase().includes("selfie".toLowerCase()) == true) {
     var path = "./images/selfies/"
     if ((message.content.substring(0, 8) == "!selfie_".toLowerCase()) && (parseInt(message.content.substring(8))) != NaN) {
