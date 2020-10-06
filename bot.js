@@ -169,7 +169,7 @@ client.on('message', message => {
   }
 
   if (message.content.substring(0, 1) == '!') {
-    score = commands.command(client, message, channel, score)
+    score = commands.command(Discord, client, message, channel, score)
   }
 
   if (message.author.id == lastUserID) {

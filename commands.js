@@ -4,10 +4,11 @@ var https = require('https');
 var fileManager = require('./fileManager.js');
 var randomMod = require('./randomMod.js');
 var members = require('./members.js');
+var rankImages = require('./rankImages.js');
 const masterColor = 7871916
 var lastNum = -1;
 
-const command = function(client, message, channel, score) 
+const command = function(Discord, client, message, channel, score) 
 {
   var args = message.content.substring(1).split(' ');
   var cmd = args[0];
@@ -123,19 +124,19 @@ const command = function(client, message, channel, score)
       const taggedUser = message.mentions.users.first();
       console.log(`Rank of: ${taggedUser.username}`)
       member = members.checkMember(taggedUser.username, taggedUser.id)
-      console.log(`Rank: ${member}`)
-      var data = {
-        "to": channel,
-        "embed": {
-          "title": `Rank of ${taggedUser.username}`,
-          "description": "Current Score: " + member.score,
-          "color": 7871916,
-          "thumbnail": {
-            "url": taggedUser.displayAvatarURL({ format: "png", dynamic: true }),
-          }
-        }
-      };
-      channel.send(data);
+      console.log(`Rank: ${member.score}`)
+      var imageID = rankImages.getImage(member.score)
+      var attachment = new Discord.MessageAttachment(imageID, 'rank.png');
+      var rankImage = 'attachment://images/owo.png'
+      var embed = new Discord.MessageEmbed()
+        .setTitle(`Points of ${taggedUser.username}`)
+        .setAuthor("Ranker Girl", "https://i.pinimg.com/736x/b9/cb/0c/b9cb0c0ef9d2b8f1dee686dcb24bc9d2.jpg")
+        .setDescription(`Current points that ${taggedUser.username} has gained are: ${member.score}`)
+        .setThumbnail(taggedUser.displayAvatarURL({ format: "png", dynamic: true }))
+        .attachFiles(attachment)
+        .setImage('attachment://rank.png')
+        .setColor(7871916);
+      channel.send({embed});
       score = 0;
     }
     
