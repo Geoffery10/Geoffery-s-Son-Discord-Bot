@@ -445,10 +445,6 @@ const command = function(client, message, channel, lastNum)
                       "description": "This is a list of all the commands I can do:",
                       "fields": [
                         {
-                          "name": "anime",
-                          "value": "Anime gif\nIf send \"anime_<number>\" then you can call a specific gif."
-                        },
-                        {
                           "name": "hentai",
                           "value": "That's illegal!"
                         },
@@ -458,7 +454,7 @@ const command = function(client, message, channel, lastNum)
                         },
                         {
                           "name": "sauce",
-                          "value": "nhentai.net/g/<number>"
+                          "value": "DANGER NSFW"
                         },
                         {
                           "name": "heresy",
@@ -481,16 +477,20 @@ const command = function(client, message, channel, lastNum)
                           "value": "Pong probably"
                         },
                         {
+                          "name": "!anime",
+                          "value": "Anime gif\nIf send \"!anime_<number>\" then you can call a specific gif."
+                        },
+                        {
                           "name": "!r2loadout",
                           "value": "Gives you a complete random Risk of Rain 2 loadout to use in your next Artifact of Command run."
                         },
                         {
                           "name": "!mctime",
-                          "value": "The time in the Minecraft Server."
+                          "value": "The time in the Minecraft Server (if running)."
                         },
                         {
                           "name": "!mcseed",
-                          "value": "The seed of the Minecraft Server."
+                          "value": "The seed of the Minecraft Server (if running)."
                         },
                         {
                           "name": "!wtf",
