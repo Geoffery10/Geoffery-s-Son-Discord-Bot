@@ -27,7 +27,7 @@ logger.level = 'debug';
 // Initialize Discord Bot
 
 client.once('ready', () => {
-	console.log('Ready!');
+  console.log('Ready!');
 });
 
 client.login(auth.token);
@@ -36,6 +36,7 @@ client.login(auth.token);
 client.on('message', message => {
   members.checkMember(message.author.username, message.author.id)
   var channel = message.channel;
+  var guild = message.guild;
   console.log(`${message.author.username} sent: ${message} on Channel: ${channel}`)
 
   if(message.content.toLowerCase().includes("rip".toLowerCase()) || message.content.toLowerCase().includes("r.i.p".toLowerCase())) {

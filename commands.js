@@ -3,6 +3,7 @@ var mcRCON = require('./mcRCON.js');
 var https = require('https');
 var fileManager = require('./fileManager.js');
 var randomMod = require('./randomMod.js');
+var members = require('./members.js');
 const masterColor = 7871916
 
 const command = function(client, message, channel, lastNum) 
@@ -231,6 +232,10 @@ const command = function(client, message, channel, lastNum)
             console.log("Gettting Server Stat")
             mcRCON.sendCommand('seed', channel)
           break;
+          case 'mcinfo':
+            console.log("Gettting Server Stat")
+            mcRCON.LookServerFL(channel)
+          break;
           case 'fact':
             //Info at: https://uselessfacts.jsph.pl/
             url = "https://uselessfacts.jsph.pl/random.json?language=en";
@@ -316,6 +321,42 @@ const command = function(client, message, channel, lastNum)
                 message.channel.send({ embed });
               });
             });
+          break;
+          case 'zerotier':
+            embed = {
+              "embed": {
+                "title": "ZeroTier Info",
+                "url": "https://www.zerotier.com/",
+                "color": 16763904,
+                "thumbnail": {
+                  "url": "https://my.zerotier.com/img/zerotier-logo-white.png"
+                },
+                "author": {
+                  "name": "ZeroTier",
+                  "url": "https://discordapp.com",
+                  "icon_url": "https://my.zerotier.com/img/zerotier-logo-white.png"
+                },
+                "fields": [
+                  {
+                    "name": "Step 1",
+                    "value": "[Download ZeroTier](https://www.zerotier.com/download/) and install it."
+                  },
+                  {
+                    "name": "Step 2",
+                    "value": "Join: 8850338390b695d0 by right clicking the ZeroTier icon in the task bar."
+                  },
+                  {
+                    "name": "Step 3",
+                    "value": "DM Geoffery10 and let him know to let you into the server."
+                  },
+                  {
+                    "name": "Step 4",
+                    "value": "Wait patiently..."
+                  }
+                ]
+              }
+            }
+            channel.send(embed);
           break;
           case 'r2loadout':
             // Start selection... Picking survivor
