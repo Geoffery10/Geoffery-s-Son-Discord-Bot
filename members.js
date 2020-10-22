@@ -16,9 +16,7 @@ const loadJson = function () {
     return members
 } 
 
-const addScore = function (userSent, userIDSent, score) {
-    members = loadJson()
-    member = members.find( ({ userID }) => userID === userIDSent )
+const addScore = function (userSent, userIDSent, score, member) {
     member = {
         user:userSent, 
         userID:userIDSent, 
@@ -54,6 +52,7 @@ const saveJson = function(member) {
 }
 
 const checkMember = function(userSent, userIDSent) {
+    console.log(`Adding ${userSent} to memeber list.`)
     members = loadJson()
     member = members.find( ({ userID }) => userID === userIDSent )
     if (member == undef) {

@@ -177,6 +177,6 @@ client.on('message', message => {
   } else {
     lastUserID = message.author.id
   }
-  member = members.addScore(message.author.username, message.author.id, score)
+  member = members.addScore(message.author.username, message.author.id, score, member)
     
 });
