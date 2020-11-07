@@ -263,23 +263,27 @@ const command = function(Discord, client, message, channel, score)
             });
           break;
           case 'mcday':
-            console.log("Gettting Server Stat")
+            console.log("Getting Server Stat")
             mcRCON.sendCommand('time set day', channel)
           break;
           case 'mcnight':
-            console.log("Gettting Server Stat")
+            console.log("Getting Server Stat")
             mcRCON.sendCommand('time set night', channel)
           break;
           case 'mctime':
-            console.log("Gettting Server Stat")
+            console.log("Getting Server Stat")
             mcRCON.sendCommand('time world', channel)
           break;
           case 'mcseed':
-            console.log("Gettting Server Stat")
+            console.log("Getting Server Stat")
             mcRCON.sendCommand('seed', channel)
           break;
           case 'mcinfo':
-            console.log("Gettting Server Stat")
+            console.log("Getting Server Stat")
+            mcRCON.LookServerFL(channel)
+          break;
+          case 'mcstat':
+            console.log("Getting Server Stat")
             mcRCON.LookServerFL(channel)
           break;
           case 'fact':
@@ -512,6 +516,10 @@ const command = function(Discord, client, message, channel, score)
                         {
                           "name": "!r2loadout",
                           "value": "Gives you a complete random Risk of Rain 2 loadout to use in your next Artifact of Command run."
+                        },
+                        {
+                          "name": "!mcstat or !mcinfo",
+                          "value": "Info on the Minecraft Server (if running)."
                         },
                         {
                           "name": "!mctime",

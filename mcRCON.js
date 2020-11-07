@@ -4,14 +4,14 @@ var options = {
     tcp: true,       // false for UDP, true for TCP (default true)
     challenge: true  // true to use the challenge protocol (default true)
 };
-var host = '192.168.0.125'
-var port = 25544
-var password = 'FoodFood'
+var host = '50.80.62.13'
+var port = 25575
+var password = 'asgahdsghdf'
 
 
 const LookServerFL = async function (channel) {
     //Info at: https://sv443.net/jokeapi/v2/
-    url = "http://192.168.0.125:8000/"
+    url = "http://192.168.0.167:8000"
 
     https.get(url, res => {
         playerList = ""
@@ -44,8 +44,8 @@ const LookServerFL = async function (channel) {
             "embed": {
                 "description": "Info: " + body.motd
                 + "\nOnline Players: " + playerList
-                + "\nIP Zerotier: 172.25.44.20:" + body.port
-                + "\nWeb Map Zerotier: [172.25.44.20:25568](172.25.44.20:25568)"
+                + "\nIP: 50.80.62.13:" + body.port
+                + "\nWeb Map: [http://50.80.62.13:25568/](http://50.80.62.13:25568/)"
                 + "\nVersion: " + body.bukkitVersion,
                 "color": 4289797,
                 "thumbnail": {
@@ -65,7 +65,8 @@ const LookServerFL = async function (channel) {
 }
 
 const sendCommand = async function (cmd, channel) {
-    const rcon = new Rcon(host, port, password);
+    localhost = '192.168.0.167'
+    const rcon = new Rcon(localhost, port, password);
     var message = "Server not responding..."
     rcon.connect().then(() => {
     return rcon.send(cmd); // That's a command for Minecraft
@@ -83,11 +84,11 @@ const sendCommand = async function (cmd, channel) {
                 "description": "``` " + message + " ```",
                 "color": 4289797,
                 "thumbnail": {
-                "url": "https://media.forgecdn.net/avatars/136/944/636511227443004307.png"
+                "url": "https://static.wikia.nocookie.net/minecraft/images/f/fe/GrassNew.png/revision/latest/scale-to-width-down/340?cb=20190903234415"
                 },
                 "author": {
                 "name": "RLCraft Server",
-                "url": "https://www.curseforge.com/minecraft/modpacks/rlcraft",
+                "url": "https://www.minecraft.net/",
                 "icon_url": "https://i.pinimg.com/originals/85/78/bf/8578bfd439ef6ee41e103ae82b561986.png"
                 }
             }
