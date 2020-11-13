@@ -1,5 +1,6 @@
 const Rcon = require('modern-rcon');
-const https = require("http");
+const http = require('http');
+const https = require('https');
 var options = {
     tcp: true,       // false for UDP, true for TCP (default true)
     challenge: true  // true to use the challenge protocol (default true)
@@ -8,12 +9,10 @@ var host = '50.80.62.13'
 var port = 25575
 var password = 'asgahdsghdf'
 
-
-const LookServerFL = async function (channel) {
-    //Info at: https://sv443.net/jokeapi/v2/
+const LookServerFL = async function (channel, ip) {
+    host = ip;
     url = "http://192.168.0.167:8000"
-
-    https.get(url, res => {
+    http.get(url, res => {
         playerList = ""
         res.setEncoding("utf8");
         let body = "";
@@ -44,8 +43,8 @@ const LookServerFL = async function (channel) {
             "embed": {
                 "description": "Info: " + body.motd
                 + "\nOnline Players: " + playerList
-                + "\nIP: 50.80.62.13:" + body.port
-                + "\nWeb Map: [http://50.80.62.13:25568/](http://50.80.62.13:25568/)"
+                + "\nIP: "+ ip + ":" + body.port
+                + "\nWeb Map: [http://" + ip + ":25568/](http://" + ip + ":25568/)"
                 + "\nVersion: " + body.bukkitVersion,
                 "color": 4289797,
                 "thumbnail": {

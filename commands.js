@@ -8,7 +8,7 @@ var rankImages = require('./rankImages.js');
 const masterColor = 7871916
 var lastNum = -1;
 
-const command = function(Discord, client, message, channel, score) 
+const command = function(Discord, client, message, channel, score, IP) 
 {
   var args = message.content.substring(1).split(' ');
   var cmd = args[0];
@@ -280,11 +280,11 @@ const command = function(Discord, client, message, channel, score)
           break;
           case 'mcinfo':
             console.log("Getting Server Stat")
-            mcRCON.LookServerFL(channel)
+            mcRCON.LookServerFL(channel, IP)
           break;
           case 'mcstat':
             console.log("Getting Server Stat")
-            mcRCON.LookServerFL(channel)
+            mcRCON.LookServerFL(channel, IP)
           break;
           case 'fact':
             //Info at: https://uselessfacts.jsph.pl/

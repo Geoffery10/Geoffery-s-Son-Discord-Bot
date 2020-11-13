@@ -15,7 +15,8 @@ const { json } = require('express');
 var https = require('https');
 var birthdayLastDate = new Date(2019,3,31) 
 const masterColor = 7871916
-var lastUserID = "735550470675759106"
+var lastUserID = "735550470675759106" 
+var IP = 'ERROR'
 // Require the module in your project
 
 // Configure logger settings
@@ -27,7 +28,22 @@ logger.level = 'debug';
 // Initialize Discord Bot
 
 client.once('ready', () => {
-  console.log('Ready!');
+  IP = 'ERROR'
+    console.log("Getting IP...")
+    url = "https://api.ipify.org/?format=json";
+    https.get(url, res => {
+            res.setEncoding("utf8");
+                let body = "";
+                res.on("data", data => {
+                    body += data;
+                });
+                res.on("end", () => {
+                    body = JSON.parse(body);
+                    let ip = body.ip;
+                    IP = body.ip
+                });
+        });
+  console.log('Geoffery\'s Son is Ready!');
 });
 
 client.login(auth.token);
@@ -169,7 +185,7 @@ client.on('message', message => {
   }
 
   if (message.content.substring(0, 1) == '!') {
-    score = commands.command(Discord, client, message, channel, score)
+    score = commands.command(Discord, client, message, channel, score, IP)
   }
 
   if (message.author.id == lastUserID) {
