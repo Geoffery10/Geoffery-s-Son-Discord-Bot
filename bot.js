@@ -123,8 +123,8 @@ client.on('message', message => {
     score = score + 1;
   }
 
-  var sauce_regex = /(^.*\ssauce$)|(^sauce\s.*)|(^sauce$)|(^.*\ssauce\s.*$)/i;
-  if (sauce_regex.test(message.content.toLowerCase()) == true && !(message.content.includes("Sauce: "))) {
+
+  if (message.content.toLowerCase().includes("sauce".toLowerCase()) == true && !(message.author.id == "735550470675759106")) {
     var num = Math.floor(Math.random() * Math.floor(321861))
     console.log("Sauce: " + num)
     console.log("nhentai.net/g/" + num)
