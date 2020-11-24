@@ -50,14 +50,28 @@ client.login(auth.token);
 
 
 client.on('message', message => {
+  if (message.author.id == "779431244222955520"){
+    if (message.content.includes(" » ") == true) {
+      message.content = message.content.substring(message.content.indexOf("»") + 2);
+      console.log(`Updated message: ${message.content}`);
+    }
+  }
   member = members.checkMember(message.author.username, message.author.id)
   var channel = message.channel;
   var guild = message.guild;
+  var simplify = false;
   console.log(`${message.author.username} sent: ${message} on Channel: ${channel}`)
+
+  if (channel == "779436910841954354") {
+    simplify = true;
+  }
   
   var score = 1;
 
-  if(message.content.toLowerCase().includes("rip".toLowerCase()) || message.content.toLowerCase().includes("r.i.p".toLowerCase())) {
+  var rip_regex = /(^.*\srip$)|(^rip\s.*)|(^rip$)|(^.*\srip\s.*$)/i;
+  var ripdot_regex = /(^.*\sr.i.p$)|(^r.i.p\s.*)|(^r.i.p$)|(^.*\sr.i.p\s.*$)/i;
+  var ripdotfinal_regex = /(^.*\sr.i.p.$)|(^r.i.p.\s.*)|(^r.i.p.$)|(^.*\sr.i.p.\s.*$)/i;
+  if(rip_regex.test(message.content.toLowerCase()) || ripdot_regex.test(message.content.toLowerCase()) || ripdotfinal_regex.test(message.content.toLowerCase())) {
     message.react("372950049665318925")
   }
 
@@ -75,7 +89,9 @@ client.on('message', message => {
     }
   }
 
-  if (message.content.toLowerCase().includes("OwO".toLowerCase()) == true || message.content.toLowerCase().includes("Uwu".toLowerCase()) == true) {
+  var owo_regex = /(^.*\sowo$)|(^owo\s.*)|(^owo$)|(^.*\sowo\s.*$)/i;
+  var uwu_regex = /(^.*\suwu$)|(^uwu\s.*)|(^uwu$)|(^.*\suwu\s.*$)/i;
+  if (owo_regex.test(message.content.toLowerCase()) || uwu_regex.test(message.content.toLowerCase())) {
     console.log("OwO")
     var embed= new Discord.MessageEmbed()
       .attachFiles(['./images/owo.png'])
@@ -107,11 +123,15 @@ client.on('message', message => {
     score = score + 1;
   }
 
-  if (message.content.toLowerCase().includes("sauce".toLowerCase()) == true && !(message.content.includes("Sauce: "))) {
+  var sauce_regex = /(^.*\ssauce$)|(^sauce\s.*)|(^sauce$)|(^.*\ssauce\s.*$)/i;
+  if (sauce_regex.test(message.content.toLowerCase()) == true && !(message.content.includes("Sauce: "))) {
     var num = Math.floor(Math.random() * Math.floor(321861))
     console.log("Sauce: " + num)
     console.log("nhentai.net/g/" + num)
-    var embed = {
+    if (simplify == true) {
+      message.channel.send("Here is the sauce in which you desire: " + num);
+    } else {
+      var embed = {
         "embed": {
           "description": "Here is the sauce in which you desire: " + num,
           "url": "https://discordapp.com",
@@ -124,6 +144,7 @@ client.on('message', message => {
         }
       }
       message.channel.send(embed);
+    }
       score = score + 1;
   }
 
@@ -174,7 +195,8 @@ client.on('message', message => {
     score = score + 1;
   }
 
-  if (message.content.toLowerCase().includes("trap".toLowerCase()) == true) {
+  var trap_regex = /(^.*\strap$)|(^trap\s.*)|(^trap$)|(^.*\strap\s.*$)/i;
+  if (trap_regex.test(message.content.toLowerCase())) {
     console.log("It's a trap!")
     var embed = new Discord.MessageEmbed()
       .attachFiles(['./images/trap.gif'])
@@ -185,7 +207,7 @@ client.on('message', message => {
   }
 
   if (message.content.substring(0, 1) == '!') {
-    score = commands.command(Discord, client, message, channel, score, IP)
+    score = commands.command(Discord, client, message, channel, score, IP, simplify)
   }
 
   if (message.author.id == lastUserID) {

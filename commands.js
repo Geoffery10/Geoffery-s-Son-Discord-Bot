@@ -8,7 +8,7 @@ var rankImages = require('./rankImages.js');
 const masterColor = 7871916
 var lastNum = -1;
 
-const command = function(Discord, client, message, channel, score, IP) 
+const command = function(Discord, client, message, channel, score, IP, simplify) 
 {
   var args = message.content.substring(1).split(' ');
   var cmd = args[0];
@@ -78,17 +78,21 @@ const command = function(Discord, client, message, channel, score, IP)
     var dice = 1
     dice = parseInt(cmd.substring(6))
     var num = Math.floor(Math.random() * dice) + 1;
-    var embed = {
-      "embed": {
-        "description": `You rolled ${num} on your d${dice}. Good job! At the very least you get an A+ for effort so isn't that nice.`,
-        "color": 2464068,
-        "thumbnail": {
-          "url": "https://gilkalai.files.wordpress.com/2017/09/dice.png?w=640"
-        },
-        "author": {
-          "name": "Steve from Accounting",
-          "url": "https://www.google.com/error",
-          "icon_url": "https://www.topaccountingdegrees.org/wp-content/uploads/2015/08/Accounting-7.jpg"
+    if (simplify == true) {
+      message.channel.send(`You rolled ${num} on your d${dice}. Good job! At the very least you get an A+ for effort so isn't that nice.`);
+    } else {
+      var embed = {
+        "embed": {
+          "description": `You rolled ${num} on your d${dice}. Good job! At the very least you get an A+ for effort so isn't that nice.`,
+          "color": 2464068,
+          "thumbnail": {
+            "url": "https://gilkalai.files.wordpress.com/2017/09/dice.png?w=640"
+          },
+          "author": {
+            "name": "Steve from Accounting",
+            "url": "https://www.google.com/error",
+            "icon_url": "https://www.topaccountingdegrees.org/wp-content/uploads/2015/08/Accounting-7.jpg"
+          }
         }
       }
     };
@@ -102,19 +106,23 @@ const command = function(Discord, client, message, channel, score, IP)
       console.log(`Sins of: ${taggedUser.username}`)
       member = members.checkMember(taggedUser.username, taggedUser.id)
       console.log(`Sins: ${member}`)
-      var data = {
-        "to": channel,
-        "embed": {
-          "title": `Sins of ${taggedUser.username}`,
-          "description": member.sins,
-          "color": 7871916,
-          "thumbnail": {
-            "url": taggedUser.displayAvatarURL({ format: "png", dynamic: true }),
+      if (simplify == true) {
+        message.channel.send(`Sins of ${taggedUser.username} are: ${member.sins}`);
+      } else {
+        var data = {
+          "to": channel,
+          "embed": {
+            "title": `Sins of ${taggedUser.username}`,
+            "description": member.sins,
+            "color": 7871916,
+            "thumbnail": {
+              "url": taggedUser.displayAvatarURL({ format: "png", dynamic: true }),
+            }
           }
-        }
-      };
-      channel.send(data);
-      score = score + 1;
+        };
+        channel.send(data);
+        score = score + 1;
+      }
     }
   } else if (message.content.toLowerCase().includes('Grank'.toLowerCase()) == true) { 
     if (!message.mentions.users.size) {
@@ -301,19 +309,23 @@ const command = function(Discord, client, message, channel, score, IP)
                 console.log(body);
                 console.log(body.text)
                 var text = body.text
-                var embed = {
-                    "embed": {
-                      "description": `Fact: ${text}\nSource: [${body.source}](${body.source_url})`,
-                      "url": "https://discordapp.com",
-                      "color": 4550821,
-                      "author": {
-                        "name": "Dr. Fact",
-                        "url": "https://uselessfacts.jsph.pl/",
-                        "icon_url": "https://img.icons8.com/bubbles/2x/light-on.png"
+                if (simplify == true) {
+                  message.channel.send(`Fact: ${text}`);
+                } else {
+                  var embed = {
+                      "embed": {
+                        "description": `Fact: ${text}\nSource: [${body.source}](${body.source_url})`,
+                        "url": "https://discordapp.com",
+                        "color": 4550821,
+                        "author": {
+                          "name": "Dr. Fact",
+                          "url": "https://uselessfacts.jsph.pl/",
+                          "icon_url": "https://img.icons8.com/bubbles/2x/light-on.png"
+                        }
                       }
-                    }
-                  };
-                  channel.send(embed);
+                    };
+                    channel.send(embed);
+                  }
                 });
               });
           break;
@@ -332,19 +344,23 @@ const command = function(Discord, client, message, channel, score, IP)
                 console.log(body);
                 console.log(body.slip.advice)
                 var text = body.slip.advice
-                var embed = {
-                    "embed": {
-                      "description": `Advice: ${text}`,
-                      "url": "https://discordapp.com",
-                      "color": 4550821,
-                      "author": {
-                        "name": "Advice Co.",
-                        "url": "https://api.adviceslip.com/",
-                        "icon_url": "https://www.partnersinprojectgreen.com/wp-content/uploads/2017/01/PPG_EV_ICON_HELP.png"
+                if (simplify == true) {
+                  message.channel.send(`Advice: ${text}`);
+                } else {
+                  var embed = {
+                      "embed": {
+                        "description": `Advice: ${text}`,
+                        "url": "https://discordapp.com",
+                        "color": 4550821,
+                        "author": {
+                          "name": "Advice Co.",
+                          "url": "https://api.adviceslip.com/",
+                          "icon_url": "https://www.partnersinprojectgreen.com/wp-content/uploads/2017/01/PPG_EV_ICON_HELP.png"
+                        }
                       }
-                    }
-                  };
-                  channel.send(embed);
+                    };
+                    channel.send(embed);
+                  }
                 });
               });
               score = score + 1;
