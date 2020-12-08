@@ -16,7 +16,7 @@ const command = function(Discord, client, message, channel, score, IP, simplify)
 
   args = args.splice(1);
 
-  if (message.content.toLowerCase().includes("!anime".toLowerCase()) == true) {
+  if (message.content.toLowerCase().includes("anime".toLowerCase()) == true) {
     var path = "./images/anime/"
     if ((message.content.substring(0, 7) == "!anime_".toLowerCase()) && (parseInt(message.content.substring(6))) != NaN) {
         console.log("Trying to find anime_" + parseInt(message.content.substring(7)))
@@ -116,55 +116,11 @@ const command = function(Discord, client, message, channel, score, IP, simplify)
             "description": member.sins,
             "color": 7871916,
             "thumbnail": {
-              "url": taggedUser.displayAvatarURL({ format: "png", dynamic: true })
+              "url": taggedUser.displayAvatarURL({ format: "png", dynamic: true }),
             }
           }
         };
         channel.send(data);
-        score = score + 1;
-      }
-    }
-  } else if (message.content.toLowerCase().includes('punch'.toLowerCase()) == true) { 
-    if (!message.mentions.users.size) {
-      message.channel.send('You need to tag someone to punch them...');
-    } else {
-      var member;
-      const taggedUser = message.mentions.users.first();
-      console.log(`Punching: ${taggedUser.username}`)
-      member = members.checkMember(taggedUser.username, taggedUser.id)
-      if (simplify == true) {
-        message.channel.send(`Punched ${taggedUser.username}`);
-      } else {
-        var punches = ["https://media1.tenor.com/images/31686440e805309d34e94219e4bedac1/tenor.gif?itemid=4790446", "https://media3.giphy.com/media/arbHBoiUWUgmc/giphy.gif",
-      "https://media1.tenor.com/images/4e1c688f7666adb0f68bb4995e47e0ef/tenor.gif?itemid=16634439", "https://pa1.narvii.com/6151/e112deaa278b8bbab20afa81f6e2ebe9fc6a2767_00.gif",
-      "https://k60.kn3.net/taringa/2/8/2/6/3/8/58/albertrax/CC7.gif", "https://i.pinimg.com/originals/67/2d/2e/672d2ec0601df831bf3584b55ec57869.gif", 
-      "https://media1.tenor.com/images/990b6f1430b36d50051b938ab0fb4713/tenor.gif", "https://media1.tenor.com/images/9534f2062c5d5990c1403fb3bac9b8b8/tenor.gif",
-      "https://i.giphy.com/media/iWEIxgPiAq58c/source.gif", "https://i.pinimg.com/originals/8a/3a/a4/8a3aa4b05c054cdb840740f200fc3278.gif"]
-      if ((message.content.substring(0, 7) == "!punch_".toLowerCase()) && (parseInt(message.content.substring(6))) != NaN) {
-        var num = parseInt(message.content.substring(8))
-      } else {
-        var num = Math.floor(Math.random() * punches.length);
-      }
-        var punch = {
-          "to": channel,
-          "embed": {
-            "title": `Punching ${taggedUser.username}`,
-            "description": "👊👊👊 You've been punched 👊👊👊",
-            "color": 13632027,
-            "thumbnail": {
-              "url": taggedUser.displayAvatarURL({ format: "png", dynamic: true })
-            },
-            "image": {
-              "url": punches[num]
-            },
-            "author": {
-              "name": "Steve From Accounting",
-              "url": "https://discordapp.com",
-              "icon_url": "https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/blob/master/publicImages/punch_icon.png?raw=true"
-            }
-          }
-        };
-        channel.send(punch);
         score = score + 1;
       }
     }
@@ -574,20 +530,20 @@ const command = function(Discord, client, message, channel, score, IP, simplify)
                           "value": "Anime gif\nIf send \"!anime_<number>\" then you can call a specific gif."
                         },
                         {
-                          "name": "!sins",
-                          "value": "Shows the sins of those with records..."
-                        },
-                        {
-                          "name": "!punch",
-                          "value": "Putches a enemy of your choice."
-                        },
-                        {
                           "name": "!r2loadout",
                           "value": "Gives you a complete random Risk of Rain 2 loadout to use in your next Artifact of Command run."
                         },
                         {
                           "name": "!mcstat or !mcinfo",
                           "value": "Info on the Minecraft Server (if running)."
+                        },
+                        {
+                          "name": "!mctime",
+                          "value": "The time in the Minecraft Server (if running)."
+                        },
+                        {
+                          "name": "!mcseed",
+                          "value": "The seed of the Minecraft Server (if running)."
                         },
                         {
                           "name": "!wtf",
