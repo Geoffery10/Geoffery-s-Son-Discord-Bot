@@ -43,6 +43,11 @@ client.once('ready', () => {
                     IP = body.ip
                 });
         });
+  let rawdata = fs.readFileSync('status.json');
+  let status = JSON.parse(rawdata);
+  client.user.setPresence(status);
+  client.user.setPresence(status)
+
   console.log('Geoffery\'s Son is Ready!');
 });
 
@@ -50,6 +55,9 @@ client.login(auth.token);
 
 
 client.on('message', message => {
+  let rawdata = fs.readFileSync('status.json');
+  let status = JSON.parse(rawdata);
+  client.user.setPresence(status);
   if (message.author.id == "779431244222955520"){
     if (message.content.includes(" » ") == true) {
       message.content = message.content.substring(message.content.indexOf("»") + 2);
