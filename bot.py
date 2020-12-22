@@ -9,6 +9,7 @@ import requests
 import datetime
 from loggingChannel import sendLog
 from react import checkReact
+from prompts import checkForPrompts
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -90,10 +91,8 @@ async def on_message(message):
         lastBirthday = datetime.datetime(2019, 3, 31)
         print(await sendLog(log=(f'Resetting birthday clock to {lastBirthday.date()}.'), client=client))
 
-    # owo
-    if search("(^|\s)(u|o|♡|Ò|□|●|0)(u|w)(u|o|♡|Ó|□|●|0)", message.content.lower()):
-        file = discord.File("./images/owo.png", filename="image.png")
-        await message.channel.send(file=file)
+    # Respond to Prompts
+    await checkForPrompts(message, client)
 
 
 
