@@ -29,20 +29,44 @@ async def on_ready():
         print("IP Response == 200")
         ip = json.loads(r.content)
         print(f'IP: {ip["ip"]}')
-        
+
     # Loaded
     print(await sendLog(log=(f'{client.user} has connected to Discord!'), client=client))
 
     with open('status.json') as fs:
         data = json.load(fs)
     # print(await sendLog(log=(f'New status: -n:{data["activity"]["name"]}'), client=client))
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=data["activity"]["name"]))
+    await client.change_presence(
+        activity=discord.Activity(type=discord.ActivityType.listening, name=data["activity"]["name"]))
 
 
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
+
+    # Update Status
+    with open('status.json') as fs:
+        data = json.load(fs)
+    await client.change_presence(
+        activity=discord.Activity(type=discord.ActivityType.listening, name=data["activity"]["name"]))
+
+    # Remove DiscordSRV formatting
+    if (message.author.id == "779431244222955520") and (message.content.includes(" » ") == True):
+        message.content = message.content[message.content.index(" » "):]
+        print(await sendLog(log=f'Updated message: {message.content}', client=client))
+
+    # Check for Member in members.json
+    channel = message.channel
+    guild = message.guild
+    simply = False  # True if message will be sent to  minecraft
+
+    # Log message
+    print(f'{message.author.name} sent: {message.content} on Channel: {channel.id}')
+
+    if channel == "779436910841954354":
+        print("Message will be simplified.")
+        simplify = True
 
     mentions = message.mentions
 
