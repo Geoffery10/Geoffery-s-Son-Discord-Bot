@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 from re import search
 import json
 import requests
-from loggingChannel import sendLog
 import datetime
+from loggingChannel import sendLog
 from react import checkReact
 
 load_dotenv()
@@ -72,9 +72,30 @@ async def on_message(message):
         print("Message will be simplified.")
         simplify = True
 
+    # Store Mentions if Any
+    mentions = message.mentions
+
+    # React to message if appropriate
     await checkReact(message, client)
 
-    mentions = message.mentions
+    # React to a birthday
+    now = datetime.datetime.now()
+    global lastBirthday
+    if search("(^|\s)(happy\sb(irth)?(day)?)", message.content.lower()) and lastBirthday.date() < now.date():
+        print("Reacting to a birthday")
+        file = discord.File("./images/happybirthday.gif", filename="happybirthday.gif")
+        await message.channel.send(file=file)
+        lastBirthday = now
+    if search("(^!birthdayreset)", message.content.lower()) and message.author.id == 253710834553847808:
+        lastBirthday = datetime.datetime(2019, 3, 31)
+        print(await sendLog(log=(f'Resetting birthday clock to {lastBirthday.date()}.'), client=client))
+
+    # owo
+    if search("(^|\s)(u|o|♡|Ò|□|●|0)(u|w)(u|o|♡|Ó|□|●|0)", message.content.lower()):
+        file = discord.File("./images/owo.png", filename="image.png")
+        await message.channel.send(file=file)
+
+
 
 
 client.run(TOKEN)
