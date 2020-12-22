@@ -9,6 +9,7 @@ import json
 from dotenv import load_dotenv
 from fileManager import sendImage
 
+
 async def sendGif(client, channel, search_term, random):
     # gif start
     load_dotenv()
@@ -33,3 +34,30 @@ async def sendGif(client, channel, search_term, random):
 async def checkForCommands(message, client):
     if search("^(anime)", message.content.lower()):
         await sendGif(client, message.channel, "cute anime girl", random=False)
+
+    if search("^(selfie)", message.content.lower()):
+        DIR = './images/selfies/'
+        options = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
+        selfieNum = random.randint(0, (options - 1))
+        print(await sendLog(
+            log=f'{message.author.name} has asked for a selfie. Sending -> #{selfieNum}!',
+            client=client))
+        await sendImage(message, client, "selfie_", selfieNum, DIR)
+
+    if search("roll(_|\s)([0-9]+)d([0-9]+)", message.content.lower()):
+        value = 0
+        dice = [int(i) for i in message.content.split() if i.isdigit()]
+
+        print(len(dice))
+        if len(dice) == 2:
+            for i in range(dice[0]):
+                value = value + dice[1]
+            embed = discord.Embed(colour=discord.Colour(0x259944), url="https://discordapp.com",
+                                  description=f'You rolled {value} on your {dice[0]}d{dice[1]}. Good job! At the very least you get an A+ for effort so isn\'t that nice.')
+            embed.set_thumbnail(url="https://gilkalai.files.wordpress.com/2017/09/dice.png?w=640")
+            embed.set_author(name="Steve from Accounting", url="https://www.google.com/error",
+                             icon_url="https://www.topaccountingdegrees.org/wp-content/uploads/2015/08/Accounting-7.jpg")
+            await message.channel.send(embed=embed)
+
+
+
