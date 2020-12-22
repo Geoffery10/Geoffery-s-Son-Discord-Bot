@@ -59,5 +59,98 @@ async def checkForCommands(message, client):
                              icon_url="https://www.topaccountingdegrees.org/wp-content/uploads/2015/08/Accounting-7.jpg")
             await message.channel.send(embed=embed)
 
+    # Sins
+    if search("^(sins)", message.content.lower()):
+        await message.channel.send('[THIS WILL SHOW YOU PEOPLES SINS BUT IT\'S UNDER CONSTRUCTION]')
+
+    # Punch
+    if search("^(punch)", message.content.lower()):
+        await message.channel.send('[THIS WILL PUNCH PEOPLE BUT IT\'S UNDER CONSTRUCTION]')
+
+    # Grank
+    # if search("^(grank)", message.content.lower()):
+        # await message.channel.send('[THIS WILL SHOW RANK BUT IT\'S UNDER CONSTRUCTION]')
+
+    if search("^(ping)", message.content.lower()):
+        await message.channel.send('What are you expecting? Me to say pong back?')
+
+    if search("^(wtf)", message.content.lower()):
+        await message.channel.send('Rude!')
+
+    if search("^(nani)", message.content.lower()):
+        await message.channel.send('何')
+
+    if search("^(thispersondoesnotexist|tpdne)", message.content.lower()):
+        url = "https://fakeface.rest/face/json"
+        r = requests.get(url)
+        if r.status_code == 200:
+            thispersondoesnotexist = json.loads(r.content)
+            # print(top_gifs)
+            await message.channel.send(thispersondoesnotexist['image_url'])
+
+    if search("^(waifu)", message.content.lower()):
+        url = "https://www.thiswaifudoesnotexist.net/example-"
+        num = random.randint(0, 100000)
+        await message.channel.send(url+str(num)+".jpg")
+
+    if search("^(hot)", message.content.lower()):
+        file = discord.File("./video/Hot.mp4", filename="hot.mp4")
+        await message.channel.send(file=file)
+
+    if search("^(joke)", message.content.lower()):
+        url = "https://sv443.net/jokeapi/v2/joke/Any?blacklistFlags=racist&type=single"
+        r = requests.get(url)
+        if r.status_code == 200:
+            joke = json.loads(r.content)
+            await message.channel.send(joke['joke'])
+
+    if search("^(insult)", message.content.lower()):
+        url = "https://evilinsult.com/generate_insult.php?lang=en&type=json"
+        r = requests.get(url)
+        if r.status_code == 200:
+            insult = json.loads(r.content)
+            await message.channel.send(insult['insult'])
+
+    if search("^(fact)", message.content.lower()):
+        url = "https://uselessfacts.jsph.pl/random.json?language=en"
+        r = requests.get(url)
+        if r.status_code == 200:
+            fact = json.loads(r.content)
+            await message.channel.send(fact['text'])
+
+    if search("^(advi(s|c)e)", message.content.lower()):
+        url = "https://api.adviceslip.com/advice"
+        r = requests.get(url)
+        if r.status_code == 200:
+            advice = json.loads(r.content)
+            await message.channel.send(advice["slip"]['advice'])
+
+    if search("^(cat|kitty)", message.content.lower()):
+        cat_api = os.getenv('THE_CAT_API')
+        url = "https://api.thecatapi.com/v1/images/search?api_key=" + cat_api
+        r = requests.get(url)
+        if r.status_code == 200:
+            cat = json.loads(r.content)
+            await message.channel.send(cat[0]["url"])
+
+    if search("^(yesorno)", message.content.lower()):
+        url = "https://yesno.wtf/api"
+        r = requests.get(url)
+        if r.status_code == 200:
+            yesorno = json.loads(r.content)
+            await message.channel.send(yesorno['image'])
+
+    if search("^(zerotier)", message.content.lower()):
+        await message.channel.send('[THIS WILL SHOW YOU HOW TO SETUP ZERO TIER BUT IT\'S UNDER CONSTRUCTION]')
+
+    if search("^(r2loadout)", message.content.lower()):
+        await message.channel.send('[THIS WILL CREATE A RANDOM LOADOUT FOR YOU BUT IT\'S UNDER CONSTRUCTION]')
+
+    if search("^(random)", message.content.lower()):
+        await message.channel.send('[THIS WILL SEND A RANDOM COMMAND BUT IT\'S UNDER CONSTRUCTION]')
+
+    if search("^(help)", message.content.lower()):
+        await message.channel.send('[LOOKS LIKE YOU NEED HELP... TOO BAD IT\'S UNDER CONSTRUCTION. ASK GEOFFERY.]')
+
 
 
