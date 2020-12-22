@@ -7,6 +7,8 @@ from re import search
 import json
 import requests
 from loggingChannel import sendLog
+import datetime
+from react import checkReact
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -17,6 +19,7 @@ intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 
 myid = '<@735550470675759106>'
+lastBirthday = datetime.datetime(2019, 3, 31)
 
 
 @client.event
@@ -64,9 +67,12 @@ async def on_message(message):
     # Log message
     print(f'{message.author.name} sent: {message.content} on Channel: {channel.id}')
 
-    if channel == "779436910841954354":
+    # Check if message should be simplified for Minecraft
+    if channel.id == 779436910841954354 or channel.id == 779553090097250307:
         print("Message will be simplified.")
         simplify = True
+
+    await checkReact(message, client)
 
     mentions = message.mentions
 
