@@ -67,6 +67,11 @@ async def on_message(message):
     # Store Mentions if Any
     mentions = message.mentions
 
+    if len(mentions) > 0:
+        if mentions[0].id == 735550470675759106:
+            if search("^!quit", message.content.lower()) and message.channel == client.get_channel(789190323326025789):
+                await client.logout()
+
     # React to message if appropriate
     await checkReact(message, client)
 
