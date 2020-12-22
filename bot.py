@@ -56,7 +56,7 @@ async def on_message(message):
         activity=discord.Activity(type=discord.ActivityType.listening, name=data["activity"]["name"]))
 
     # Remove DiscordSRV formatting
-    if (message.author.id == "779431244222955520") and (message.content.includes(" » ") == True):
+    if (message.author.id == "779431244222955520") and search("(\s»\s)", message.content.lower()):
         message.content = message.content[message.content.index(" » "):]
         print(await sendLog(log=f'Updated message: {message.content}', client=client))
 
@@ -94,7 +94,8 @@ async def on_message(message):
     # Respond to Prompts
     await checkForPrompts(message, client)
 
-
+    # Respond to Commands
+    
 
 
 client.run(TOKEN)

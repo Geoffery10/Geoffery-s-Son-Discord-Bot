@@ -46,6 +46,18 @@ async def checkForPrompts(message, client):
             client=client))
         await sendImage(message, client, "heresy_", heresyNum, DIR)
 
-    if search("ravioli ravioli", message.content.lower()):
+    if search("(^|\s)(ravioli ravioli)($|\s)", message.content.lower()):
         file = discord.File("./images/ravioli.gif", filename="ravioli.gif")
+        await message.channel.send(file=file)
+
+    if search("(^|\s)(hentai)($|\s)", message.content.lower()):
+        file = discord.File("./images/hentai.gif", filename="hentai.gif")
+        await message.channel.send(file=file)
+
+    if search("(^|\s)(hello there)($|\s)", message.content.lower()):
+        file = discord.File("./images/generalkenobi.gif", filename="generalkenobi.gif")
+        await message.channel.send(file=file)
+
+    if search("(^|\s)(trap)(s|$|\s)(s|$|\s)", message.content.lower()):
+        file = discord.File("./images/trap.gif", filename="trap.gif")
         await message.channel.send(file=file)
