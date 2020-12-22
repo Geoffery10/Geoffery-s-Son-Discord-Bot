@@ -71,6 +71,15 @@ async def checkForCommands(message, client):
     # if search("^(grank)", message.content.lower()):
         # await message.channel.send('[THIS WILL SHOW RANK BUT IT\'S UNDER CONSTRUCTION]')
 
+    if search("^(mcinfo)", message.content.lower()):
+        url = "https://api.ipify.org/?format=json"
+        ip = "error"
+        r = requests.get(url)
+        if r.status_code == 200:
+            ip = json.loads(r.content)
+            print(f'IP: {ip["ip"]}')
+        await message.channel.send(f'Minecraft Server IP: {ip["ip"]}:26969')
+
     if search("^(ping)", message.content.lower()):
         await message.channel.send('What are you expecting? Me to say pong back?')
 

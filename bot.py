@@ -26,23 +26,13 @@ lastBirthday = datetime.datetime(2019, 3, 31)
 
 @client.event
 async def on_ready():
-    # Getting IP
-    url = "https://api.ipify.org/?format=json"
-    ip = "error"
-    r = requests.get(url)
-    if r.status_code == 200:
-        print("IP Response == 200")
-        ip = json.loads(r.content)
-        print(f'IP: {ip["ip"]}')
-
     # Loaded
     print(await sendLog(log=(f'{client.user} has connected to Discord!'), client=client))
 
     with open('status.json') as fs:
         data = json.load(fs)
-    # print(await sendLog(log=(f'New status: -n:{data["activity"]["name"]}'), client=client))
     await client.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.listening, name=data["activity"]["name"]))
+        activity=discord.Activity(type=discord.ActivityType.playing, name=data["activity"]["name"]))
 
 
 @client.event
@@ -54,7 +44,7 @@ async def on_message(message):
     with open('status.json') as fs:
         data = json.load(fs)
     await client.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.listening, name=data["activity"]["name"]))
+        activity=discord.Activity(type=discord.ActivityType.playing, name=data["activity"]["name"]))
 
     # Remove DiscordSRV formatting
     if (message.author.id == "779431244222955520") and search("(\s»\s)", message.content.lower()):
