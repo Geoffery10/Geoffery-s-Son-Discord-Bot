@@ -10,6 +10,7 @@ import datetime
 from loggingChannel import sendLog
 from react import checkReact
 from prompts import checkForPrompts
+from commands import checkForCommands
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -95,7 +96,10 @@ async def on_message(message):
     await checkForPrompts(message, client)
 
     # Respond to Commands
-    
+    if search("(^!\S)", message.content):
+        print(await sendLog(log=(f'Detected a command: {message.content[1:]}'), client=client))
+        message.content = message.content[1:]
+        await checkForCommands(message, client)
 
 
 client.run(TOKEN)
