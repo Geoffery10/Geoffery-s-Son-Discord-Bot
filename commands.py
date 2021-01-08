@@ -106,7 +106,7 @@ async def checkForCommands(message, client):
         url = "https://random-user.p.rapidapi.com/getuser"
 
         headers = {
-            'x-rapidapi-key': "dc02b90e2emsh6be8145fc6dd65ep198267jsnf83b7e473ef7",
+            'x-rapidapi-key': os.getenv('x-rapidapi-key'),
             'x-rapidapi-host': "random-user.p.rapidapi.com"
         }
 
