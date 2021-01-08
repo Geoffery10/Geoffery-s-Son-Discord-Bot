@@ -10,22 +10,33 @@ survivors = ['https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/8/8e/Acrid
     'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/2/25/Loader.png?version=6ab3ac5a71553bcc805fc98bfa61a8a0',
     'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/thumb/0/00/Mercenary.png/128px-Mercenary.png?version=049e8137daf69cb645908ac7affeace5',
     'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/thumb/6/6f/MUL-T.png/128px-MUL-T.png?version=3d4235ee57a9b7145d79e9d342eb3e03',
-    'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/7/74/REX.png?version=ddc456b15c26f92e4fc52fcd911c081b']
+    'https://gamepedia.cursecdn.com/riskofrain2_gamepedia_en/7/74/REX.png?version=ddc456b15c26f92e4fc52fcd911c081b',
+    'https://cdn.thunderstore.io/live/repository/icons/Rein-Sniper-1.4.1.png.128x128_q85.png',
+    'https://cdn.thunderstore.io/live/repository/icons/Rein-RogueWisp-2.1.14.png.128x128_q85.png',
+    'https://cdn.discordapp.com/attachments/469291841859092488/782568907009425418/texEnforcerIcon.png',
+    'https://static.wikia.nocookie.net/riskofrain2_gamepedia_en/images/1/1f/Bandit.png/revision/latest?cb=20200129200645']
 whites = ['Armor-Piercing Rounds', 'Backup Magazine', 'Bundle of Fireworks', 'Bustling Fungus', 'Crowbar', 'Energy Drink', 'Focus Crystal', 'Fresh Meat',
       'Gasoline', 'Lens-Maker\'s Glasses', 'Medkit', 'Monster Tooth', 'Paul\'s Goat Hoof', 'Personal Shield Generator', 'Repulsion Armor Plate', 'Rusted Key',
       'Soldier\'s Syringe', 'Sticky Bomb', 'Stun Grenade', 'Topaz Brooch', 'Tougher Times', 'Tri-Tip Dagger', 'Warbanner']
+
 greens = ['AtG Missile Mk. 1', 'Bandolier', 'Berzerker\'s Pauldron', 'Chronobauble', 'Death Mark', 'Fuel Cell', 'Ghor\'s Tome', 'Harvester\'s Scythe',
 'Hopoo Feather', 'Infusion', 'Kjaro\'s Bandt', 'Leeching Seed', 'Lepton Daisy', 'Old Guillotine', 'Old War Stealthkit', 'Predatory Instincts',
 'Razorwire', 'Red Whip', 'Rose Buckler', 'Runald\'s Band', 'Squid Polyp', 'Ukulele', 'War Horn', 'Wax Quail', 'Will-o\'-the-wisp']
+
 reds = ['57 Leaf Clover', 'Aegis', 'Alien Head', 'Brainstalks', 'Brilliant Behemoth', 'Ceremonial Dagger', 'Dio\'s Best Friend', 'Frost Relic', 'H3AD-5T v2',
 'Happiest Mask', 'Hardlight Afterburner', 'Interstellar Desk Plant', 'N\'kuhana\'s Opinion', 'Rejuvenation Rack', 'Resonance Disc', 'Sentient Meat Hook',
-'Shattering Justice', 'Soulbound Catalyst', 'Unstable Tesla Coil', 'Wake of Vultures']
+'Shattering Justice', 'Soulbound Catalyst', 'Unstable Tesla Coil', 'Wake of Vultures', '[MOD] Her Biting Embrace', '[MOD] Ifrit\'s Distinction',
+'[MOD] N\'kuhana\'s Retort', '[MOD] Silence Between Two Strikes', '[MOD] Spectral Circlet']
+
 yellows = ['Genesis Loop', 'Little Disciple', 'Mired Urn', 'Molten Perforator', 'Queen\'s Gland', 'Shatterspleen', 'Titanic Knurl']
+
 equipments = ['Blast Shower', 'Disposable Missile Launcher', 'Eccentric Vase', 'Foreign Fruit', 'Forgive Me Please', 'Gnarled Woodsprite', 'Gorag\'s Opus', 'Jade Elephant',
 'Milky Chrysalis', 'Ocular HUD', 'Preon Accumulator', 'Primordial Cube', 'Radar Scanner', 'Royal Capacitor', 'Sawmerang', 'Super Massive Leech', 'The Back-up',
 'The Crowdfunder', 'Volcanic Egg']
+
 lunars = ['Beads of Fealty', 'Brittle Crown', 'Corpsebloom', 'Defiant Gouge', 'Focused Convergence', 'Gesture of the Drowned', 'Mercurial Rachis', 'Purity',
 'Shaped Glass', 'Strides of Heresy', 'Transcendence', 'Visions of Heresy']
+
 lunarEquipments = ['Effigy of Grief', 'Glowing Meteorite', 'Eccentric Vase', 'Helfire Tincture', 'Spinel Tonic']
 
 
