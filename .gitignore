@@ -1,7 +1,8 @@
-images
 video
 node_modules
 auth.json
 auth.json
 memberData.json
 .env
+images\anime
+images\heresy
