@@ -4,5 +4,8 @@ auth.json
 auth.json
 memberData.json
 .env
-**/images/anime
-**/images/heresy
+images/anime
+images/heresy
+images/riskorrain2
+images/riskofrain2/*
+images/thispersondoesnotexist/*
