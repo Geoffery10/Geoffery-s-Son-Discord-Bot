@@ -48,6 +48,9 @@ async def checkReact(message, client):
     if search("(^|\s)(report|sus)(\s|$)", message.content.lower()):
         print("Reacting to a report!")
         await message.add_reaction(r":among_us_report:797137767947436043")
+    if search("(^|\s)(fbi|f.b.i|f.b.i.)(\s|$)", message.content.lower()):
+        print("Reacting to FBI!")
+        await message.add_reaction(r":fbi:797174135993532446")
     mentions = message.mentions
     if len(mentions) > 0:
         if mentions[0] == client.user:
