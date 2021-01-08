@@ -29,7 +29,7 @@ async def checkForPrompts(message, client):
     if search("(^|\s)(sauce)($|\s)", message.content.lower()):
         sauceNum = random.randint(0,321861)
 
-        print(await sendLog(log=f'{message.author.name} requested sauce. The sauce found was: {sauceNum} \nhttps://nhentai.com/g/{sauceNum}', client=client))
+        print(await sendLog(log=f'{message.author.name} requested sauce. The sauce found was: {sauceNum} \nhttps://nhentai.net/g/{sauceNum}', client=client))
         description = "Here is the sauce in which you desire: " + str(sauceNum)
         embed = discord.Embed(colour=discord.Colour(0xed2553), url="https://discordapp.com",
                               description=description)

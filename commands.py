@@ -69,7 +69,7 @@ async def checkForCommands(message, client):
 
     # Grank
     # if search("^(grank)", message.content.lower()):
-        # await message.channel.send('[THIS WILL SHOW RANK BUT IT\'S UNDER CONSTRUCTION]')
+    # await message.channel.send('[THIS WILL SHOW RANK BUT IT\'S UNDER CONSTRUCTION]')
 
     if search("^(mcinfo)", message.content.lower()):
         url = "https://api.ipify.org/?format=json"
@@ -100,18 +100,60 @@ async def checkForCommands(message, client):
     if search("^(waifu)", message.content.lower()):
         url = "https://www.thiswaifudoesnotexist.net/example-"
         num = random.randint(0, 100000)
-        await message.channel.send(url+str(num)+".jpg")
+        await message.channel.send(url + str(num) + ".jpg")
+
+    if search("^((id)|(fake(\s|_|)id))", message.content.lower()):
+        url = "https://random-user.p.rapidapi.com/getuser"
+
+        headers = {
+            'x-rapidapi-key': "dc02b90e2emsh6be8145fc6dd65ep198267jsnf83b7e473ef7",
+            'x-rapidapi-host': "random-user.p.rapidapi.com"
+        }
+
+        r = requests.get(url, headers=headers)
+        if r.status_code == 200:
+            id = json.loads(r.content)
+            id = id['results'][0]
+            print(id)
+            embed = discord.Embed(colour=discord.Colour(0xb8b8b8), description=f'ID for {id["name"]["first"]} {id["name"]["last"]}:')
+
+            embed.set_thumbnail(url=id["picture"]["large"])
+            embed.set_author(name=f'{id["name"]["title"]} {id["name"]["first"]} {id["name"]["last"]}',
+                             icon_url=id["picture"]["large"], url=id["picture"]["large"])
+            location = id["location"]
+            embed.add_field(name="Location", value=f'{location["street"]["number"]} {location["street"]["name"]} {location["city"]}, {location["state"]}, {location["country"]}, {location["postcode"]}')
+            embed.add_field(name="Email", value=f'Email: {id["email"]} \nUsername: {id["login"]["username"]} \nPassword: {id["login"]["password"]}')
+            embed.add_field(name="Phone Number", value=f'{id["cell"]}')
+            embed.add_field(name="Date of Birth", value=f'Age: {id["dob"]["age"]} DOB: {id["dob"]["date"]}')
+            if id['id']['value'] == id['id']['value'] and id['id']['value'] is not None:
+                embed.add_field(name="ID", value=f'Type: {id["id"]["name"]} Value: {id["id"]["value"]}')
+
+            await message.channel.send(embed=embed)
 
     if search("^(hot)", message.content.lower()):
         file = discord.File("./video/Hot.mp4", filename="hot.mp4")
         await message.channel.send(file=file)
 
     if search("^(joke)", message.content.lower()):
-        url = "https://sv443.net/jokeapi/v2/joke/Any?blacklistFlags=racist&type=single"
-        r = requests.get(url)
-        if r.status_code == 200:
-            joke = json.loads(r.content)
-            await message.channel.send(joke['joke'])
+        num = random.randint(0, 3)
+        if num >= 1:
+            print("Sending joke from joke3.p.rapidapi")
+            url = "https://joke3.p.rapidapi.com/v1/joke"
+            headers = {
+                'x-rapidapi-key': "dc02b90e2emsh6be8145fc6dd65ep198267jsnf83b7e473ef7",
+                'x-rapidapi-host': "joke3.p.rapidapi.com"
+            }
+            r = requests.get(url, headers=headers)
+            if r.status_code == 200:
+                joke = json.loads(r.content)
+                await message.channel.send(joke['content'])
+        else:
+            print("Sending joke from sv443.net/jokeapi")
+            url = "https://sv443.net/jokeapi/v2/joke/Any?blacklistFlags=racist&type=single"
+            r = requests.get(url)
+            if r.status_code == 200:
+                joke = json.loads(r.content)
+                await message.channel.send(joke['joke'])
 
     if search("^(insult)", message.content.lower()):
         url = "https://evilinsult.com/generate_insult.php?lang=en&type=json"
@@ -142,6 +184,13 @@ async def checkForCommands(message, client):
             cat = json.loads(r.content)
             await message.channel.send(cat[0]["url"])
 
+    if search("^(dog|pup)", message.content.lower()):
+        url = "https://random.dog/woof.json?ref=apilist.fun"
+        r = requests.get(url)
+        if r.status_code == 200:
+            dog = json.loads(r.content)
+            await message.channel.send(dog["url"])
+
     if search("^(yesorno)", message.content.lower()):
         url = "https://yesno.wtf/api"
         r = requests.get(url)
@@ -160,6 +209,3 @@ async def checkForCommands(message, client):
 
     if search("^(help)", message.content.lower()):
         await message.channel.send('[LOOKS LIKE YOU NEED HELP... TOO BAD IT\'S UNDER CONSTRUCTION. ASK GEOFFERY.]')
-
-
-
