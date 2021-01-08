@@ -2,7 +2,6 @@ import discord
 from re import search
 import random
 from random import randrange
-from random import randint
 from loggingChannel import sendLog
 import os, os.path
 import requests
@@ -34,20 +33,7 @@ async def sendGif(client, channel, search_term, random):
 
 async def checkForCommands(message, client):
     if search("^(anime)", message.content.lower()):
-        localOrOnline = randint(1, 3)
-        if localOrOnline >= 2: #Online
-            print(await sendLog(
-                log=f'{message.author.name} has requested anime! Sending online gif!',
-                client=client))
-            await sendGif(client, message.channel, "cute anime girl", random=False)
-        else:
-            DIR = './images/anime/'
-            options = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
-            animeNum = random.randint(0, (options - 1))
-            print(await sendLog(
-                log=f'{message.author.name} has requested anime! Sending anime#{animeNum}!',
-                client=client))
-            await sendImage(message, client, "anime_", animeNum, DIR)
+        await sendGif(client, message.channel, "cute anime girl", random=False)
 
     if search("^(selfie)", message.content.lower()):
         DIR = './images/selfies/'
