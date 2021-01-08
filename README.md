@@ -1,9 +1,9 @@
+<p align="center">
+<img align="center" width="200" height="200" src="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/blob/master/images/selfies/selfie_04.png?raw=true">
+</p>
+
 # Geoffery's Son Discord Bot
 This is a Discord Bot for my own personal server. Most of his abilities are just for fun with a few useful commands.
- 
-<p align="center">
-<img align="center" width="540" height="303" src="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/blob/master/images/anime/anime_01.gif?raw=true">
-</p>
 
 ## Table of Contents
 * [Commands](#license)
