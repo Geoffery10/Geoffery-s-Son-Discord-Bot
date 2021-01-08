@@ -2,6 +2,7 @@ import discord
 from re import search
 import random
 from random import randrange
+from random import randint
 from loggingChannel import sendLog
 import os, os.path
 import requests
@@ -33,7 +34,20 @@ async def sendGif(client, channel, search_term, random):
 
 async def checkForCommands(message, client):
     if search("^(anime)", message.content.lower()):
-        await sendGif(client, message.channel, "cute anime girl", random=False)
+        localOrOnline = randint(1, 3)
+        if localOrOnline >= 2:  # Online
+            print(await sendLog(
+                log=f'{message.author.name} has requested anime! Sending online gif!',
+                client=client))
+            await sendGif(client, message.channel, "cute anime girl", random=False)
+        else:
+            DIR = './images/anime/'
+            options = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
+            animeNum = random.randint(0, (options - 1))
+            print(await sendLog(
+                log=f'{message.author.name} has requested anime! Sending anime#{animeNum}!',
+                client=client))
+            await sendImage(message, client, "anime_", animeNum, DIR)
 
     if search("^(selfie)", message.content.lower()):
         DIR = './images/selfies/'
@@ -197,15 +211,52 @@ async def checkForCommands(message, client):
         if r.status_code == 200:
             yesorno = json.loads(r.content)
             await message.channel.send(yesorno['image'])
+            await message.channel.send(yesorno['answer'].capitalize())
 
     if search("^(zerotier)", message.content.lower()):
         await message.channel.send('[THIS WILL SHOW YOU HOW TO SETUP ZERO TIER BUT IT\'S UNDER CONSTRUCTION]')
 
     if search("^(r2loadout)", message.content.lower()):
-        await message.channel.send('[THIS WILL CREATE A RANDOM LOADOUT FOR YOU BUT IT\'S UNDER CONSTRUCTION]')
+        from r2loadout import get_r2loadout
+        await message.channel.send(embed=get_r2loadout())
 
     if search("^(random)", message.content.lower()):
         await message.channel.send('[THIS WILL SEND A RANDOM COMMAND BUT IT\'S UNDER CONSTRUCTION]')
 
     if search("^(help)", message.content.lower()):
-        await message.channel.send('[LOOKS LIKE YOU NEED HELP... TOO BAD IT\'S UNDER CONSTRUCTION. ASK GEOFFERY.]')
+        embed = discord.Embed(title="Help", colour=discord.Colour(0x9b9b9b), url="https://discordapp.com",
+                              description="This is a list of commands you can use with Geoffery's Son."
+                                          "\n\n**OwO**\nConfuses me."
+                                          "\n\n**Is it possible to learn this power?**\nNo, leave us..."
+                                          "\n\n**The sun is a deadly laser!**\nNot anymore there's a blanket!"
+                                          "\n\n**10th/9th time!**\n10th/9th time!"
+                                          "\n\n**Sauce**\nThe work of the devil."
+                                          "\n\n**Heresy**\nWe must deal with is immediately!"
+                                          "\n\n**Ravioli ravioli**\nDragon Loli"
+                                          "\n\n**Hentai**\nWait that's illegal!"
+                                          "\n\n**Hello there**\nGeneral Kenobi!"
+                                          "\n\n**Trap**\nWhat do you think?"
+                                          "\n\n**!anime**\nAnime gifs for everyone!"
+                                          "\n\n**!roll 1d6**\nRolls dice based on what you send. For example !roll 3d2 will roll 3 d2 dice and than send the result."
+                                          "\n\n**!sins @yourfiends**\nThis where inform you of the sins of your friends. I'd watch out for Steve from accounting..."
+                                          "\n\n**!punch @yourfiends**\nPunch your friends over the internet from a safe distance."
+                                          "\n\n**!mcinfo**\nInfo on the Minecraft Server if one is running."
+                                          "\n\n**!ping**\nWhat do you expect?"
+                                          "\n\n**!wtf**\nWhy is this a command?"
+                                          "\n\n**!nani**\nIt can translate to weeb characters."
+                                          "\n\n**!thispersondoesnotexist or !tpdne**\nThe smart ai over at [thispersondoesnotexist](https://thispersondoesnotexist.com) will send us a face that does not exist."
+                                          "\n\n**!waifu**\nThe smart ai over at [thiswaifudoesnotexist](https://www.thiswaifudoesnotexist.net) will send us a waifu that does not exist."
+                                          "\n\n**!id or !fake id**\nThis will create your new identity."
+                                          "\n\n**!hot**\nBRRRRRRRR!!"
+                                          "\n\n**!joke**\nI'll tell you a joke!"
+                                          "\n\n**!insult**\nI'll insult you! Be prepared some of these are pretty terrible..."
+                                          "\n\n**!fact**\nI'll tell you a random fact."
+                                          "\n\n**!advice**\nI'll give you some advice."
+                                          "\n\n**!cat or !dog**\nI'll send a random image of a kitty or dogo!"
+                                          "\n\n**!yesorno**\nI'll tell you if the answer is yes or no."
+                                          "\n\n**!r2loadout**\nA random load out for a Risk of Rain 2 Command run. I hope Rnjesus is on your side."
+                                          "\n\n**!help**\nConsidering your already here you probably already know this one...")
+
+        embed.set_author(name="Geoffery's Son", url="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot",
+                         icon_url="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/blob/Python/images/selfies/selfie_04.png?raw=true")
+        await message.channel.send(embed=embed)
