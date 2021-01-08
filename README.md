@@ -10,36 +10,36 @@ This is a Discord Bot for my own personal server. Most of his abilities are just
 * [License](#license)
 
 ## Commands
-* anime: Anime gif if you send anime_{number} then you can call a specific gif
-* hentai: That's illegal!
-* owo or uwu: owo
-* sauce: sends sauce
-* heresy: Yikes that bad?
-* ravioli ravioli: DON'T LEWD!
-* hello there: It's a star wars reference
-* trap: Danger!
-* !ping: Pong probably
-* !r2loadout: Gives you a complete random Risk of Rain 2 loadout to use in your next Artifact of Command run.
-* !mctime: The time in the Minecraft Server.
-* !mcseed: The seed of the Minecraft Server.
-* !wtf: That's mean!
-* !hot: HOT!
-* !roll_d<Your Number Here>: Roll any dice. Example: !roll_d20
-* !nani: What?
+* OwO: Confuses me.
+* Is it possible to learn this power?: No, leave us...
+* The sun is a deadly laser!: Not anymore there's a blanket!
+* 10th/9th time!: 10th/9th time!
+* Sauce: The work of the devil.
+* Heresy: We must deal with is immediately!
+* Ravioli ravioli: Dragon Loli
+* Hentai: Wait that's illegal!
+* Hello there: General Kenobi!
+* Trap: What do you think?
+* !anime: Anime gifs for everyone!
+* !roll 1d6: Rolls dice based on what you send. For example !roll 3d2 will roll 3 d2 dice and than send the result.
+* !sins @yourfiends: This where inform you of the sins of your friends. I'd watch out for Steve from accounting...
+* !punch @yourfiends: Punch your friends over the internet from a safe distance.
+* !mcinfo: Info on the Minecraft Server if one is running.
+* !ping: What do you expect?
+* !wtf: Why is this a command?
+* !nani: It can translate to weeb characters.
+* !thispersondoesnotexist or !tpdne: The smart ai over at thispersondoesnotexist will send us a face that does not exist.
+* !waifu: The smart ai over at thiswaifudoesnotexist will send us a waifu that does not exist.
+* !id or !fake id: This will create your new identity.
+* !hot: BRRRRRRRR!!
+* !joke: I'll tell you a joke!
+* !insult: I'll insult you! Be prepared some of these are pretty terrible...
 * !fact: I'll tell you a random fact.
-* !advise: I'll tell you a some advice if you are that desperate...
-* !joke: I'll tell you a joke.
-* !insultme: I'll tell you a different kind of joke...
-* !yesorno: I'll tell you yes or no.
-* !selfie: I'll send you a random picture of me.
-* !cat: Random cat pictures from Tumblr.
-* !thispersondoesnotexist: Generates a person that does not exist.
-* !waifu: Generates a waifu for you to love. <3
-* !random: One command sent at random...
-* !lastNum: I'll tell you the number of the last gif I sent. (Number 94 of an anime gif would equal anime_94)
-* !birthdayReset: Reset the cooldown on birthday messages.
-* !who is my \"Family Member Here\"": I will reveal some of my relations...
-* !help: Shows you all these commands
+* !advice: I'll give you some advice.
+* !cat or !dog: I'll send a random image of a kitty or dogo!
+* !yesorno: I'll tell you if the answer is yes or no.
+* !r2loadout: A random load out for a Risk of Rain 2 Command run. I hope Rnjesus is on your side.
+* !help: Sends this list.
  
 ## License
 This code is was created and owned by me. You are free to use it in your own projects without credit (Just don't submit it to your Professor because that's a bad idea).
