@@ -11,3 +11,4 @@ old js/*
 *.pyc
 .idea/workspace.xml
 __pycache__/commands.cpython-38.pyc
+.idea/workspace.xml
