@@ -80,10 +80,11 @@ async def on_message(message):
     now = datetime.datetime.now()
     global lastBirthday
     if search("(^|\s)(happy\sb(irth)?(day)?)", message.content.lower()) and lastBirthday.date() < now.date():
-        print("Reacting to a birthday")
-        file = discord.File("./images/happybirthday.gif", filename="happybirthday.gif")
-        await message.channel.send(file=file)
-        lastBirthday = now
+        async with message.channel.typing():
+            print("Reacting to a birthday")
+            file = discord.File("./images/happybirthday.gif", filename="happybirthday.gif")
+            await message.channel.send(file=file)
+            lastBirthday = now
     if search("(^!birthdayreset)", message.content.lower()) and message.author.id == 253710834553847808:
         lastBirthday = datetime.datetime(2019, 3, 31)
         print(await sendLog(log=(f'Resetting birthday clock to {lastBirthday.date()}.'), client=client))
