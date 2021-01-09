@@ -32,6 +32,28 @@ async def sendGif(client, channel, search_term, random):
         top_8gifs = None
 
 
+async def getGif(client, search_term, random):
+    # gif start
+    load_dotenv()
+    apikey = os.getenv('TENOR_API_KEY')
+    lmt = 50
+    url = "https://api.tenor.com/v1/search?q="
+    if random:
+        url = "https://api.tenor.com/v1/random?q="
+        lmt = 1
+    r = requests.get(url + ("%s&key=%s&limit=%s" % (search_term, apikey, lmt)))
+    if r.status_code == 200:
+        # load the GIFs using the urls for the smaller GIF sizes
+        top_gifs = json.loads(r.content)
+        # print(top_gifs)
+        selected_gif = top_gifs['results'][randrange(lmt)]
+        print(await sendLog(log=("Gif selected " + selected_gif["url"]), client=client))
+        return selected_gif["url"]
+    else:
+        top_8gifs = None
+    return "https://media2.giphy.com/media/YyKPbc5OOTSQE/giphy.gif"
+
+
 async def checkForCommands(message, client):
     if search("^(anime)", message.content.lower()):
         localOrOnline = randint(1, 3)
@@ -79,7 +101,30 @@ async def checkForCommands(message, client):
 
     # Punch
     if search("^(punch)", message.content.lower()):
-        await message.channel.send('[THIS WILL PUNCH PEOPLE BUT IT\'S UNDER CONSTRUCTION]')
+        mentions = message.mentions
+        if len(mentions) > 0:
+            if mentions[0].id == 786698404927504385:
+                embed = discord.Embed(title=f"Punching {message.author.name}", colour=discord.Colour(0xff0000),
+                                      description=f"Rest in peace {message.author.mention}. You better not try to hurt her again...")
+                embed.set_thumbnail(url=message.author.avatar_url)
+                embed.set_author(name="Steve from Accounting",
+                                 icon_url="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/blob/master/images/punch_icon.png?raw=true")
+                searchTerm = "anime punch"
+            else:
+                embed = discord.Embed(title=f"Punching {mentions[0].name}", colour=discord.Colour(0xff0000),
+                                      description=f"Rest in peace {mentions[0].mention}")
+                embed.set_thumbnail(url=mentions[0].avatar_url)
+                rng = randint(1, 2)
+                if rng == 2:
+                    searchTerm = "punch"
+                else:
+                    searchTerm = "anime punch"
+                embed.set_author(name="Steve from Accounting",
+                                 icon_url="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/blob/master/images/punch_icon.png?raw=true")
+            await message.channel.send(embed=embed)
+            await sendGif(client, message.channel, searchTerm, random=False)
+        else:
+            await message.channel.send('You need to @ mention your enemy to punch them.')
 
     # Grank
     # if search("^(grank)", message.content.lower()):
@@ -129,14 +174,17 @@ async def checkForCommands(message, client):
             id = json.loads(r.content)
             id = id['results'][0]
             print(id)
-            embed = discord.Embed(colour=discord.Colour(0xb8b8b8), description=f'ID for {id["name"]["first"]} {id["name"]["last"]}:')
+            embed = discord.Embed(colour=discord.Colour(0xb8b8b8),
+                                  description=f'ID for {id["name"]["first"]} {id["name"]["last"]}:')
 
             embed.set_thumbnail(url=id["picture"]["large"])
             embed.set_author(name=f'{id["name"]["title"]} {id["name"]["first"]} {id["name"]["last"]}',
                              icon_url=id["picture"]["large"], url=id["picture"]["large"])
             location = id["location"]
-            embed.add_field(name="Location", value=f'{location["street"]["number"]} {location["street"]["name"]} {location["city"]}, {location["state"]}, {location["country"]}, {location["postcode"]}')
-            embed.add_field(name="Email", value=f'Email: {id["email"]} \nUsername: {id["login"]["username"]} \nPassword: {id["login"]["password"]}')
+            embed.add_field(name="Location",
+                            value=f'{location["street"]["number"]} {location["street"]["name"]} {location["city"]}, {location["state"]}, {location["country"]}, {location["postcode"]}')
+            embed.add_field(name="Email",
+                            value=f'Email: {id["email"]} \nUsername: {id["login"]["username"]} \nPassword: {id["login"]["password"]}')
             embed.add_field(name="Phone Number", value=f'{id["cell"]}')
             embed.add_field(name="Date of Birth", value=f'Age: {id["dob"]["age"]} DOB: {id["dob"]["date"]}')
             if id['id']['value'] == id['id']['value'] and id['id']['value'] is not None:

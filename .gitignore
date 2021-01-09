@@ -9,3 +9,5 @@ images/thispersondoesnotexist/*
 old js/*
 .idea/*
 *.pyc
+.idea/workspace.xml
+__pycache__/commands.cpython-38.pyc
