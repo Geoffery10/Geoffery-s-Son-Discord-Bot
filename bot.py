@@ -94,7 +94,7 @@ async def on_message(message):
 
     # Respond to Commands
     if search("(^!\S)", message.content):
-        print(await sendLog(log=(f'Detected a command: {message.content[1:]}'), client=client))
+        # print(await sendLog(log=(f'Detected a command: {message.content[1:]}'), client=client))
         message.content = message.content[1:]
         await checkForCommands(message, client)
 

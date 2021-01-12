@@ -16,6 +16,9 @@ async def checkForPrompts(message, client):
         file = discord.File("./video/Palpatine_00.mp4", filename="palpatine.mp4")
         await message.channel.send(file=file)
 
+    if search("(^|\s)(sand)($|\s)", message.content.lower()):
+        await message.channel.send("https://pa1.narvii.com/6995/64746a9cf49d6c306c861b2c0d0029b6be40c807r1-480-240_hq.gif")
+
     if search("(the sun is a deadly la(z|s)er)", message.content.lower()):
         file = discord.File("./video/Blanket.mp4", filename="video.mp4")
         await message.channel.send(file=file)
