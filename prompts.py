@@ -29,6 +29,9 @@ async def checkForPrompts(message, client):
     if search("^9th time", message.content.lower()):
         await message.channel.send("10th time!")
 
+    if search("(^|\s)(badonkers|dobonhonkeros|dohoonkabhankoloos|tonhongerekoogers|serious honkers|bonkhonagahoogs|humungous hungolomghnonoloughongous|new anime plot)($|\s|!)", message.content.lower()):
+        await message.channel.send("https://www.youtube.com/watch?v=7yaCKsb0vUg")
+
     if search("(^|\s)(sauce)($|\s)", message.content.lower()):
         sauceNum = random.randint(0,321861)
 
