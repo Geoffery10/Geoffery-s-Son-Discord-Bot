@@ -16,7 +16,7 @@ async def checkForPrompts(message, client):
         file = discord.File("./video/Palpatine_00.mp4", filename="palpatine.mp4")
         await message.channel.send(file=file)
 
-    if search("(^|\s)(sand)($|\s)", message.content.lower()):
+    if search("(^|\s)(sand)($|\s|!)", message.content.lower()):
         await message.channel.send("https://pa1.narvii.com/6995/64746a9cf49d6c306c861b2c0d0029b6be40c807r1-480-240_hq.gif")
 
     if search("(the sun is a deadly la(z|s)er)", message.content.lower()):
@@ -32,7 +32,7 @@ async def checkForPrompts(message, client):
     if search("(^|\s)(badonkers|dobonhonkeros|dohoonkabhankoloos|tonhongerekoogers|serious honkers|bonkhonagahoogs|humungous hungolomghnonoloughongous|new anime plot)($|\s|!)", message.content.lower()):
         await message.channel.send("https://www.youtube.com/watch?v=7yaCKsb0vUg")
 
-    if search("(^|\s)(sauce)($|\s)", message.content.lower()):
+    if search("(^|\s)(sauce)($|\s|!)", message.content.lower()):
         sauceNum = random.randint(0,321861)
 
         print(await sendLog(log=f'{message.author.name} requested sauce. The sauce found was: {sauceNum} \nhttps://nhentai.net/g/{sauceNum}', client=client))
@@ -52,18 +52,21 @@ async def checkForPrompts(message, client):
             client=client))
         await sendImage(message, client, "heresy_", heresyNum, DIR)
 
-    if search("(^|\s)(ravioli ravioli)($|\s)", message.content.lower()):
+    if search("(^|\s)(ravioli ravioli)($|\s|!)", message.content.lower()):
         file = discord.File("./images/ravioli.gif", filename="ravioli.gif")
         await message.channel.send(file=file)
 
-    if search("(^|\s)(hentai)($|\s)", message.content.lower()):
+    if search("(^|\s)(hentai)($|\s|!)", message.content.lower()):
         file = discord.File("./images/hentai.gif", filename="hentai.gif")
         await message.channel.send(file=file)
 
-    if search("(^|\s)(hello there)($|\s)", message.content.lower()):
+    if search("(^|\s)(hello there)($|\s|!)", message.content.lower()):
         file = discord.File("./images/generalkenobi.gif", filename="generalkenobi.gif")
         await message.channel.send(file=file)
 
-    if search("(^|\s)(trap)(s|$|\s)(s|$|\s)", message.content.lower()):
+    if search("(^|\s)(trap)(s|$|\s|!)(s|$|\s|!)", message.content.lower()):
         file = discord.File("./images/trap.gif", filename="trap.gif")
         await message.channel.send(file=file)
+
+    if search("wentworth($|\s|!)", message.content.lower()):
+        await message.channel.send("877-CASH-NOW!")
