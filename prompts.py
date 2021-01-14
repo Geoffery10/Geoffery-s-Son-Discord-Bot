@@ -70,3 +70,6 @@ async def checkForPrompts(message, client):
 
     if search("(g|.|\s|j|^)wentworth($|\s|!)", message.content.lower()):
         await message.channel.send("877-CASH-NOW!")
+
+    if search("\sa scratch($|\s|!)", message.content.lower()):
+        await message.channel.send("http://www.okmoviequotes.com/wp-content/uploads/2014/05/402-Monty-Python-and-the-Holy-Grail-quotes.gif")
