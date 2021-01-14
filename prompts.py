@@ -68,5 +68,5 @@ async def checkForPrompts(message, client):
         file = discord.File("./images/trap.gif", filename="trap.gif")
         await message.channel.send(file=file)
 
-    if search("wentworth($|\s|!)", message.content.lower()):
+    if search("(g|.|\s|j|^)wentworth($|\s|!)", message.content.lower()):
         await message.channel.send("877-CASH-NOW!")
