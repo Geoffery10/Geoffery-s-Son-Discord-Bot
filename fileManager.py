@@ -5,6 +5,7 @@ from loggingChannel import sendLog
 import os.path
 from os import path
 
+
 async def sendImage(message, client, fileName, num, dir):
     found = True
     if num <= 9:
@@ -33,4 +34,3 @@ async def sendImage(message, client, fileName, num, dir):
 
     if found:
         await message.channel.send(file=file)
-

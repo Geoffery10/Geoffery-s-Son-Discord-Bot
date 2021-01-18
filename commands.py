@@ -54,7 +54,7 @@ async def getGif(client, search_term, random):
     return "https://media2.giphy.com/media/YyKPbc5OOTSQE/giphy.gif"
 
 
-async def checkForCommands(message, client):
+async def checkForCommands(message, client, member_database):
     if search("^(anime)", message.content.lower()):
         localOrOnline = randint(1, 3)
         if localOrOnline >= 2:  # Online
@@ -98,7 +98,22 @@ async def checkForCommands(message, client):
     # Sins
     if search("^(sins)", message.content.lower()):
         async with message.channel.typing():
-            await message.channel.send('[THIS WILL SHOW YOU PEOPLES SINS BUT IT\'S UNDER CONSTRUCTION]')
+            mentions = message.mentions
+            sins_found = False
+            if len(mentions) > 0:
+                for member in member_database:
+                    if member['userID'] == mentions[0].id:
+                        sins_found = True
+                        member_sins = member
+                if sins_found:
+                    embed = discord.Embed(title=f"Sins of {mentions[0].display_name}", colour=discord.Colour(0x781dac),
+                                          description=member_sins['sins'])
+                    embed.set_thumbnail(url=mentions[0].avatar_url)
+                    embed.set_author(name="The Devil", url="https://youtu.be/dQw4w9WgXcQ",
+                                     icon_url="https://i.imgur.com/uLAimaY_d.webp?maxwidth=728&fidelity=grand")
+                    await message.channel.send(embed=embed)
+            else:
+                await message.channel.send('You need to @ mention someone to see their sins.')
 
     # Punch
     if search("^(punch)", message.content.lower()):

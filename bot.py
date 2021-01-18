@@ -11,6 +11,7 @@ from loggingChannel import sendLog
 from react import checkReact
 from prompts import checkForPrompts
 from commands import checkForCommands
+import member_data
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -39,6 +40,12 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+    
+    member_database = await member_data.get_member_data(client)
+
+    new_member = message.author.id
+
+    members = await member_data.search_member_data(member_database, new_member, message.author)
 
     # Update Status
     with open('status.json') as fs:
@@ -96,7 +103,7 @@ async def on_message(message):
     if search("(^!\S)", message.content):
         # print(await sendLog(log=(f'Detected a command: {message.content[1:]}'), client=client))
         message.content = message.content[1:]
-        await checkForCommands(message, client)
+        await checkForCommands(message, client, member_database)
 
 
 client.run(TOKEN)
