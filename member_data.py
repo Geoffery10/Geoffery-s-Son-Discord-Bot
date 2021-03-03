@@ -26,7 +26,7 @@ async def search_member_data(data, newvalue, member):
     for value in data:
         if newvalue == value['userID']:
             found = True
-            print(await sendLog(log=f'Member is already in database.', client=client))
+            # print(await sendLog(log=f'Member is already in database.', client=client))
     if not found:
         data = await add_member_data(data, member)
     return data
