@@ -13,3 +13,4 @@ old js/*
 __pycache__/commands.cpython-38.pyc
 .idea/workspace.xml
 .idea/*
+gameData/Russian Roulette/games.json

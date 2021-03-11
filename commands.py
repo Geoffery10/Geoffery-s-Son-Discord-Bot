@@ -9,6 +9,8 @@ import requests
 import json
 from dotenv import load_dotenv
 from fileManager import sendImage
+from minecraftrcon import ping_MC_server
+import russianroulette
 
 
 async def sendGif(client, channel, search_term, random):
@@ -80,6 +82,15 @@ async def checkForCommands(message, client, member_database):
             client=client))
         await sendImage(message, client, "selfie_", selfieNum, DIR)
 
+    if search("^(rr|russian roulette|russianroulette|roulette)", message.content.lower()):
+        await russianroulette.startGame(message, client)
+
+    if search("^(shoot|rrshoot|rr shoot)", message.content.lower()):
+        await russianroulette.shoot(message, client)
+
+    if search("^(spin|rrspin|rr spin)", message.content.lower()):
+        await russianroulette.spin(message, client)
+
     if search("roll(_|\s)([0-9]+)d([0-9]+)", message.content.lower()):
         value = 0
         dice = [int(i) for i in message.content.split() if i.isdigit()]
@@ -149,13 +160,7 @@ async def checkForCommands(message, client, member_database):
 
     if search("^(mcinfo)", message.content.lower()):
         async with message.channel.typing():
-            url = "https://api.ipify.org/?format=json"
-            ip = "error"
-            r = requests.get(url)
-            if r.status_code == 200:
-                ip = json.loads(r.content)
-                print(f'IP: {ip["ip"]}')
-            await message.channel.send(f'Minecraft Server IP: {ip["ip"]}:26969')
+            await ping_MC_server(client, message)
 
     if search("^(ping)", message.content.lower()):
         await message.channel.send('What are you expecting? Me to say pong back?')
