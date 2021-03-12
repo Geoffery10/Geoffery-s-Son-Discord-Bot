@@ -21,6 +21,12 @@ default_thumbnail = "https://ctl.s6img.com/society6/img/Dabrw_Qve91Mq4FyNPHsbqz-
                     "/4390483_6932973/~~/russian-roulette-rts-prints.jpg "
 
 
+async def fixNick(member):
+    if member.nick == None or member.nick == "None":
+        return member.name
+    return member.nick
+
+
 async def check_game_file():
     return path.exists('./gameData/Russian Roulette/games.json')
 
@@ -81,6 +87,7 @@ async def game_message(message, description, thumbnail):
 
 
 async def shoot(message, client):
+    nick = await fixNick(message.author)
     if await check_game_file():
         game_found = False
         print("GAME DATA FOUND")
@@ -90,22 +97,26 @@ async def shoot(message, client):
             if data["active"]:
                 if data["current_index"] == data["bullet_index"]:
                     data["active"] = False
-                    await game_message(message, f"<:rip:372950049665318925> {message.author.nick} you will be missed...", message.author.avatar_url)
+                    await game_message(message, f"<:rip:372950049665318925> {nick} you will be missed...",
+                                       message.author.avatar_url)
                 else:
                     data["current_index"] += 1
                     if data["current_index"] > 6:
-                        data["current_index"] = 0
-                    await game_message(message, f"Seems you get to live today {message.author.nick}...", message.author.avatar_url)
+                        data["current_index"] = 1
+                    await game_message(message, f"Seems you get to live today {nick}...", message.author.avatar_url)
                 if message.author.id not in data["players"]:
                     data["players"].append(message.author.id)
                 await update_game_data(game_data_set, data)
             else:
-                await game_message(message, "Please start a new game with !rr", default_thumbnail)
+                await startGame(message, client)
+        else:
+            await startGame(message, client)
     else:
         await game_message(message, "Game failed to start... Please try again later.", default_thumbnail)
 
 
 async def spin(message, client):
+    nick = await fixNick(message.author)
     if await check_game_file():
         game_found = False
         print("GAME DATA FOUND")
@@ -113,23 +124,25 @@ async def spin(message, client):
         game_found, data = await check_for_game(message, game_data_set)
         if game_found:
             if data["active"]:
-                data["current_index"] = randint(1,6)
+                data["current_index"] = randint(1, 6)
                 if data["current_index"] == data["bullet_index"]:
                     data["active"] = False
                     await game_message(message,
-                                       f"<:rip:372950049665318925> {message.author.nick} you will be missed...",
+                                       f"<:rip:372950049665318925> {nick} you will be missed...",
                                        message.author.avatar_url)
                 else:
                     data["current_index"] += 1
                     if data["current_index"] > 6:
                         data["current_index"] = 0
-                    await game_message(message, f"Seems you get to live today {message.author.nick}...",
+                    await game_message(message, f"Seems you get to live today {nick}...",
                                        message.author.avatar_url)
                 if message.author.id not in data["players"]:
                     data["players"].append(message.author.author.id)
                 await update_game_data(game_data_set, data)
             else:
-                await game_message(message, "Please start a new game with !rr", default_thumbnail)
+                await startGame(message, client)
+        else:
+            await startGame(message, client)
     else:
         await game_message(message, "Game failed to start... Please try again later.", default_thumbnail)
 
