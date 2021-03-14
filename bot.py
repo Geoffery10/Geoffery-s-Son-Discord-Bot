@@ -25,15 +25,30 @@ myid = '<@735550470675759106>'
 lastBirthday = datetime.datetime(2019, 3, 31)
 
 
+async def updateStatus():
+    with open('status.json') as fs:
+        data = json.load(fs)
+    await client.change_presence(
+        activity=await activityType(data))
+
+async def activityType(data):
+    if data["activity"]["type"] == "PLAYING":
+        return discord.Activity(type=discord.Game(data["activity"]["name"]))
+    elif data["activity"]["type"] == "STREAMING":
+        return discord.Activity(type=discord.streaming(name=data["activity"]["name"], url=data["activity"]["url"]))
+    elif data["activity"]["type"] == "WATCHING":
+        return discord.Activity(type=discord.ActivityType.watching, name=data["activity"]["name"])
+    elif data["activity"]["type"] == "LISTENING":
+        return discord.Activity(type=discord.ActivityType.listening, name=data["activity"]["name"])
+
+
+
 @client.event
 async def on_ready():
     # Loaded
     print(await sendLog(log=(f'{client.user} has connected to Discord!'), client=client))
 
-    with open('status.json') as fs:
-        data = json.load(fs)
-    await client.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.playing, name=data["activity"]["name"]))
+    await updateStatus()
 
 
 @client.event
@@ -48,10 +63,7 @@ async def on_message(message):
     members = await member_data.search_member_data(member_database, new_member, message.author)
 
     # Update Status
-    with open('status.json') as fs:
-        data = json.load(fs)
-    await client.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.playing, name=data["activity"]["name"]))
+    await updateStatus()
 
     # Remove DiscordSRV formatting
     if (message.author.id == "779431244222955520") and search("(\s»\s)", message.content.lower()):
