@@ -9,6 +9,13 @@ async def checkReact(message, client):
     if search("(^|\s)r(i|\.)(p|i)(\.|)(p|\s|$)(\.(\s|$)|\s|$)", message.content.lower()):
         print("Reacting RIP")
         await message.add_reaction(r":rip:372950049665318925")
+    if message.author.id == 247283454440374274:
+        if search("(connection has been lost)", message.content.lower()):
+            print("Reacting to Lost Call")
+            await message.add_reaction(r":rip:372950049665318925")
+        elif search("(hung up)", message.content.lower()):
+            print("Reacting to Lost Call")
+            await message.add_reaction(r":rip:372950049665318925")
     if search("(^|\s)(stonk)(s|)(\s|$)", message.content.lower()):
         print("Reacting Stonks")
         await message.add_reaction(r":stonks:763100428065046568")

@@ -338,8 +338,13 @@ async def checkForCommands(message, client, member_database):
                                               "\n\n**!cat or !dog**\nI'll send a random image of a kitty or dogo!"
                                               "\n\n**!yesorno**\nI'll tell you if the answer is yes or no."
                                               "\n\n**!r2loadout**\nA random load out for a Risk of Rain 2 Command run. I hope Rnjesus is on your side."
+                                              "\n\n**!rr**\nStart a game of Russian Roulette."
                                               "\n\n**!help**\nConsidering your already here you probably already know this one...")
 
             embed.set_author(name="Geoffery's Son", url="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot",
                              icon_url="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/blob/Python/images/selfies/selfie_04.png?raw=true")
-            await message.channel.send(embed=embed)
+            try:
+                await message.delete()
+            except Exception:
+                print("Failed to delete message...")
+            await message.author.send(embed=embed)
