@@ -6,7 +6,7 @@
 This is a Discord Bot for my own personal server. Most of his abilities are just for fun with a few useful commands.
 
 ## Table of Contents
-* [Commands](#license)
+* [Commands](#commands)
 * [License](#license)
 
 ## Commands
