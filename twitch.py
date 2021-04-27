@@ -61,17 +61,19 @@ async def check_user(user, client):
         else:
             if not user["id"] == info['id']:
                 print(await sendLog(f'id: {user["id"]} new id: {info["id"]}', client))
+                stream_url = f"https://www.twitch.tv/{info['broadcaster_login']}"
                 user["id"] = info["id"]
                 print(await sendLog(f"0: {info['display_name']} online playing {info['game_name']}.\n{info}", client))
                 channel = client.get_channel(483867465613443082)
                 embed = discord.Embed(title=info["title"], colour=discord.Colour(0x9147ff),
-                                      url=f"https://www.twitch.tv/{info['broadcaster_login']}",
-                                      description=f"{info['display_name']} is streaming {info['game_name']}",
+                                      url=stream_url,
+                                      description=f"{info['display_name']} is streaming {info['game_name']}\n"
+                                                  f"[Watch Now!]({stream_url})",
                                       timestamp=datetime.strptime(info['started_at'], "%Y-%m-%dT%H:%M:%SZ"))
 
                 embed.set_image(
                     url=info['thumbnail_url'])
-                embed.set_author(name="Twitch", url=f"https://www.twitch.tv/{info['broadcaster_login']}",
+                embed.set_author(name="Twitch", url=stream_url,
                                  icon_url="https://cdn4.iconfinder.com/data/icons/social-media-square-4/1024/square-11-512.png")
                 embed.set_footer(text="Twitch", icon_url="https://assets.help.twitch.tv/Glitch_Purple_RGB.png")
                 await channel.send(embed=embed)
