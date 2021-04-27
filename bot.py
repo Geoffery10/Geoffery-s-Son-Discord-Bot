@@ -12,6 +12,7 @@ from react import checkReact
 from prompts import checkForPrompts
 from commands import checkForCommands
 import member_data
+from twitch import checkTwitch
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -24,18 +25,30 @@ client = discord.Client(intents=intents)
 myid = '<@735550470675759106>'
 lastBirthday = datetime.datetime(2019, 3, 31)
 
+streamers = [{"name": "geoffery10",
+              "id": '0'},
+             {"name": "steelywheelyy",
+              "id": '0'},
+             {"name": "connordavey33",
+              "id": '0'},
+             {"name": "acnor4",
+              "id": '0'}]
+
 
 async def updateStatus():
+    global streamers
     with open('status.json') as fs:
         data = json.load(fs)
     await client.change_presence(
         activity=await activityType(data))
+    streamers = await checkTwitch(streamers, client)
+
 
 async def activityType(data):
     if data["activity"]["type"] == "PLAYING":
         return discord.Activity(type=discord.Game(data["activity"]["name"]))
     elif data["activity"]["type"] == "STREAMING":
-        return discord.Activity(type=discord.streaming(name=data["activity"]["name"], url=data["activity"]["url"]))
+        return discord.Activity(activity=discord.Streaming(name=data["activity"]["name"], url=data["activity"]["url"]))
     elif data["activity"]["type"] == "WATCHING":
         return discord.Activity(type=discord.ActivityType.watching, name=data["activity"]["name"])
     elif data["activity"]["type"] == "LISTENING":

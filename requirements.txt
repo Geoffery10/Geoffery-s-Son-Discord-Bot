@@ -1,3 +1,4 @@
 python-dotenv>=0.15.0
 discord.py>=1.5.1
 requests>=2.24.0
+mcstatus>=5.1.1
