@@ -2,8 +2,10 @@
 import os
 
 import discord
+from discord import user
 from discord.ext import commands
 from discord_slash import SlashCommand, SlashContext
+from discord_slash.utils.manage_commands import create_option
 from dotenv import load_dotenv
 from re import search
 import json
@@ -32,11 +34,6 @@ slash = SlashCommand(client, sync_commands=True)
 
 
 guild_ids = [786690956514426910, 254779349352448001] # Put your server ID in this array.
-
-
-@slash.slash(name="Anime", description="Sends Anime", guild_ids=guild_ids)
-async def anime(ctx):
-    await bot_commands.anime(ctx, client)
 
 
 streamers = [{"name": "geoffery10",
@@ -142,6 +139,66 @@ async def on_message(message):
         # print(await sendLog(log=(f'Detected a command: {message.content[1:]}'), client=client))
         message.content = message.content[1:]
         await checkForCommands(message, client, member_database)
+
+
+@slash.slash(name="Anime", description="Sends Anime", guild_ids=guild_ids)
+async def anime(ctx):
+    await bot_commands.anime(ctx, client)
+
+
+@slash.slash(name="punch", description="Punch another member of the server", options=[
+    create_option(
+        name="mention",
+        description="Mention another user on the server",
+        option_type=6,
+        required=True
+    )
+], guild_ids=guild_ids)
+async def punch(ctx, mention: user):
+    print(mention.id)
+    await bot_commands.punch(ctx, client, mention)
+
+
+@slash.slash(name="Selfie", description="I send you a selfie of myself", guild_ids=guild_ids)
+async def selfie(ctx):
+    await bot_commands.selfie(ctx, client)
+
+
+@slash.slash(name="Nani", description="Google Translate or something...", guild_ids=guild_ids)
+async def nani(ctx):
+    await ctx.send('何')
+
+
+@slash.slash(name="wtf", guild_ids=guild_ids)
+async def wtf(ctx):
+    await ctx.send('Rude!')
+
+
+@slash.slash(name="mcinfo", description="Info on Geoffery's Minecraft Server if available", guild_ids=guild_ids)
+async def mcinfo(ctx):
+    # This one is bugged
+    await bot_commands.mcinfo(ctx, client)
+
+
+@slash.slash(name="tpdne", description="Sends you a person that does not exist", guild_ids=guild_ids)
+async def tpdne(ctx):
+    await bot_commands.tpdne(ctx)
+
+
+@slash.slash(name="waifu", description="Sends you a waifu that does not exist", guild_ids=guild_ids)
+async def waifu(ctx):
+    await bot_commands.waifu(ctx)
+
+
+@slash.slash(name="hot", description="brrrrrrr", guild_ids=guild_ids)
+async def hot(ctx):
+    file = discord.File("./video/Hot.mp4", filename="hot.mp4")
+    await ctx.send(file=file)
+
+#@slash.slash(name="joke", description="Sends you a joke", guild_ids=guild_ids)
+#async def joke(ctx):
+#    await bot_commands.joke(ctx)
+
 
 
 client.run(TOKEN)
