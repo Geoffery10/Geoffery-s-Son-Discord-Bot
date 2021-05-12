@@ -21,6 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f074c847-3ed6-4b7e-8bfe-e6b93584fa54" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot_commands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/fileManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/twitch.py" beforeDir="false" afterPath="$PROJECT_DIR$/twitch.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

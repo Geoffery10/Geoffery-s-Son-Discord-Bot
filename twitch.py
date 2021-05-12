@@ -59,10 +59,10 @@ async def check_user(user, client):
         if info['is_live'] is False:
             status = f"1: {info['display_name']} offline"
         else:
-            if not user["id"] == info['id']:
-                print(await sendLog(f'id: {user["id"]} new id: {info["id"]}', client))
+            if not user["started_at"] == info['started_at']:
+                print(await sendLog(f'started_at: {user["started_at"]} new started_at: {info["started_at"]}', client))
                 stream_url = f"https://www.twitch.tv/{info['broadcaster_login']}"
-                user["id"] = info["id"]
+                user["started_at"] = info["started_at"]
                 print(await sendLog(f"0: {info['display_name']} online playing {info['game_name']}.\n{info}", client))
                 channel = client.get_channel(483867465613443082)
                 embed = discord.Embed(title=info["title"], colour=discord.Colour(0x9147ff),
@@ -77,11 +77,11 @@ async def check_user(user, client):
                                  icon_url="https://cdn4.iconfinder.com/data/icons/social-media-square-4/1024/square-11-512.png")
                 embed.set_footer(text="Twitch", icon_url="https://assets.help.twitch.tv/Glitch_Purple_RGB.png")
                 await channel.send(embed=embed)
-                return user["id"]
+                return user["started_at"]
     except URLError as e:
         if e.reason == 'Not Found' or e.reason == 'Unprocessable Entity':
             print(await sendLog(f"2: {user} not found", client))
         else:
             print(await sendLog(f"3: {user} error", client))
 
-    return user["id"]
+    return user["started_at"]

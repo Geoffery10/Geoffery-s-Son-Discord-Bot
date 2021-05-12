@@ -8,7 +8,7 @@ import os, os.path
 import requests
 import json
 from dotenv import load_dotenv
-from fileManager import sendImage
+from fileManager import sendImage, sendImageNew
 from minecraftrcon import ping_MC_server
 import russianroulette
 
@@ -33,6 +33,26 @@ async def sendGif(client, channel, search_term, random):
     else:
         top_8gifs = None
 
+async def sendGifNew(ctx, client, search_term, random):
+    # gif start
+    load_dotenv()
+    apikey = os.getenv('TENOR_API_KEY')
+    lmt = 50
+    url = "https://api.tenor.com/v1/search?q="
+    if random:
+        url = "https://api.tenor.com/v1/random?q="
+        lmt = 1
+    r = requests.get(url + ("%s&key=%s&limit=%s" % (search_term, apikey, lmt)))
+    if r.status_code == 200:
+        # load the GIFs using the urls for the smaller GIF sizes
+        top_gifs = json.loads(r.content)
+        # print(top_gifs)
+        selected_gif = top_gifs['results'][randrange(lmt)]
+        print(await sendLog(log=("Gif selected " + selected_gif["url"]), client=client))
+        await ctx.send(selected_gif["url"])
+    else:
+        top_8gifs = None
+
 
 async def getGif(client, search_term, random):
     # gif start
@@ -54,6 +74,23 @@ async def getGif(client, search_term, random):
     else:
         top_8gifs = None
     return "https://media2.giphy.com/media/YyKPbc5OOTSQE/giphy.gif"
+
+
+async def anime(ctx, client):
+    localOrOnline = randint(1, 3)
+    if localOrOnline >= 2:  # Online
+        # print(await sendLog(
+            # log=f'{message.author.name} has requested anime! Sending online gif!',
+            # client=client))
+        await sendGifNew(ctx, client, "cute anime girl", random=False)
+    else:
+        DIR = './images/anime/'
+        options = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
+        animeNum = random.randint(0, (options - 1))
+        # print(await sendLog(
+            # log=f'{message.author.name} has requested anime! Sending anime#{animeNum}!',
+            # client=client))
+        await sendImageNew(ctx, client, "anime_", animeNum, DIR)
 
 
 async def checkForCommands(message, client, member_database):

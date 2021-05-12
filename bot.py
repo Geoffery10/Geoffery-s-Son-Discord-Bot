@@ -2,15 +2,18 @@
 import os
 
 import discord
+from discord.ext import commands
+from discord_slash import SlashCommand, SlashContext
 from dotenv import load_dotenv
 from re import search
 import json
 import requests
 import datetime
+import bot_commands
 from loggingChannel import sendLog
 from react import checkReact
 from prompts import checkForPrompts
-from commands import checkForCommands
+from bot_commands import checkForCommands
 import member_data
 from twitch import checkTwitch
 
@@ -24,15 +27,26 @@ client = discord.Client(intents=intents)
 
 myid = '<@735550470675759106>'
 lastBirthday = datetime.datetime(2019, 3, 31)
+bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+slash = SlashCommand(client, sync_commands=True)
+
+
+guild_ids = [786690956514426910, 254779349352448001] # Put your server ID in this array.
+
+
+@slash.slash(name="Anime", description="Sends Anime", guild_ids=guild_ids)
+async def anime(ctx):
+    await bot_commands.anime(ctx, client)
+
 
 streamers = [{"name": "geoffery10",
-              "id": '0'},
+              "started_at": '0'},
              {"name": "steelywheelyy",
-              "id": '0'},
+              "started_at": '0'},
              {"name": "connordavey33",
-              "id": '0'},
+              "started_at": '0'},
              {"name": "acnor4",
-              "id": '0'}]
+              "started_at": '0'}]
 
 
 async def updateStatus():
@@ -55,7 +69,6 @@ async def activityType(data):
         return discord.Activity(type=discord.ActivityType.listening, name=data["activity"]["name"])
 
 
-
 @client.event
 async def on_ready():
     # Loaded
@@ -68,7 +81,7 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    
+
     member_database = await member_data.get_member_data(client)
 
     new_member = message.author.id
