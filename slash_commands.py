@@ -1,3 +1,5 @@
+from time import sleep
+
 import discord
 from re import search
 import random
@@ -202,17 +204,25 @@ async def fake_id(ctx):
 
 async def joke(ctx):
     num = random.randint(0, 3)
+    num = 1
     if num >= 1:
         print("Sending joke from joke3.p.rapidapi")
-        url = "https://joke3.p.rapidapi.com/v1/joke"
+        url = "https://jokeapi-v2.p.rapidapi.com/joke/Any"
+        querystring = {"type": "single,twopart", "format": "json", "idRange": "0-150",
+                       "blacklistFlags": "nsfw,racist"}
         headers = {
-            'x-rapidapi-key': "dc02b90e2emsh6be8145fc6dd65ep198267jsnf83b7e473ef7",
-            'x-rapidapi-host': "joke3.p.rapidapi.com"
+            'x-rapidapi-key': "3760b526d1msh34c2122de2b24dcp1f5f20jsn6a233a68122f",
+            'x-rapidapi-host': "jokeapi-v2.p.rapidapi.com"
         }
-        r = requests.get(url, headers=headers)
+        r = requests.request("GET", url, headers=headers, params=querystring)
         if r.status_code == 200:
             joke = json.loads(r.content)
-            await ctx.send(joke['content'])
+            if joke['type'] == 'twopart':
+                await ctx.send(joke['setup'])
+                sleep(5)
+                await ctx.send(joke['delivery'])
+            else:
+                await ctx.send(joke['joke'])
         else:
             await ctx.send(
                 f"Command failed due to server error {r.status_code}. Please try again later. <:cry_anime:557425672260288512>")
