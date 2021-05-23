@@ -142,7 +142,9 @@ async def on_message(message):
         await checkForCommands(message, client, member_database)
 
 
-@slash.slash(name="Anime", description="Sends Anime", guild_ids=guild_ids)
+# ======================================== SLASH COMMANDS ========================================
+
+@slash.slash(name="anime", description="Sends Anime", guild_ids=guild_ids)
 async def anime(ctx):
     await slash_commands.anime(ctx, client)
 
@@ -160,12 +162,12 @@ async def punch(ctx, mention: user):
     await slash_commands.punch(ctx, client, mention)
 
 
-@slash.slash(name="Selfie", description="I send you a selfie of myself", guild_ids=guild_ids)
+@slash.slash(name="selfie", description="I send you a selfie of myself", guild_ids=guild_ids)
 async def selfie(ctx):
     await slash_commands.selfie(ctx, client)
 
 
-@slash.slash(name="Nani", description="Google Translate or something...", guild_ids=guild_ids)
+@slash.slash(name="nani", description="Google Translate or something...", guild_ids=guild_ids)
 async def nani(ctx):
     await ctx.send('何')
 
@@ -209,10 +211,16 @@ async def sins(ctx, mention: user):
     member_database = await member_data.get_member_data(client)
     await slash_commands.sins(ctx, client, mention, member_database)
 
-#@slash.slash(name="joke", description="Sends you a joke", guild_ids=guild_ids)
-#async def joke(ctx):
-#    await bot_commands.joke(ctx)
 
+@slash.slash(name="fake_id", description="Sends you a fake id so you can escape the government.", guild_ids=guild_ids)
+async def fake_id(ctx):
+    print(f"Sending fake id")
+    await slash_commands.fake_id(ctx)
+
+
+@slash.slash(name="joke", description="Sends you a joke.", guild_ids=guild_ids)
+async def joke(ctx):
+    await slash_commands.joke(ctx)
 
 
 client.run(TOKEN)

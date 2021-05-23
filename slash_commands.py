@@ -163,3 +163,66 @@ async def sins(ctx, client, mention, member_database):
                          icon_url="https://i.imgur.com/uLAimaY_d.webp?maxwidth=728&fidelity=grand")
         await ctx.send(embed=embed)
 
+
+async def fake_id(ctx):
+    url = "https://random-user.p.rapidapi.com/getuser"
+
+    headers = {
+        'x-rapidapi-key': os.getenv('X_RAPIDAPI_KEY'),
+        'x-rapidapi-host': "random-user.p.rapidapi.com"
+    }
+
+    print("Getting request")
+    r = requests.get(url, headers=headers)
+    print(f"Request Code: {r.status_code}")
+    if r.status_code == 200:
+        id = json.loads(r.content)
+        id = id['results'][0]
+        print(id)
+        embed = discord.Embed(colour=discord.Colour(0xb8b8b8),
+                              description=f'ID for {id["name"]["first"]} {id["name"]["last"]}:')
+
+        embed.set_thumbnail(url=id["picture"]["large"])
+        embed.set_author(name=f'{id["name"]["title"]} {id["name"]["first"]} {id["name"]["last"]}',
+                         icon_url=id["picture"]["large"], url=id["picture"]["large"])
+        location = id["location"]
+        embed.add_field(name="Location",
+                        value=f'{location["street"]["number"]} {location["street"]["name"]} {location["city"]}, {location["state"]}, {location["country"]}, {location["postcode"]}')
+        embed.add_field(name="Email",
+                        value=f'Email: {id["email"]} \nUsername: {id["login"]["username"]} \nPassword: {id["login"]["password"]}')
+        embed.add_field(name="Phone Number", value=f'{id["cell"]}')
+        embed.add_field(name="Date of Birth", value=f'Age: {id["dob"]["age"]} DOB: {id["dob"]["date"]}')
+        if id['id']['value'] == id['id']['value'] and id['id']['value'] is not None:
+            embed.add_field(name="ID", value=f'Type: {id["id"]["name"]} Value: {id["id"]["value"]}')
+
+        await ctx.send(embed=embed)
+    else:
+        await ctx.send(f"Command failed due to server error {r.status_code}. Please try again later. <:cry_anime:557425672260288512>")
+
+
+async def joke(ctx):
+    num = random.randint(0, 3)
+    if num >= 1:
+        print("Sending joke from joke3.p.rapidapi")
+        url = "https://joke3.p.rapidapi.com/v1/joke"
+        headers = {
+            'x-rapidapi-key': "dc02b90e2emsh6be8145fc6dd65ep198267jsnf83b7e473ef7",
+            'x-rapidapi-host': "joke3.p.rapidapi.com"
+        }
+        r = requests.get(url, headers=headers)
+        if r.status_code == 200:
+            joke = json.loads(r.content)
+            await ctx.send(joke['content'])
+        else:
+            await ctx.send(
+                f"Command failed due to server error {r.status_code}. Please try again later. <:cry_anime:557425672260288512>")
+    else:
+        print("Sending joke from sv443.net/jokeapi")
+        url = "https://sv443.net/jokeapi/v2/joke/Any?blacklistFlags=racist&type=single"
+        r = requests.get(url)
+        if r.status_code == 200:
+            joke = json.loads(r.content)
+            await ctx.channel.send(joke['joke'])
+        else:
+            await ctx.send(
+                f"Command failed due to server error {r.status_code}. Please try again later. <:cry_anime:557425672260288512>")
