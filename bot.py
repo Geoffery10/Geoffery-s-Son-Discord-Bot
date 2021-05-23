@@ -196,6 +196,19 @@ async def hot(ctx):
     file = discord.File("./video/Hot.mp4", filename="hot.mp4")
     await ctx.send(file=file)
 
+
+@slash.slash(name="sins", description="Sends you the sins of a user", options=[
+    create_option(
+        name="mention",
+        description="Mention another user on the server",
+        option_type=6,
+        required=True
+    )
+], guild_ids=guild_ids)
+async def sins(ctx, mention: user):
+    member_database = await member_data.get_member_data(client)
+    await slash_commands.sins(ctx, client, mention, member_database)
+
 #@slash.slash(name="joke", description="Sends you a joke", guild_ids=guild_ids)
 #async def joke(ctx):
 #    await bot_commands.joke(ctx)

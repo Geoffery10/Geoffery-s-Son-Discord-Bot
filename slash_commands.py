@@ -148,3 +148,18 @@ async def joke(ctx):
             await ctx.send(joke['joke'])
         await ctx.send("Failed to load joke. Please try again later.")
 
+
+async def sins(ctx, client, mention, member_database):
+    sins_found = False
+    for member in member_database:
+        if member['userID'] == mention.id:
+            sins_found = True
+            member_sins = member
+    if sins_found:
+        embed = discord.Embed(title=f"Sins of {mention.display_name}", colour=discord.Colour(0x781dac),
+                              description=member_sins['sins'])
+        embed.set_thumbnail(url=mention.avatar_url)
+        embed.set_author(name="The Devil", url="https://youtu.be/dQw4w9WgXcQ",
+                         icon_url="https://i.imgur.com/uLAimaY_d.webp?maxwidth=728&fidelity=grand")
+        await ctx.send(embed=embed)
+
