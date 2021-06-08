@@ -11,6 +11,7 @@ from re import search
 import json
 import datetime
 import slash_commands
+import zapier_commands
 from loggingChannel import sendLog
 from react import checkReact
 from prompts import checkForPrompts
@@ -78,6 +79,10 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    if message.author.id == 851912336565862431:
+        print(await sendLog(log=f'Received Zapier Command!', client=client))
+        await zapier_commands.commands(message, client)
+
     member_database = await member_data.get_member_data(client)
 
     new_member = message.author.id
@@ -98,7 +103,7 @@ async def on_message(message):
     simply = False  # True if message will be sent to  minecraft
 
     # Log message
-    print(f'{message.author.name} sent: {message.content} on Channel: {channel.id}')
+    print(f'{message.author.name} [{message.author.id}] sent: {message.content} on Channel: {channel.id}')
 
     # Check if message should be simplified for Minecraft
     if channel.id == 779436910841954354 or channel.id == 779553090097250307:
