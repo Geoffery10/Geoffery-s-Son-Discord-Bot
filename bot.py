@@ -9,9 +9,7 @@ from discord_slash.utils.manage_commands import create_option
 from dotenv import load_dotenv
 from re import search
 import json
-import requests
 import datetime
-import bot_commands
 import slash_commands
 from loggingChannel import sendLog
 from react import checkReact
@@ -34,10 +32,10 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 slash = SlashCommand(client, sync_commands=True)
 
 
-guild_ids = [786690956514426910, 254779349352448001] # Put your server ID in this array.
+guild_ids = [786690956514426910, 254779349352448001]  # Put your server ID in this array.
 
 
-streamers = [{"name": "geoffery10",
+streamers = [{"name": "Geoffery10",
               "started_at": '0'},
              {"name": "steelywheelyy",
               "started_at": '0'},
