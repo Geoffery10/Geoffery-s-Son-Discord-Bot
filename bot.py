@@ -52,7 +52,7 @@ async def updateStatus():
         data = json.load(fs)
     await client.change_presence(
         activity=await activityType(data))
-    streamers = await checkTwitch(streamers, client)
+    # streamers = await checkTwitch(streamers, client)
 
 
 async def activityType(data):
