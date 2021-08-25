@@ -4,13 +4,27 @@ import random
 from loggingChannel import sendLog
 import os, os.path
 from fileManager import sendImage
+from random import randint
 
 
 async def checkForPrompts(message, client):
     # owo
     if search("(^|\s)(u|o|♡|Ò|□|●|0)(u|w)(u|o|♡|Ó|□|●|0)", message.content.lower()):
-        file = discord.File("./images/owo.png", filename="image.png")
-        await message.channel.send(file=file)
+        chance = randint(1, 3)
+        if chance == 1:
+            DIR = './images/owo/'
+            options = []
+            for filename in os.listdir(DIR):
+                options.append(filename)
+            owoNum = random.randint(0, (len(options)-1))
+            print(await sendLog(
+                log=f'{message.author.name} has OwO\'ed! Sending OwO: {options[owoNum]}!',
+                client=client))
+            filename = DIR + options[owoNum]
+            print(filename)
+            file = discord.File(filename, filename="owo" + os.path.splitext(options[owoNum])[1])
+            print(file)
+            await message.channel.send(file=file)
 
     if search("(is it possible to learn this power)", message.content.lower()):
         file = discord.File("./video/Palpatine_00.mp4", filename="palpatine.mp4")
