@@ -33,7 +33,7 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 slash = SlashCommand(client, sync_commands=True)
 
 
-guild_ids = [786690956514426910, 254779349352448001]  # Put your server ID in this array.
+guild_ids = [786690956514426910, 254779349352448001, 885595844999532624]  # Put your server ID in this array.
 
 
 streamers = [{"name": "Geoffery10",
