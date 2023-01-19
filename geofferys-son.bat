@@ -1,1 +1,2 @@
-pythonw.exe bot.py
+@echo off
+start /min python bot.py

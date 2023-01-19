@@ -36,7 +36,8 @@ async def sendImage(message, client, fileName, num, dir):
     if found:
         await message.channel.send(file=file)
 
-async def sendImageNew(ctx, client, fileName, num, dir):
+
+async def sendImageNew(interaction, client, fileName, num, dir):
     found = True
     if num <= 9:
         fileName = fileName + "0" + str(num)
@@ -63,4 +64,4 @@ async def sendImageNew(ctx, client, fileName, num, dir):
         found = False
 
     if found:
-        await ctx.send(file=file)
+        await interaction.response.send_message(file=file)

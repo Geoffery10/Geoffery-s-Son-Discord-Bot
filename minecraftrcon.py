@@ -77,7 +77,7 @@ async def ping_MC_server(client, message):
     await message.channel.send(embed=embed)
 
 
-async def ping_MC_server_ctx(client, ctx):
+async def ping_MC_server_interaction(client, interaction):
     IP = os.getenv('MC_DNS')
     PORT = os.getenv('MC_PORT')
     RCON_PASSWORD = os.getenv('MC_RCON_PASS')
@@ -94,10 +94,10 @@ async def ping_MC_server_ctx(client, ctx):
         ip_address = ip["ip"]
         print(f'IP: {ip_address}')
         server = JavaServer.lookup(f"{ip_address}:{str(PORT)}")
-        print(f"JavaServer.lookup({ip_address}:{str(PORT)}")
+        print(f"Loaded IP from Online ({ip_address}:{str(PORT)})")
     else:
         server = JavaServer.lookup(f"{IP}:{str(PORT)}")
-        print(f"JavaServer.lookup({IP}:{str(PORT)})")
+        print(f"Loaded IP from Storage ({IP}:{str(PORT)})")
 
     serverOnline = True
     queryPass = False
@@ -107,6 +107,11 @@ async def ping_MC_server_ctx(client, ctx):
     except Exception:
         serverOnline = False
         print(f"Status: Failed")
+
+    if not serverOnline:
+        print(f"Server is offline (returning embed)")
+        return discord.Embed(title="Minecraft Server Status", color=discord.Color(0x63a121), description="The server is currently offline.")
+
 
     try:
         query = server.query()
@@ -119,7 +124,10 @@ async def ping_MC_server_ctx(client, ctx):
         imageURL = "https://minecraft-statistic.net/img/screen/icon/167506.png"
     else:
         imageURL = "https://media.minecraftforum.net/attachments/300/619/636977108000120237.png"
-
+    
+    # Create Embed
+    embed = discord.Embed(title="Minecraft Server Status", color=discord.Color(0x63a121), description=f"**IP**: {IP}:{PORT}")
+    '''
     # Create Embed
     if queryPass:
         description = f"**IP**: {IP}:{PORT}\n**MOTD**: {query.raw.get('hostname')}"
@@ -144,5 +152,5 @@ async def ping_MC_server_ctx(client, ctx):
         embed.add_field(name="Status", value=":red_circle: Offline")
     embed.set_thumbnail(url=imageURL)
     embed.set_author(name="Geoffery10", icon_url="https://static.planetminecraft.com/files/avatar/918830_1.png")
-
-    await ctx.send(embed=embed)
+    '''
+    return embed

@@ -9,7 +9,7 @@ import requests
 import json
 from dotenv import load_dotenv
 from fileManager import sendImage, sendImageNew
-from minecraftrcon import ping_MC_server, ping_MC_server_ctx
+from minecraftrcon import ping_MC_server, ping_MC_server_interaction
 import russianroulette
 
 

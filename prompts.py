@@ -8,6 +8,7 @@ from random import randint
 
 
 async def checkForPrompts(message, client):
+    ''' Works but disabled for now
     # owo
     if search("(^|\s)(u|o|♡|Ò|□|●|0)(u|w)(u|o|♡|Ó|□|●|0)", message.content.lower()):
         chance = randint(1, 3)
@@ -25,6 +26,7 @@ async def checkForPrompts(message, client):
             file = discord.File(filename, filename="owo" + os.path.splitext(options[owoNum])[1])
             print(file)
             await message.channel.send(file=file)
+    '''
 
     if search("(is it possible to learn this power)", message.content.lower()):
         file = discord.File("./video/Palpatine_00.mp4", filename="palpatine.mp4")

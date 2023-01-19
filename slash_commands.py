@@ -11,11 +11,11 @@ import requests
 import json
 from dotenv import load_dotenv
 from fileManager import sendImage, sendImageNew
-from minecraftrcon import ping_MC_server, ping_MC_server_ctx
+from minecraftrcon import ping_MC_server, ping_MC_server_interaction
 import russianroulette
 
 
-async def sendGifNew(ctx, client, search_term, random):
+async def sendGifNew(interaction, client, search_term, random):
     # gif start
     load_dotenv()
     apikey = os.getenv('TENOR_API_KEY')
@@ -31,7 +31,7 @@ async def sendGifNew(ctx, client, search_term, random):
         # print(top_gifs)
         selected_gif = top_gifs['results'][randrange(lmt)]
         print(await sendLog(log=("Gif selected " + selected_gif["url"]), client=client))
-        await ctx.send(selected_gif["url"])
+        await interaction.response.send_message(selected_gif["url"])
     else:
         top_8gifs = None
 
@@ -73,39 +73,6 @@ async def anime(ctx, client):
             # log=f'{message.author.name} has requested anime! Sending anime#{animeNum}!',
             # client=client))
         await sendImageNew(ctx, client, "anime_", animeNum, DIR)
-
-
-async def selfie(ctx, client):
-    DIR = './images/selfies/'
-    options = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
-    selfieNum = random.randint(0, (options - 1))
-    print(await sendLog(
-        log=f'{ctx.author.name} has asked for a selfie. Sending -> #{selfieNum}!',
-        client=client))
-    await sendImageNew(ctx, client, "selfie_", selfieNum, DIR)
-
-
-async def punch(ctx, client, mentions):
-    if mentions.id == 786698404927504385:
-        embed = discord.Embed(title=f"Punching {ctx.author.name}", colour=discord.Colour(0xff0000),
-                              description=f"Rest in peace {ctx.author.mention}. You better not try to hurt her again...")
-        embed.set_thumbnail(url=ctx.author.avatar_url)
-        embed.set_author(name="Steve from Accounting",
-                         icon_url="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/blob/master/images/punch_icon.png?raw=true")
-        searchTerm = "anime punch"
-    else:
-        embed = discord.Embed(title=f"Punching {mentions.name}", colour=discord.Colour(0xff0000),
-                              description=f"Rest in peace {mentions.mention}")
-        embed.set_thumbnail(url=mentions.avatar_url)
-        rng = randint(1, 2)
-        if rng == 2:
-            searchTerm = "punch"
-        else:
-            searchTerm = "anime punch"
-        embed.set_author(name="Steve from Accounting",
-                         icon_url="https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot/blob/master/images/punch_icon.png?raw=true")
-    await ctx.send(embed=embed)
-    await sendGifNew(ctx, client, searchTerm, random=False)
 
 
 async def mcinfo(ctx, client):
