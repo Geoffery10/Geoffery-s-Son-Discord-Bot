@@ -1,5 +1,5 @@
 import discord
-from mcstatus import MinecraftServer
+from mcstatus import JavaServer
 from loggingChannel import sendLog
 import requests
 import json
@@ -23,11 +23,11 @@ async def ping_MC_server(client, message):
         ip = json.loads(r.content)
         ip_address = ip["ip"]
         print(f'IP: {ip_address}')
-        server = MinecraftServer.lookup(f"{ip_address}:{str(PORT)}")
-        print(f"MinecraftServer.lookup({ip_address}:{str(PORT)}")
+        server = JavaServer.lookup(f"{ip_address}:{str(PORT)}")
+        print(f"JavaServer.lookup({ip_address}:{str(PORT)}")
     else:
-        server = MinecraftServer.lookup(f"{IP}:{str(PORT)}")
-        print(f"MinecraftServer.lookup({IP}:{str(PORT)})")
+        server = JavaServer.lookup(f"{IP}:{str(PORT)}")
+        print(f"JavaServer.lookup({IP}:{str(PORT)})")
 
     serverOnline = True
     queryPass = False
@@ -93,11 +93,11 @@ async def ping_MC_server_ctx(client, ctx):
         ip = json.loads(r.content)
         ip_address = ip["ip"]
         print(f'IP: {ip_address}')
-        server = MinecraftServer.lookup(f"{ip_address}:{str(PORT)}")
-        print(f"MinecraftServer.lookup({ip_address}:{str(PORT)}")
+        server = JavaServer.lookup(f"{ip_address}:{str(PORT)}")
+        print(f"JavaServer.lookup({ip_address}:{str(PORT)}")
     else:
-        server = MinecraftServer.lookup(f"{IP}:{str(PORT)}")
-        print(f"MinecraftServer.lookup({IP}:{str(PORT)})")
+        server = JavaServer.lookup(f"{IP}:{str(PORT)}")
+        print(f"JavaServer.lookup({IP}:{str(PORT)})")
 
     serverOnline = True
     queryPass = False

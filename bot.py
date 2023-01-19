@@ -4,8 +4,9 @@ import os
 import discord
 from discord import user
 from discord.ext import commands
-from discord_slash import SlashCommand, SlashContext
-from discord_slash.utils.manage_commands import create_option
+# from discord_slash import SlashCommand, SlashContext
+import interactions
+# from discord_slash.utils.manage_commands import create_option
 from dotenv import load_dotenv
 from re import search
 import json
