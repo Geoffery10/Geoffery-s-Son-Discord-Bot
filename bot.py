@@ -144,7 +144,7 @@ async def mcinfo(interaction: discord.Interaction):
 
 async def updateStatus():
     global streamers
-    with open('status.json') as fs:
+    with open(os.path.join(os.environ.get('BOT_DATA_DIR', '.'), 'status.json')) as fs:
         data = json.load(fs)
     await client.change_presence(
         activity=await activityType(data))

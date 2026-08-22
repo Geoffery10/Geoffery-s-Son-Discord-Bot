@@ -5,16 +5,25 @@ from loggingChannel import sendLog
 client = ""
 
 
+def _data_path(*parts):
+    """Resolve a path under $BOT_DATA_DIR (default: bot's working dir).
+
+    Reads BOT_DATA_DIR at call time so a deploy that restarts the bot picks up
+    the new value without code changes.
+    """
+    return os.path.join(os.environ.get('BOT_DATA_DIR', '.'), *parts)
+
+
 async def get_member_data(update_client):
     global client
     client = update_client
-    with open('memberData/memberData.json', 'r') as f:
+    with open(_data_path('memberData', 'memberData.json'), 'r') as f:
         data = json.load(f)
         return data
 
 
 async def store_member_data(data):
-    filename = "memberData/memberData.json"
+    filename = _data_path('memberData', 'memberData.json')
     os.remove(filename)
     with open(filename, 'w') as f:
         json.dump(data, f, indent=4)

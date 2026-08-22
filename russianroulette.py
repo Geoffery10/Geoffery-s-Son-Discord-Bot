@@ -21,6 +21,11 @@ default_thumbnail = "https://ctl.s6img.com/society6/img/Dabrw_Qve91Mq4FyNPHsbqz-
                     "/4390483_6932973/~~/russian-roulette-rts-prints.jpg "
 
 
+def _data_path(*parts):
+    """Resolve a path under $BOT_DATA_DIR (default: bot's working dir)."""
+    return os.path.join(os.environ.get('BOT_DATA_DIR', '.'), *parts)
+
+
 async def fixNick(member):
     if member.nick == None or member.nick == "None":
         return member.name
@@ -28,11 +33,11 @@ async def fixNick(member):
 
 
 async def check_game_file():
-    return path.exists('./gameData/Russian Roulette/games.json')
+    return path.exists(_data_path('gameData', 'Russian Roulette', 'games.json'))
 
 
 async def get_game_data():
-    with open("./gameData/Russian Roulette/games.json", "r") as read_file:
+    with open(_data_path('gameData', 'Russian Roulette', 'games.json'), "r") as read_file:
         game_data_set = json.load(read_file)
     return game_data_set
 
@@ -48,7 +53,7 @@ async def save_game_data(game_data_set, message):
     }
     game_data_set.append(new_game)
     print("Creating new game data")
-    with open("./gameData/Russian Roulette/games.json", "w") as write_file:
+    with open(_data_path('gameData', 'Russian Roulette', 'games.json'), "w") as write_file:
         json.dump(game_data_set, write_file, indent=4)
 
 
@@ -59,7 +64,7 @@ async def update_game_data(game_data_set, new_data):
         if game_data_set[index]["channel"] == new_data["channel"]:
             game_data_set[index] = new_data
             print("Found Data to Update")
-    with open("./gameData/Russian Roulette/games.json", "w") as write_file:
+    with open(_data_path('gameData', 'Russian Roulette', 'games.json'), "w") as write_file:
         json.dump(game_data_set, write_file, indent=4)
 
 
