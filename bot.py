@@ -10,6 +10,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import os.path
+import yaml
 from loggingChannel import sendLog
 from minecraftrcon import ping_MC_server, ping_MC_server_interaction
 from react import checkReact
@@ -23,10 +24,43 @@ import russianroulette
 from r2loadout import get_r2loadout
 from time import sleep
 
+# Channel blacklist — IDs of channels where the bot should stay silent.
+# Loaded once at startup from ./blacklist.yml (next to bot.py).
+_blacklisted_channels: set[int] = set()
+
+
+def _load_blacklist() -> set[int]:
+    """Read blacklist.yml from the bot's working directory and return a set of channel IDs.
+
+    Returns an empty set if the file is missing or malformed — the bot then
+    behaves as if there's no blacklist (which is the pre-blacklist behavior).
+    """
+    # blacklist.yml lives next to bot.py (the repo working directory), not under
+    # BOT_DATA_DIR — it's source-controlled config, not runtime data.
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'blacklist.yml')
+    try:
+        with open(path, 'r') as f:
+            data = yaml.safe_load(f)
+        if not isinstance(data, dict):
+            return set()
+        channels = data.get('channels', [])
+        if not isinstance(channels, list):
+            return set()
+        return {int(c) for c in channels if str(c).isdigit()}
+    except FileNotFoundError:
+        return set()
+    except (yaml.YAMLError, ValueError, TypeError) as e:
+        print(f"blacklist.yml is malformed: {e}; ignoring")
+        return set()
+
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 apikey = os.getenv('TENOR_API_KEY')
+
+# Load the channel blacklist once at startup. See _load_blacklist() above.
+_blacklisted_channels = _load_blacklist()
+print(f"Loaded {len(_blacklisted_channels)} blacklisted channel(s)")
 
 intents = discord.Intents(messages=True, guilds=True, guild_messages=True, guild_reactions=True, members=True, reactions=True, presences=True)
 intents.message_content = True
@@ -52,6 +86,10 @@ class MyClient(discord.Client):
 
     async def on_message(self, message):
         if message.author == client.user:
+            return
+
+        # Respect the channel blacklist — return early before doing any work.
+        if message.channel.id in _blacklisted_channels:
             return
 
         member_database = await member_data.get_member_data(client)
