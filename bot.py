@@ -38,13 +38,14 @@ class MyClient(discord.Client):
         super().__init__(*args, **kwargs)
 
     async def on_ready(self):
-        # Get the guild object
-        guild_ids = [786690956514426910,
-                     254779349352448001, 885595844999532624]
-
-        for guild_id in guild_ids:
-            await tree.sync(guild=client.get_guild(guild_id))
-        print("Synced trees")
+        # Sync slash commands to every guild the bot is actually in.
+        # Hardcoding guild IDs is fragile: if a guild ID is stale, get_guild()
+        # returns None and tree.sync(guild=None) becomes a global sync, which
+        # propagates slowly. Iterate the live guild list instead.
+        for guild in client.guilds:
+            await tree.sync(guild=guild)
+        print(f"Synced trees to {len(client.guilds)} guild(s): "
+              f"{', '.join(g.name for g in client.guilds)}")
 
         # Loaded
         print(await sendLog(log=(f'{client.user} has connected to Discord!'), client=client))
