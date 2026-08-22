@@ -42,12 +42,13 @@ async def get_game_data():
     return game_data_set
 
 
-async def save_game_data(game_data_set, message):
+async def save_game_data(game_data_set, interaction):
+    """Create a new game in the channel where the slash command was invoked."""
     new_game = {
-        "guild": message.guild.id,
-        "channel": message.channel.id,
+        "guild": interaction.guild.id,
+        "channel": interaction.channel.id,
         "active": True,
-        "players": [message.author.id],
+        "players": [interaction.user.id],
         "bullet_index": randint(1, 6),
         "current_index": 1
     }
@@ -68,11 +69,12 @@ async def update_game_data(game_data_set, new_data):
         json.dump(game_data_set, write_file, indent=4)
 
 
-async def check_for_game(message, game_data_set):
+async def check_for_game(interaction, game_data_set):
+    """Look up a game in the channel the slash command was invoked in."""
     data = {}
     game_found = False
     for data_set in game_data_set:
-        if str(data_set["channel"]) == str(message.channel.id):
+        if str(data_set["channel"]) == str(interaction.channel.id):
             print("Game found on this channel")
             game_found = True
             data = data_set
@@ -80,7 +82,7 @@ async def check_for_game(message, game_data_set):
     return game_found, data
 
 
-async def game_message(message, description, thumbnail):
+async def game_message(interaction, description, thumbnail):
     embed = discord.Embed(title="Russian Roulette", colour=discord.Colour(0x69645f), url="http://government.ru/en/",
                           description=description)
     embed.set_thumbnail(
@@ -88,92 +90,93 @@ async def game_message(message, description, thumbnail):
     embed.set_author(name="Vladimir Putin", url="http://government.ru/en/",
                      icon_url="https://media.vanityfair.com/photos/5874192bee23284912086649/1:1/w_960,h_960,"
                               "c_limit/vladimir-putin-evil.jpg")
-    await message.channel.send(embed=embed)
+    await interaction.channel.send(embed=embed)
 
 
-async def shoot(message, client):
-    nick = await fixNick(message.author)
+async def shoot(interaction, client):
+    nick = await fixNick(interaction.user)
     if await check_game_file():
-        game_found = False
         print("GAME DATA FOUND")
         game_data_set = await get_game_data()
-        game_found, data = await check_for_game(message, game_data_set)
+        game_found, data = await check_for_game(interaction, game_data_set)
         if game_found:
             if data["active"]:
                 if data["current_index"] == data["bullet_index"]:
                     data["active"] = False
-                    await game_message(message, f"<:rip:372950049665318925> {nick} you will be missed...",
-                                       message.author.avatar_url)
+                    await game_message(interaction, f"<:rip:372950049665318925> {nick} you will be missed...",
+                                       interaction.user.display_avatar.url)
                 else:
                     data["current_index"] += 1
                     if data["current_index"] > 6:
                         data["current_index"] = 1
-                    await game_message(message, f"Seems you get to live today {nick}...", message.author.avatar_url)
-                if message.author.id not in data["players"]:
-                    data["players"].append(message.author.id)
+                    await game_message(interaction, f"Seems you get to live today {nick}...", interaction.user.display_avatar.url)
+                if interaction.user.id not in data["players"]:
+                    data["players"].append(interaction.user.id)
                 await update_game_data(game_data_set, data)
             else:
-                await startGame(message, client)
+                await startGame(interaction, client)
         else:
-            await startGame(message, client)
+            await startGame(interaction, client)
     else:
-        await game_message(message, "Game failed to start... Please try again later.", default_thumbnail)
+        await game_message(interaction, "Game failed to start... Please try again later.", default_thumbnail)
 
 
-async def spin(message, client):
-    nick = await fixNick(message.author)
+async def spin(interaction, client):
+    nick = await fixNick(interaction.user)
     if await check_game_file():
-        game_found = False
         print("GAME DATA FOUND")
         game_data_set = await get_game_data()
-        game_found, data = await check_for_game(message, game_data_set)
+        game_found, data = await check_for_game(interaction, game_data_set)
         if game_found:
             if data["active"]:
                 data["current_index"] = randint(1, 6)
                 if data["current_index"] == data["bullet_index"]:
                     data["active"] = False
-                    await game_message(message,
+                    await game_message(interaction,
                                        f"<:rip:372950049665318925> {nick} you will be missed...",
-                                       message.author.avatar_url)
+                                       interaction.user.display_avatar.url)
                 else:
                     data["current_index"] += 1
                     if data["current_index"] > 6:
                         data["current_index"] = 0
-                    await game_message(message, f"Seems you get to live today {nick}...",
-                                       message.author.avatar_url)
-                if message.author.id not in data["players"]:
-                    data["players"].append(message.author.author.id)
+                    await game_message(interaction, f"Seems you get to live today {nick}...",
+                                       interaction.user.display_avatar.url)
+                if interaction.user.id not in data["players"]:
+                    data["players"].append(interaction.user.id)
                 await update_game_data(game_data_set, data)
             else:
-                await startGame(message, client)
+                await startGame(interaction, client)
         else:
-            await startGame(message, client)
+            await startGame(interaction, client)
     else:
-        await game_message(message, "Game failed to start... Please try again later.", default_thumbnail)
+        await game_message(interaction, "Game failed to start... Please try again later.", default_thumbnail)
 
 
-async def startGame(message, client):
+async def startGame(interaction, client):
+    # Acknowledge the slash command first so Discord doesn't show "interaction failed"
+    if not interaction.response.is_done():
+        await interaction.response.send_message("Starting Russian Roulette...", ephemeral=True)
+
     if await check_game_file():
-        game_found = False
         print("GAME DATA FOUND")
         game_data_set = await get_game_data()
-        game_found, data = await check_for_game(message, game_data_set)
+        game_found, data = await check_for_game(interaction, game_data_set)
         if game_found:
-            await game_message(message, "Starting Game... Use !shoot to shoot and !spin to spin. (Note spin "
+            await game_message(interaction, "Starting Game... Use /shoot to shoot and /spin to spin. (Note spin "
                                         "will also shoot you with whatever it lands on..)", default_thumbnail)
             new_data = {
-                "guild": message.guild.id,
-                "channel": message.channel.id,
+                "guild": interaction.guild.id,
+                "channel": interaction.channel.id,
                 "active": True,
-                "players": [message.author.id],
+                "players": [interaction.user.id],
                 "bullet_index": randint(1, 6),
                 "current_index": 1
             }
             await update_game_data(game_data_set, new_data)
         else:
             print("No game was found for this channel")
-            await save_game_data(game_data_set, message)
-            await game_message(message, "Starting Game... Use !shoot to shoot and !spin to spin. (Note spin "
+            await save_game_data(game_data_set, interaction)
+            await game_message(interaction, "Starting Game... Use /shoot to shoot and /spin to spin. (Note spin "
                                         "will also shoot you with whatever it lands on..)", default_thumbnail)
     else:
-        await game_message(message, "Game failed to start... Please try again later.", default_thumbnail)
+        await game_message(interaction, "Game failed to start... Please try again later.", default_thumbnail)
