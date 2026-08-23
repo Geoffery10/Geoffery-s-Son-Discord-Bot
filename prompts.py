@@ -98,11 +98,12 @@ async def checkForPrompts(message, client):
     if search("\sa scratch($|\s|!)", message.content.lower()):
         await message.channel.send("http://www.okmoviequotes.com/wp-content/uploads/2014/05/402-Monty-Python-and-the-Holy-Grail-quotes.gif")
 
-    # "Hi [something], I'm [bot]" — classic Dad-joke format. Triggered on any
-    # message containing "I'm [something]" / "Im [something]" / "I am [something]".
-    # Capture the [something] and reply with the bot's display name (per-guild
-    # nickname if set, else global username).
-    im_match = search(r"(?:^|\s)(?:i'?m|i am)\s+([^.!?,\n]+?)(?:[.!?,\n]|$)", message.content.lower())
+    # "Hi [something], I'm [bot]" — classic Dad-joke format. Triggered when a
+    # message OPENS with "I'm [something]" / "Im [something]" / "I am [something]".
+    # Start-anchored so the joke lands on short intros, not on every incidental
+    # "I'm" inside a long message. Capture capped at 50 chars to avoid replying
+    # with multi-sentence run-ons. Reply uses the bot's per-guild display name.
+    im_match = search(r"^\s*(?:i'?m|i am)\s+([^.!?,\n]{1,50}?)(?:[.!?,\n]|$)", message.content.lower())
     if im_match:
         something = im_match.group(1).strip()
         bot_name = client.user.name
