@@ -72,14 +72,17 @@ class MyClient(discord.Client):
         super().__init__(*args, **kwargs)
 
     async def on_ready(self):
-        # Sync slash commands to every guild the bot is actually in.
-        # Hardcoding guild IDs is fragile: if a guild ID is stale, get_guild()
-        # returns None and tree.sync(guild=None) becomes a global sync, which
-        # propagates slowly. Iterate the live guild list instead.
-        for guild in client.guilds:
-            await tree.sync(guild=guild)
-        print(f"Synced trees to {len(client.guilds)} guild(s): "
-              f"{', '.join(g.name for g in client.guilds)}")
+        # Sync slash commands globally. Per-guild syncs require commands to
+        # be defined with @tree.command(guild=...), which we don't do — calling
+        # tree.sync(guild=guild) when commands are global-only sends an empty
+        # payload to that guild, clearing any existing per-guild commands.
+        #
+        # Global commands take up to 1 hour to propagate to each guild the bot
+        # is in, but they DO propagate to every guild automatically. That's the
+        # right behavior for a bot with 25 commands.
+        synced = await tree.sync()
+        print(f"Synced {len(synced)} global command(s); "
+              f"propagation to {len(client.guilds)} guild(s) may take up to 1 hour")
 
         # Loaded
         print(await sendLog(log=(f'{client.user} has connected to Discord!'), client=client))
