@@ -1,7 +1,9 @@
-name: Deploy
+name: Tests and Deploy
 
 on:
   push:
+    branches: [master]
+  pull_request:
     branches: [master]
   workflow_dispatch:
 
@@ -10,9 +12,12 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  # Runs on every push (including PRs) and every workflow_dispatch.
+  # Hermetic — no secrets, no network. Fast feedback for PR authors.
+  test:
+    name: Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
 
     steps:
       - name: Checkout
@@ -35,6 +40,23 @@ jobs:
         run: |
           echo "=== running pytest ==="
           pytest tests/ -v --tb=short
+
+  # Runs only on push to master (after merge) or manual dispatch.
+  # Depends on `test` so a failing test blocks the deploy.
+  # Touches the LXC via Tailscale — uses secrets, but only after tests pass.
+  deploy:
+    name: Deploy
+    needs: test
+    # Skip on PRs (no secrets, no LXC access for PRs).
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Tailscale up
         uses: tailscale/github-action@v4
