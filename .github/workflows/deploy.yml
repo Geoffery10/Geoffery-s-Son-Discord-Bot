@@ -20,6 +20,22 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install test deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: |
+          echo "=== running pytest ==="
+          pytest tests/ -v --tb=short
+
       - name: Tailscale up
         uses: tailscale/github-action@v4
         with:
