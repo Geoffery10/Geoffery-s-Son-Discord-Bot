@@ -98,14 +98,18 @@ async def checkForPrompts(message, client):
     if search("\sa scratch($|\s|!)", message.content.lower()):
         await message.channel.send("http://www.okmoviequotes.com/wp-content/uploads/2014/05/402-Monty-Python-and-the-Holy-Grail-quotes.gif")
 
-    # "Hi [something], I'm [bot]" — classic Dad-joke format. Triggered on any
-    # message containing "I'm [something]" / "Im [something]" / "I am [something]".
-    # Capture the [something] and reply with the bot's display name (per-guild
-    # nickname if set, else global username).
-    im_match = search(r"(?:^|\s)(?:i'?m|i am)\s+([^.!?,\n]+?)(?:[.!?,\n]|$)", message.content.lower())
+    # "Hi [something], I'm [bot]" — classic Dad-joke format. Triggered by any
+    # message containing "I'm [something]" / "Im [something]" / "I am [something]",
+    # including mid-message and after emoji/word prefixes. Surrounding markdown
+    # (**, _, `) and other formatting inside the capture is preserved — only
+    # whitespace is trimmed. Capped at 50 chars to avoid multi-sentence run-ons.
+    im_match = search(
+        r"(?:i'?m|i am)(?:\s+|\W+)([^\w]*\w[^\n]{0,49}?)(?:[.!?,\n]|$)",
+        message.content.lower())
     if im_match:
         something = im_match.group(1).strip()
-        bot_name = client.user.name
-        if message.guild and message.guild.me:
-            bot_name = message.guild.me.display_name or client.user.name
-        await message.channel.send(f"Hi {something}, I'm {bot_name}")
+        if something and len(something) <= 50:
+            bot_name = client.user.name
+            if message.guild and message.guild.me:
+                bot_name = message.guild.me.display_name or client.user.name
+            await message.channel.send(f"Hi {something}, I'm {bot_name}")
