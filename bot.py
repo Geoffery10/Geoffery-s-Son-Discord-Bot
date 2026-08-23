@@ -72,21 +72,51 @@ class MyClient(discord.Client):
         super().__init__(*args, **kwargs)
 
     async def on_ready(self):
-        # Sync slash commands globally. Per-guild syncs require commands to
-        # be defined with @tree.command(guild=...), which we don't do — calling
-        # tree.sync(guild=guild) when commands are global-only sends an empty
-        # payload to that guild, clearing any existing per-guild commands.
-        #
-        # Global commands take up to 1 hour to propagate to each guild the bot
-        # is in, but they DO propagate to every guild automatically. That's the
-        # right behavior for a bot with 25 commands.
-        synced = await tree.sync()
-        print(f"Synced {len(synced)} global command(s); "
-              f"propagation to {len(client.guilds)} guild(s) may take up to 1 hour")
+        synced_count, cleared_count = await sync_slash_commands(tree, client.guilds)
+        print(f"Synced {synced_count} global command(s); "
+              f"propagation to {cleared_count} guild(s) may take up to 1 hour")
 
         # Loaded
         print(await sendLog(log=(f'{client.user} has connected to Discord!'), client=client))
         await updateStatus()
+
+
+async def sync_slash_commands(tree, guilds):
+    """Sync slash commands globally and clear stale per-guild registrations.
+
+    Returns a tuple of (synced_global_count, cleared_guild_count).
+
+    Why per-guild clearing is needed
+    --------------------------------
+    Pre-PR #11, the bot iterated client.guilds and called
+    tree.sync(guild=guild) for each, which copied every global command
+    into the guild's per-guild list. After PR #11 stopped that, the
+    per-guild copies persisted (Discord stores them independently of
+    the global list). With 25 commands × 5 guilds + 25 global, the
+    slash command picker showed 50 entries with duplicate names.
+
+    tree.clear_commands(guild=...) + tree.sync(guild=...) sends an
+    empty list to that guild, which Discord treats as "delete all
+    per-guild commands". Once cleared, the picker falls back to the
+    25 global commands and the duplicates vanish.
+
+    This function is idempotent and safe to call on every startup. If
+    per-guild commands are ever added (via @tree.command(guild=...)),
+    this function needs to be updated to either skip those guilds or
+    push the per-guild commands after clearing.
+    """
+    # Global sync (no args). Per-guild syncs require commands to
+    # be defined with @tree.command(guild=...), which we don't do.
+    # Global commands take up to 1 hour to propagate to each guild the
+    # bot is in, but they DO propagate to every guild automatically.
+    synced = await tree.sync()
+
+    # Clear stale per-guild commands in every guild.
+    for guild in guilds:
+        tree.clear_commands(guild=guild)
+        await tree.sync(guild=guild)
+
+    return len(synced), len(guilds)
 
     async def on_message(self, message):
         if message.author == client.user:
@@ -124,9 +154,6 @@ class MyClient(discord.Client):
 client = MyClient(intents=intents)
 tree = app_commands.CommandTree(client)
 myid = '<@735550470675759106>'
-
-# Slash command guilds (for instant registration; can take up to 1h globally)
-SYNC_GUILDS = [786690956514426910, 254779349352448001, 885595844999532624]
 
 
 # ---------------------------------------------------------------------------
