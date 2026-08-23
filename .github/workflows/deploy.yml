@@ -88,8 +88,13 @@ jobs:
           fi
           echo "new HEAD: $(git rev-parse --short HEAD)"
 
-          # Install Python deps (matches the systemd unit's ExecStartPre)
-          pip install -r requirements.txt
+          # Install Python deps via the venv pip (matches systemd ExecStartPre).
+          # PEP 668: system pip is externally-managed on Debian 13+; the bot
+          # runs from .venv/ so deps go there.
+          if [[ ! -d .venv ]]; then
+            python3 -m venv .venv
+          fi
+          .venv/bin/pip install -q -r requirements.txt
 
           # Restart the bot
           sudo systemctl restart discord-bot.service
