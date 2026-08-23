@@ -109,7 +109,7 @@ jobs:
           attempt=0
           while (( SECONDS < deadline )); do
             attempt=$((attempt + 1))
-            if $SSH botuser@$LXC_HOST systemctl is-active discord-bot.service 2>&1 | grep -q '^active$'; then
+            if $SSH botuser@$LXC_HOST is-active discord-bot.service 2>&1 | grep -q '^active$'; then
               http_code=$(curl -sS -o /dev/null -w '%{http_code}' \
                 --max-time 5 \
                 -H "Authorization: Bot ${DISCORD_HEALTH_TOKEN}" \
