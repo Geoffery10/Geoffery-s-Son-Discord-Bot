@@ -19,3 +19,5 @@ gameData/Russian Roulette/games.json
 images/Thumbs.db
 logs/xvba_debug.log
 Thumbs.db
+.venv/
+.pytest_cache/
