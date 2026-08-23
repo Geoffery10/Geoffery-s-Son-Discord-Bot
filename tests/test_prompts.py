@@ -16,16 +16,10 @@ from typing import Optional
 
 import pytest
 
-# Stub out the heavy imports prompts.py pulls in (discord, loggingChannel,
-# fileManager) so we can import the module without all of them being
-# available. The stubs are minimal — anything we use in the tests gets a
-# proper mock, anything else is just a MagicMock.
-sys.modules.setdefault("discord", m.MagicMock())
-sys.modules.setdefault("loggingChannel", m.MagicMock())
-sys.modules.setdefault("fileManager", m.MagicMock())
-
-# Make the project's modules importable
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+# conftest.py stubs project modules and adds project root to sys.path.
+# prompts.py imports real discord (installed in venv) and uses discord.File,
+# discord.Embed, discord.Colour. The real discord.py is fine for testing
+# because we mock all the actual Discord API calls.
 
 import prompts  # noqa: E402
 

@@ -3,5 +3,9 @@
 #
 # This is separate from requirements.txt so the bot itself doesn't pull in
 # pytest when running on the LXC.
+#
+# Test deps = bot runtime deps + pytest. Tests import the project's bot.py
+# and prompts.py, so all the runtime deps need to be available locally.
+-r requirements.txt
 pytest>=8.0
 pytest-asyncio>=0.23
