@@ -98,14 +98,10 @@ async def checkForPrompts(message, client):
     if search("\sa scratch($|\s|!)", message.content.lower()):
         await message.channel.send("http://www.okmoviequotes.com/wp-content/uploads/2014/05/402-Monty-Python-and-the-Holy-Grail-quotes.gif")
 
-    # "Hi [something], I'm [bot]" — classic Dad-joke format. Triggered on any
+    # "Hi [something], I'm Dad" — classic Dad-joke format. Triggered on any
     # message containing "I'm [something]" / "Im [something]" / "I am [something]".
-    # Capture the [something] and reply with the bot's display name.
+    # Capture the [something] and reply as "Dad" — the original joke framing.
     im_match = search(r"(?:^|\s)(?:i'?m|i am)\s+([^.!?,\n]+?)(?:[.!?,\n]|$)", message.content.lower())
     if im_match:
         something = im_match.group(1).strip()
-        # Bot display name: per-guild nickname if set, else global username.
-        bot_name = client.user.name
-        if message.guild and message.guild.me:
-            bot_name = message.guild.me.display_name or client.user.name
-        await message.channel.send(f"Hi {something}, I'm {bot_name}")
+        await message.channel.send(f"Hi {something}, I'm Dad")
