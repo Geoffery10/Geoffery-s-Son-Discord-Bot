@@ -12,12 +12,12 @@ import os
 import os.path
 import yaml
 from loggingChannel import sendLog
-from minecraftrcon import ping_MC_server, ping_MC_server_interaction
+
 from react import checkReact
 from prompts import checkForPrompts
 import member_data
 from fileManager import sendImage, sendImageNew
-from slash_commands import sendGifNew, sendGif
+from slash_commands import sendGifNew
 import requests
 from random import randint, randrange
 import russianroulette
@@ -80,6 +80,38 @@ class MyClient(discord.Client):
         print(await sendLog(log=(f'{client.user} has connected to Discord!'), client=client))
         await updateStatus()
 
+    async def on_message(self, message):
+        if message.author == client.user:
+            return
+
+        # Respect the channel blacklist — return early before doing any work.
+        if message.channel.id in _blacklisted_channels:
+            return
+
+        member_database = await member_data.get_member_data(client)
+
+        new_member = message.author.id
+
+        members = await member_data.search_member_data(member_database, new_member, message.author)
+
+        # Update Status
+        await updateStatus()
+
+        # Remove DiscordSRV formatting
+        if (message.author.id == "779431244222955520") and search("(\s»\s)", message.content.lower()):
+            message.content = message.content[message.content.index(" » "):]
+            print(await sendLog(log=f'Updated message: {message.content}', client=client))
+
+        # Log message
+        print(
+            f'{message.author.name} [{message.author.id}] sent: {message.content} on Channel: {message.channel.id}')
+
+        # React to message if appropriate (keyword emoji reacts)
+        await checkReact(message, client)
+
+        # Respond to ambient phrase triggers (sauce, heresy, etc.)
+        await checkForPrompts(message, client)
+
 
 async def sync_slash_commands(tree, guilds):
     """Sync slash commands globally and clear stale per-guild registrations.
@@ -118,37 +150,6 @@ async def sync_slash_commands(tree, guilds):
 
     return len(synced), len(guilds)
 
-    async def on_message(self, message):
-        if message.author == client.user:
-            return
-
-        # Respect the channel blacklist — return early before doing any work.
-        if message.channel.id in _blacklisted_channels:
-            return
-
-        member_database = await member_data.get_member_data(client)
-
-        new_member = message.author.id
-
-        members = await member_data.search_member_data(member_database, new_member, message.author)
-
-        # Update Status
-        await updateStatus()
-
-        # Remove DiscordSRV formatting
-        if (message.author.id == "779431244222955520") and search("(\s»\s)", message.content.lower()):
-            message.content = message.content[message.content.index(" » "):]
-            print(await sendLog(log=f'Updated message: {message.content}', client=client))
-
-        # Log message
-        print(
-            f'{message.author.name} [{message.author.id}] sent: {message.content} on Channel: {message.channel.id}')
-
-        # React to message if appropriate (keyword emoji reacts)
-        await checkReact(message, client)
-
-        # Respond to ambient phrase triggers (sauce, heresy, etc.)
-        await checkForPrompts(message, client)
 
 
 client = MyClient(intents=intents)
@@ -170,18 +171,6 @@ async def selfie(interaction: discord.Interaction):
         log=f'{interaction.user.name} has asked for a selfie. Sending -> #{selfieNum}!',
         client=client))
     await sendImageNew(interaction, client, "selfie_", selfieNum, DIR)
-
-
-@tree.command(description="Send a random anime gif")
-async def anime(interaction: discord.Interaction):
-    localOrOnline = randint(1, 3)
-    if localOrOnline >= 2:  # Online
-        await sendGifNew(interaction, client, "cute anime girl", random=False)
-    else:
-        DIR = './images/anime/'
-        options = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])
-        animeNum = random.randint(0, (options - 1))
-        await sendImageNew(interaction, client, "anime_", animeNum, DIR)
 
 
 @tree.command(description="Punch someone")
@@ -252,13 +241,7 @@ async def sins(interaction: discord.Interaction, member: discord.Member):
             f"{member.display_name} is sinless... for now... (no entry in the database yet)")
 
 
-@tree.command(description="Get Minecraft server status")
-async def mcinfo(interaction: discord.Interaction):
-    embed = await ping_MC_server_interaction(client, interaction)
-    try:
-        await interaction.response.send_message(embed=embed)
-    except Exception:
-        await interaction.response.send_message("Unable to get server status.")
+
 
 
 @tree.command(description="Ping the bot")
@@ -275,17 +258,6 @@ async def wtf(interaction: discord.Interaction):
 @tree.command(description="It can translate to weeb characters.")
 async def nani(interaction: discord.Interaction):
     await interaction.response.send_message('何')
-
-
-@tree.command(description="AI-generated face that does not exist")
-async def thispersondoesnotexist(interaction: discord.Interaction):
-    url = "https://fakeface.rest/face/json"
-    r = requests.get(url)
-    if r.status_code == 200:
-        data = json.loads(r.content)
-        await interaction.response.send_message(data['image_url'])
-    else:
-        await interaction.response.send_message("Failed to load image.")
 
 
 @tree.command(description="AI-generated waifu that does not exist")
@@ -469,15 +441,13 @@ async def help(interaction: discord.Interaction):
                                       "\n\n**Hentai**\nWait that's illegal!"
                                       "\n\n**Hello there**\nGeneral Kenobi!"
                                       "\n\n**Trap**\nWhat do you think?"
-                                      "\n\n**/anime**\nAnime gifs for everyone!"
                                       "\n\n**/roll NdN**\nRolls dice. e.g. /roll dice_count:3 dice_sides:6"
                                       "\n\n**/sins @user**\nInform you of the sins of your friends. I'd watch out for Steve from accounting..."
                                       "\n\n**/punch @user**\nPunch your friends over the internet from a safe distance."
-                                      "\n\n**/mcinfo**\nInfo on the Minecraft Server if one is running."
+                                      
                                       "\n\n**/ping**\nWhat do you expect?"
                                       "\n\n**/wtf**\nWhy is this a command?"
                                       "\n\n**/nani**\nIt can translate to weeb characters."
-                                      "\n\n**/thispersondoesnotexist**\nThe smart ai at [thispersondoesnotexist](https://thispersondoesnotexist.com) sends a face that does not exist."
                                       "\n\n**/waifu**\nThe smart ai at [thiswaifudoesnotexist](https://www.thiswaifudoesnotexist.net) sends a waifu that does not exist."
                                       "\n\n**/id**\nCreates your new identity."
                                       "\n\n**/hot**\nBRRRRRRRR!!"

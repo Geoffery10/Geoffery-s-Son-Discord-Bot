@@ -69,6 +69,25 @@ def make_guilds(*guild_ids):
     return [m.MagicMock(id=gid) for gid in guild_ids]
 
 
+class TestClientEventHandlers:
+    """Tests that Discord event handlers are actually registered on MyClient."""
+
+    def test_myclient_overrides_on_message(self, bot_module):
+        """Regression: on_message must be a MyClient method, not nested elsewhere.
+
+        PR #18 accidentally left on_message indented inside sync_slash_commands
+        after a return statement. The bot stayed online and slash commands still
+        worked, but ambient trigger words stopped entirely because Discord never
+        called our on_message logic.
+        """
+        import discord
+
+        my_client = bot_module["MyClient"]
+        base_on_message = getattr(discord.Client, "on_message", None)
+        assert my_client.on_message is not base_on_message
+        assert my_client.on_message.__qualname__ == "MyClient.on_message"
+
+
 class TestSyncSlashCommands:
     """Tests for sync_slash_commands — the slash-command sync logic."""
 

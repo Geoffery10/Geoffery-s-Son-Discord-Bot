@@ -16,12 +16,11 @@ This is a Discord Bot for my own personal server. Most of his abilities are just
 ## Slash Commands
 
 ### Casual
-* `/anime` - Anime gifs for everyone!
 * `/selfie` - Sends a selfie of the bot.
 * `/roll dice_count:3 dice_sides:6` - Rolls dice in `NdN` format. For example `/roll dice_count:3 dice_sides:2` rolls 3 d2 dice and reports the total.
 * `/sins member:@yourfriend` - Tells you the sins of your friends. I'd watch out for Steve from accounting...
 * `/punch member:@yourfriend` - Punch your friends over the internet from a safe distance.
-* `/mcinfo` - Info on the Minecraft Server if one is running.
+
 * `/ping` - Pong! (with latency).
 * `/wtf` - Why is this a command?
 * `/nani` - It can translate to weeb characters.
@@ -29,7 +28,6 @@ This is a Discord Bot for my own personal server. Most of his abilities are just
 * `/hot` - BRRRRRRRR!!
 
 ### Image generators
-* `/thispersondoesnotexist` - The smart ai at [thispersondoesnotexist](https://thispersondoesnotexist.com) will send us a face that does not exist.
 * `/waifu` - The smart ai at [thiswaifudoesnotexist](https://www.thiswaifudoesnotexist.net) will send us a waifu that does not exist.
 * `/cat` - I'll send a random image of a kitty!
 * `/dog` - I'll send a random image of a dogo!

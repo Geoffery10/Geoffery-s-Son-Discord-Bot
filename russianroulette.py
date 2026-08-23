@@ -32,12 +32,38 @@ async def fixNick(member):
     return member.nick
 
 
+def _game_file_path():
+    """Path to the Russian Roulette persistent game state file."""
+    return _data_path('gameData', 'Russian Roulette', 'games.json')
+
+
+def ensure_game_file():
+    """Create the Russian Roulette data directory/file if missing.
+
+    The file is runtime state and is gitignored, so fresh deploys/LXC rebuilds
+    may not have it. Slash commands should self-heal instead of failing.
+    """
+    game_file = _game_file_path()
+    os.makedirs(os.path.dirname(game_file), exist_ok=True)
+    if not path.exists(game_file):
+        with open(game_file, "w") as write_file:
+            json.dump([], write_file, indent=4)
+
+
+async def acknowledge_interaction(interaction):
+    """Acknowledge a slash interaction before posting public game embeds."""
+    if not interaction.response.is_done():
+        await interaction.response.defer(ephemeral=True)
+
+
 async def check_game_file():
-    return path.exists(_data_path('gameData', 'Russian Roulette', 'games.json'))
+    ensure_game_file()
+    return path.exists(_game_file_path())
 
 
 async def get_game_data():
-    with open(_data_path('gameData', 'Russian Roulette', 'games.json'), "r") as read_file:
+    ensure_game_file()
+    with open(_game_file_path(), "r") as read_file:
         game_data_set = json.load(read_file)
     return game_data_set
 
@@ -54,7 +80,7 @@ async def save_game_data(game_data_set, interaction):
     }
     game_data_set.append(new_game)
     print("Creating new game data")
-    with open(_data_path('gameData', 'Russian Roulette', 'games.json'), "w") as write_file:
+    with open(_game_file_path(), "w") as write_file:
         json.dump(game_data_set, write_file, indent=4)
 
 
@@ -65,7 +91,7 @@ async def update_game_data(game_data_set, new_data):
         if game_data_set[index]["channel"] == new_data["channel"]:
             game_data_set[index] = new_data
             print("Found Data to Update")
-    with open(_data_path('gameData', 'Russian Roulette', 'games.json'), "w") as write_file:
+    with open(_game_file_path(), "w") as write_file:
         json.dump(game_data_set, write_file, indent=4)
 
 
@@ -94,6 +120,7 @@ async def game_message(interaction, description, thumbnail):
 
 
 async def shoot(interaction, client):
+    await acknowledge_interaction(interaction)
     nick = await fixNick(interaction.user)
     if await check_game_file():
         print("GAME DATA FOUND")
@@ -122,6 +149,7 @@ async def shoot(interaction, client):
 
 
 async def spin(interaction, client):
+    await acknowledge_interaction(interaction)
     nick = await fixNick(interaction.user)
     if await check_game_file():
         print("GAME DATA FOUND")
@@ -154,8 +182,9 @@ async def spin(interaction, client):
 
 async def startGame(interaction, client):
     # Acknowledge the slash command first so Discord doesn't show "interaction failed"
+    await acknowledge_interaction(interaction)
     if not interaction.response.is_done():
-        await interaction.response.send_message("Starting Russian Roulette...", ephemeral=True)
+        await interaction.followup.send("Starting Russian Roulette...", ephemeral=True)
 
     if await check_game_file():
         print("GAME DATA FOUND")
