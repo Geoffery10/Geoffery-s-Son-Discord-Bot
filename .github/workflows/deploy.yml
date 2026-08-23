@@ -1,0 +1,133 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-geofferys-son
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Tailscale up
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+          # Wait for the subnet route to be reachable before proceeding.
+          ping: ${{ secrets.LXC_TAILSCALE_HOST }}
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          chmod 0700 ~/.ssh
+          echo "${{ secrets.LXC_SSH_KEY }}" > ~/.ssh/lxc_deploy_key
+          chmod 0600 ~/.ssh/lxc_deploy_key
+          # Disable strict host key checking for the LAN host (DHCP IP may rotate)
+          echo "Host *" > ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+          echo "  UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+          echo "  LogLevel ERROR" >> ~/.ssh/config
+
+      - name: Verify Tailscale subnet route
+        run: |
+          echo "Verifying we can reach the LXC over Tailscale..."
+          timeout 10 ssh -i ~/.ssh/lxc_deploy_key \
+            -o ConnectTimeout=10 \
+            -o BatchMode=yes \
+            botuser@${{ secrets.LXC_TAILSCALE_HOST }} \
+            bash <<'PROBE'
+          echo "OK: reachable as $(whoami)@$(hostname)"
+          PROBE
+
+      - name: Deploy
+        env:
+          LXC_HOST: ${{ secrets.LXC_TAILSCALE_HOST }}
+          DISCORD_HEALTH_TOKEN: ${{ secrets.DISCORD_HEALTH_TOKEN }}
+          GIT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          SSH="ssh -i ~/.ssh/lxc_deploy_key -o BatchMode=yes -o ConnectTimeout=10"
+
+          echo "=== pre-deploy state ==="
+          $SSH botuser@$LXC_HOST bash <<'REMOTE'
+          set -e
+          cd /home/botuser/Geoffery-s-Son-Discord-Bot
+          echo "old HEAD: $(git rev-parse --short HEAD)"
+          echo "old status: $(systemctl is-active discord-bot.service)"
+          REMOTE
+
+          echo "=== git pull + pip install + restart ==="
+          $SSH botuser@$LXC_HOST bash <<'REMOTE'
+          set -euo pipefail
+          cd /home/botuser/Geoffery-s-Son-Discord-Bot
+
+          # Save the current HEAD so we can roll back if needed
+          PREVIOUS=$(git rev-parse HEAD)
+          echo "$PREVIOUS" > /tmp/.deploy-previous-sha
+
+          # Pull, reset, install, restart
+          git fetch --tags --prune --prune-tags
+          git reset --hard origin/master
+          if ! git diff --quiet --ignore-submodules HEAD; then
+            echo "FATAL: working tree dirty after reset" >&2
+            exit 3
+          fi
+          echo "new HEAD: $(git rev-parse --short HEAD)"
+
+          # Install Python deps (matches the systemd unit's ExecStartPre)
+          pip install -r requirements.txt
+
+          # Restart the bot
+          sudo systemctl restart discord-bot.service
+          REMOTE
+
+          echo "=== verify persisted paths ==="
+          $SSH botuser@$LXC_HOST test-paths \
+            /var/lib/geofferys-son/ /etc/geofferys-son/
+
+          echo "=== health check (max 60s) ==="
+          deadline=$((SECONDS + 60))
+          attempt=0
+          while (( SECONDS < deadline )); do
+            attempt=$((attempt + 1))
+            if $SSH botuser@$LXC_HOST systemctl is-active discord-bot.service 2>&1 | grep -q '^active$'; then
+              http_code=$(curl -sS -o /dev/null -w '%{http_code}' \
+                --max-time 5 \
+                -H "Authorization: Bot ${DISCORD_HEALTH_TOKEN}" \
+                -H "User-Agent: DiscordBot (https://github.com/Geoffery10/Geoffery-s-Son-Discord-Bot, 1.0)" \
+                "https://discord.com/api/v10/users/@me" || echo "000")
+              if [[ "$http_code" =~ ^2 ]]; then
+                echo "[$attempt] healthy: systemd=active, discord_api=$http_code"
+                echo "=== deploy OK ==="
+                exit 0
+              fi
+              echo "[$attempt] systemd=active, discord_api=$http_code"
+            else
+              echo "[$attempt] systemd not active yet"
+            fi
+            sleep 5
+          done
+
+          echo "::error::health check failed after 60s, rolling back"
+          PREVIOUS=$(cat /tmp/.deploy-previous-sha)
+          $SSH botuser@$LXC_HOST bash <<REMOTE
+          set -euo pipefail
+          cd /home/botuser/Geoffery-s-Son-Discord-Bot
+          git reset --hard "$PREVIOUS"
+          sudo systemctl restart discord-bot.service
+          REMOTE
+          exit 4
