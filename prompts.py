@@ -103,12 +103,16 @@ async def checkForPrompts(message, client):
     # including mid-message and after emoji/word prefixes. Surrounding markdown
     # (**, _, `) and other formatting inside the capture is preserved — only
     # whitespace is trimmed. Capped at 50 chars to avoid multi-sentence run-ons.
+    # Suppressed when the capture starts with an article ("a"/"an"/"the"),
+    # since "I'm a bot" → "Hi a bot, I'm Dad" lands poorly.
     im_match = search(
         r"(?:i'?m|i am)(?:\s+|\W+)([^\w]*\w[^\n]{0,49}?)(?:[.!?,\n]|$)",
         message.content.lower())
     if im_match:
         something = im_match.group(1).strip()
-        if something and len(something) <= 50:
+        first_word = something.split(maxsplit=1)[0] if something else ""
+        is_article = first_word in ("a", "an", "the")
+        if something and len(something) <= 50 and not is_article:
             bot_name = client.user.name
             if message.guild and message.guild.me:
                 bot_name = message.guild.me.display_name or client.user.name
