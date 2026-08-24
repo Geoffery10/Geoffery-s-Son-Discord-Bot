@@ -93,6 +93,12 @@ class TestImJokePrompt:
         "I'm A BOT",                # lowered -> "a" -> suppressed
         "I'mhere",                  # no whitespace/punctuation between trigger and word
         "Hello there",              # unrelated message
+        # Issue #20: trigger must be at the start of the message. Anything
+        # before "I'm" that contains a word character is a non-trigger.
+        "hello I'm new here",         # mid-message "I'm" -> no reply
+        "yeah I am groot",            # mid-message "I am" -> no reply
+        "9th time I've seen this",    # mid-message "I've" -> no reply
+        "going to the store, I'm tired",  # comma-then-I'm -> no reply
     ])
     async def test_no_reply(self, content):
         send = await self._run(content)
@@ -102,8 +108,13 @@ class TestImJokePrompt:
     @pytest.mark.parametrize("content,expected", [
         ("I'm tired",                      "Hi tired, I'm Geoffery's Son"),
         ("I'm so excited!",                "Hi so excited, I'm Geoffery's Son"),
-        ("hello I'm new here",             "Hi new here, I'm Geoffery's Son"),
+        # Issue #20: leading non-word chars (emoji, punct, markdown) and
+        # Discord custom-emoji shortcodes are allowed at the start.
         (":wave: I'm here",                "Hi here, I'm Geoffery's Son"),
+        ("— I'm tired",                    "Hi tired, I'm Geoffery's Son"),
+        ("**I'm tired**",                  "Hi tired**, I'm Geoffery's Son"),
+        ("  I'm tired",                    "Hi tired, I'm Geoffery's Son"),
+        ("🙂 I'm here",                    "Hi here, I'm Geoffery's Son"),
         ("Im hungry",                      "Hi hungry, I'm Geoffery's Son"),
         ("I am groot",                     "Hi groot, I'm Geoffery's Son"),
         # "I'M A BOT" lowered to "i'm a bot" — 'a' is article, suppressed.

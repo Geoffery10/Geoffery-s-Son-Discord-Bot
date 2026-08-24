@@ -98,15 +98,19 @@ async def checkForPrompts(message, client):
     if search("\sa scratch($|\s|!)", message.content.lower()):
         await message.channel.send("http://www.okmoviequotes.com/wp-content/uploads/2014/05/402-Monty-Python-and-the-Holy-Grail-quotes.gif")
 
-    # "Hi [something], I'm [bot]" — classic Dad-joke format. Triggered by any
-    # message containing "I'm [something]" / "Im [something]" / "I am [something]",
-    # including mid-message and after emoji/word prefixes. Surrounding markdown
-    # (**, _, `) and other formatting inside the capture is preserved — only
-    # whitespace is trimmed. Capped at 50 chars to avoid multi-sentence run-ons.
-    # Suppressed when the capture starts with an article ("a"/"an"/"the"),
-    # since "I'm a bot" → "Hi a bot, I'm Dad" lands poorly.
+    # "Hi [something], I'm [bot]" — classic Dad-joke format. Triggered only
+    # when the message opens with "I'm [something]" / "Im [something]" /
+    # "I am [something]" (issue #20, per CD33: "if its at teh start of a
+    # message"). Leading non-word characters are allowed so common prefixes
+    # like emoji, punctuation, and Discord custom-emoji shortcodes
+    # (":wave: I'm here", "— I'm tired", "**I'm tired**") still fire. A
+    # word character before the trigger — e.g. "hello I'm new here" — does
+    # NOT fire. Surrounding markdown inside the capture is preserved; the
+    # capture is capped at 50 chars to avoid multi-sentence run-ons; and
+    # the reply is suppressed when the capture starts with an article
+    # ("a"/"an"/"the") since "I'm a bot" → "Hi a bot, I'm Dad" lands poorly.
     im_match = search(
-        r"(?:i'?m|i am)(?:\s+|\W+)([^\w]*\w[^\n]{0,49}?)(?:[.!?,\n]|$)",
+        r"^(?:\W+|:\w+:)*\s*(?:i'?m|i am)(?:\s+|\W+)([^\w]*\w[^\n]{0,49}?)(?:[.!?,\n]|$)",
         message.content.lower())
     if im_match:
         something = im_match.group(1).strip()
